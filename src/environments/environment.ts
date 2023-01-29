@@ -37,6 +37,28 @@ export const environment = {
       supervisorPortal: true,
       emtPortal: false
     },
+
+    eService: {
+      pendingApplications: {
+        defaultMaxPaginations: 100,
+        defaultRequestView: 'List',
+      },
+    },
+    finance: {
+      onlineApplicationPayments: {
+        defaultMaxPaginations: 100,
+        defaultRequestView: 'List',
+      },
+      tppaPayments: {
+        defaultMaxPaginations: 5,
+        defaultRequestView: 'List',
+      },
+      tenderPayments: {
+        defaultMaxPaginations: 100,
+        defaultRequestView: 'List',
+      },
+    },
+
     staffPortal: {
       common: {
         alertTimeOut: 2000,
@@ -164,87 +186,7 @@ export const environment = {
         }
       },
     },
-    supervisorPortal: {
-      common: {
-        alertTimeOut: 2000,
-        toastrTimeOut: 3000,
-        modelCloseTimeOut: 500,
-        bulkCreatModeleCloseTimeOut: 10000,
-      },
-      sideMenu: {
-        appSwitch: true,
-        dashboard: true,
-        dashboard_overview: false,
-        dashboard_attendance: false,
-        dashboard_leave: true,
-        dashboard_ot: true,
-      },
-      overtimeRequests: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          reject: true,
-          approval: true,
-        }
-      },
-      otPriorApprovalRequests: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          reject: true,
-          approval: true,
-        }
-      },
-      leaveRequests: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          reject: true,
-          approval: true,
-        }
-      },
-      medicalLeaveRequests: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          reject: true,
-          approval: true,
-        }
-      },
-      pendingLeaveApprovals: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          cancel: true,
-          approve: true,
-          reject: true,
-        }
-      },
-      pendingOtApprovals: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          cancel: true,
-          approve: true,
-          reject: true,
-        }
-      },
-      pendingOtPriorApprovals: {
-        defaultMaxPaginations: 10,
-        defaultRequestView: 'List',
-        buttons: {
-          action: true,
-          cancel: true,
-          approve: true,
-          reject: false,
-        }
-      },
-    }
+
   }
 };
 

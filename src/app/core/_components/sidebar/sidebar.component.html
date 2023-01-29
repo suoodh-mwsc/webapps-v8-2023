@@ -22,62 +22,11 @@
         <!-- <div class="collapse navbar-collapse w-auto h-auto ps" id="sidenav-collapse-main-two">
         </div> -->
         <div class="collapse navbar-collapse w-auto h-auto ps" id="sidenav-collapse-main-next">
-
-          <button type="button" class="btn btn-icon btn-primary btn-lg btn-block mb-3 py-2" (click)="changePortal()"
-            [ngClass]="portal.name === 'Staff Portal' ? 'btn-primary' : 'btn-success'">
-            <span class="btn-inner--icon">
-              <i class="fas " [ngClass]="portal.name === 'Staff Portal' ? 'fa-user' : 'fa-user-friends'"></i>
-            </span>
-            <span class="btn-inner--text">{{portal?.name}}</span>
-          </button>
-
           <!-- Divider -->
           <hr class="mt-0 mb-3" />
           <!-- Heading -->
-          <h6 class="navbar-heading p-0 text-muted">{{portal.name}}</h6>
+          <h6 class="navbar-heading p-0 text-muted">WebApps</h6>
           <ul class="navbar-nav" id="accordionMain">
-            <li class="nav-item">
-              <div id="navbar-h1">
-                <a class="nav-link py-1" role="button" data-toggle="collapse" data-target="#header-my-dashboard"
-                  aria-expanded="false" aria-controls="header-my-dashboard">
-                  <div
-                    class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center py-0 pl-0"
-                    style="height: 20px;">
-                    <i class="fas fa-chart-area text-primary text-sm opacity-10"
-                      [ngClass]="portal.name === 'Staff Portal' ? 'text-primary' : 'text-success'"></i>
-                  </div>
-                  <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">Dashboards</span>
-                </a>
-              </div>
-              <div class="collapse show" id="header-my-dashboard" aria-labelledby="navbar-h1"
-                data-parent="#accordionMain">
-                <ul class="nav ms-4">
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/dashboard/my-dashboard']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> D</span>
-                      <span class="sidenav-normal"> My Dashboard </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/dashboard/leave-management']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> D</span>
-                      <span class="sidenav-normal"> Leave Management </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/dashboard/overtime-management']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> D</span>
-                      <span class="sidenav-normal"> OT Management </span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
             <li class="nav-item">
               <div id="navbar-h2">
                 <a class="nav-link py-1" role="button" data-toggle="collapse" data-target="#header-general"
@@ -85,8 +34,7 @@
                   <div
                     class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center py-0 pl-0"
                     style="height: 20px;">
-                    <i class="fas fa-file-alt text-primary text-sm opacity-10"
-                      [ngClass]="portal.name === 'Staff Portal' ? 'text-primary' : 'text-success'"></i>
+                    <i class="fas fa-file-alt text-primary text-sm opacity-10"></i>
                   </div>
                   <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">General</span>
                 </a>
@@ -95,54 +43,9 @@
                 <ul class="nav ms-4">
                   <li class="nav-item">
                     <a class="nav-link py-1" [routerLink]="['/general/my-calendar']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
+                      routerLinkActive="active font-weight-bold text-primary">
                       <span class="sidenav-mini-icon"> C </span>
                       <span class="sidenav-normal"> My Calendar </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/my-statistics']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> S </span>
-                      <span class="sidenav-normal"> My Statistics </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/my-payslips']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> P </span>
-                      <span class="sidenav-normal"> My PaySlips </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/my-letters']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> L </span>
-                      <span class="sidenav-normal"> My Letters </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/my-subordinates']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> S </span>
-                      <span class="sidenav-normal"> My Subordinates </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/subordinate-calendar']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> SC </span>
-                      <span class="sidenav-normal"> Subordinate's Calendar </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/general/subordinate-statistics']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> SS </span>
-                      <span class="sidenav-normal"> Subordinate's Statistics </span>
                     </a>
                   </li>
                 </ul>
@@ -155,8 +58,7 @@
                   <div
                     class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center py-0 pl-0"
                     style="height: 20px;">
-                    <i class="fas fa-user-clock text-primary text-sm opacity-10"
-                      [ngClass]="portal.name === 'Staff Portal' ? 'text-primary' : 'text-success'"></i>
+                    <i class="fas fa-user-clock text-primary text-sm opacity-10"></i>
                   </div>
                   <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">Overtime</span>
                 </a>
@@ -165,33 +67,10 @@
                 data-parent="#accordionMain">
                 <ul class="nav ms-4">
                   <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/overtime/my-overtime-prior-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> C </span>
-                      <span class="sidenav-normal"> My Prior Approvals </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
                     <a class="nav-link py-1" [routerLink]="['/overtime/my-overtimes']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
+                      routerLinkActive="active font-weight-bold text-primary">
                       <span class="sidenav-mini-icon"> S </span>
                       <span class="sidenav-normal"> My Overtime </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/overtime/subordinate-overtime-prior-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> P </span>
-                      <span class="sidenav-normal"> Prior Approvals Onbehalf</span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/overtime/subordinate-overtimes']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> O </span>
-                      <span class="sidenav-normal"> Overtime Onbehalf</span>
                     </a>
                   </li>
                 </ul>
@@ -205,8 +84,7 @@
                   <div
                     class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center py-0 pl-0"
                     style="height: 20px;">
-                    <i class="fas fa-plane text-primary text-sm opacity-10"
-                      [ngClass]="portal.name === 'Staff Portal' ? 'text-primary' : 'text-success'"></i>
+                    <i class="fas fa-plane text-primary text-sm opacity-10"></i>
                   </div>
                   <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">Leaves</span>
                 </a>
@@ -215,72 +93,63 @@
                 <ul class="nav ms-4">
                   <li class="nav-item">
                     <a class="nav-link py-1" [routerLink]="['/leave/my-leaves']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
+                      routerLinkActive="active font-weight-bold text-primary">
                       <span class="sidenav-mini-icon"> C </span>
                       <span class="sidenav-normal"> My Leave </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/leave/my-work-handovers']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> S </span>
-                      <span class="sidenav-normal"> My Work Handovers </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/leave/subordinate-leaves']"
-                      routerLinkActive="active font-weight-bold text-primary"
-                      *ngIf="portal.name === 'Supervisor Portal'">
-                      <span class="sidenav-mini-icon"> L </span>
-                      <span class="sidenav-normal"> Leaves Onbehalf</span>
                     </a>
                   </li>
                 </ul>
               </div>
             </li>
 
-            <li class="nav-item" *ngIf="portal.name === 'Staff Portal'">
+            <li class="nav-item">
               <div id="navbar-h5">
                 <a class="nav-link py-1" role="button" data-toggle="collapse" data-target="#header-my-approval"
                   aria-expanded="false" aria-controls="header-my-approval">
                   <div
                     class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center py-0 pl-0"
                     style="height: 20px;">
-                    <i class="fas fa-file-alt text-primary text-sm opacity-10"
-                      [ngClass]="portal.name === 'Staff Portal' ? 'text-primary' : 'text-success'"></i>
+                    <i class="fas fa-file-alt text-primary text-sm opacity-10"></i>
                   </div>
-                  <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">Approvals</span>
+                  <span class="nav-link-text font-weight-bold text-uppercase text-dark ms-1">Finance</span>
                 </a>
               </div>
               <div class="collapse show" id="header-my-approval" aria-labelledby="navbar-h5"
                 data-parent="#accordionMain">
                 <ul class="nav ms-4">
                   <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/approval/pending-work-handover-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> W </span>
-                      <span class="sidenav-normal"> Pending Work Handover </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/approval/pending-overtime-prior-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> P </span>
-                      <span class="sidenav-normal"> Pending Prior Approvals </span>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/approval/pending-overtime-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
+                    <a class="nav-link py-1" [routerLink]="['/payment/online-payments']"
+                      routerLinkActive="active font-weight-bold text-primary">
                       <span class="sidenav-mini-icon"> O </span>
-                      <span class="sidenav-normal"> Pending Overtime </span>
+                      <span class="sidenav-normal"> Online Payments </span>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link py-1" [routerLink]="['/approval/pending-leave-approvals']"
-                      routerLinkActive="active font-weight-bold text-primary" *ngIf="portal.name === 'Staff Portal'">
-                      <span class="sidenav-mini-icon"> L </span>
-                      <span class="sidenav-normal"> Pending Leave </span>
+                    <a class="nav-link py-1" [routerLink]="['/payment/multiple-account-payments']"
+                      routerLinkActive="active font-weight-bold text-primary">
+                      <span class="sidenav-mini-icon"> M </span>
+                      <span class="sidenav-normal"> Multi Account </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link py-1" [routerLink]="['/payment/tppa-payments']"
+                      routerLinkActive="active font-weight-bold text-primary">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal"> TPPA Payments </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link py-1" [routerLink]="['/payment/external-payments']"
+                      routerLinkActive="active font-weight-bold text-primary">
+                      <span class="sidenav-mini-icon"> X </span>
+                      <span class="sidenav-normal"> External Payments </span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link py-1" [routerLink]="['/payment/tender-payments']"
+                      routerLinkActive="active font-weight-bold text-primary">
+                      <span class="sidenav-mini-icon"> T </span>
+                      <span class="sidenav-normal"> Tender Payments </span>
                     </a>
                   </li>
                 </ul>

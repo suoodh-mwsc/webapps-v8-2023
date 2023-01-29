@@ -170,19 +170,19 @@ export class NavbarComponent implements OnInit {
     this.pendingApprovalNotificationList = [];
     localStorage.removeItem('pendingApprovalNotificationList-SupervisorPortal');
 
-    return new Promise((resolve, reject) => {
-      this._employeeConfig.getPendingApprovalCount().subscribe((data: any) => {
-        // this._localStorageService.setLocalStorage('pendingApprovalNotificationList-SupervisorPortal', JSON.stringify(data));
-        this.pendingApprovalNotificationList = data.items;
-        this.showLoader = false;
-        console.log('getApprovals -> API Call', 'start', this.pendingApprovalNotificationList);
-        this.getCount();
-      }, (error: Response | any) => {
-        this.showLoader = false;
-        return throwError(new Error(error.status));
-      });
-      resolve(this.pendingApprovalNotificationList);
-    });
+    // return new Promise((resolve, reject) => {
+    //   this._employeeConfig.getPendingApprovalCount().subscribe((data: any) => {
+    //     // this._localStorageService.setLocalStorage('pendingApprovalNotificationList-SupervisorPortal', JSON.stringify(data));
+    //     this.pendingApprovalNotificationList = data.items;
+    //     this.showLoader = false;
+    //     console.log('getApprovals -> API Call', 'start', this.pendingApprovalNotificationList);
+    //     this.getCount();
+    //   }, (error: Response | any) => {
+    //     this.showLoader = false;
+    //     return throwError(new Error(error.status));
+    //   });
+    //   resolve(this.pendingApprovalNotificationList);
+    // });
   }
 
   refreshPendingApprovalCounter() {
@@ -223,43 +223,43 @@ export class NavbarComponent implements OnInit {
     localStorage.removeItem('pendingNotificationList');
 
 
-    return new Promise((resolve, reject) => {
-      this._employeeConfig.getPendingNotificationCount(this.notificationPageNo, this.notificationPageSize).subscribe((data: any) => {
-        // this._localStorageService.setLocalStorage('pendingNotificationList', JSON.stringify(data));
-        this.pendingNotificationListPagination = data;
+    // return new Promise((resolve, reject) => {
+    //   this._employeeConfig.getPendingNotificationCount(this.notificationPageNo, this.notificationPageSize).subscribe((data: any) => {
+    //     // this._localStorageService.setLocalStorage('pendingNotificationList', JSON.stringify(data));
+    //     this.pendingNotificationListPagination = data;
 
-        data.items.forEach(ele => {
-          this.notificationFilter = [];
-          this.formatDate = moment(ele.notification_created_on).fromNow();
-          this.notificationFilter = {
-            notification_category: ele.notification_category,
-            notification_created_by: ele.notification_created_by,
-            notification_created_on: this.formatDate,
-            notification_created_on_friendly: ele.notification_created_on_friendly,
-            notification_id: ele.notification_id,
-            notification_is_read: ele.notification_is_read,
-            notification_message: ele.notification_message,
-            notification_recipient: ele.notification_recipient,
-            notification_reference_id: ele.notification_reference_id,
-            notification_sub_category: ele.notification_sub_category,
-            notification_subscriber_types: ele.notification_subscriber_types,
-            notification_title: ele.notification_title,
+    //     data.items.forEach(ele => {
+    //       this.notificationFilter = [];
+    //       this.formatDate = moment(ele.notification_created_on).fromNow();
+    //       this.notificationFilter = {
+    //         notification_category: ele.notification_category,
+    //         notification_created_by: ele.notification_created_by,
+    //         notification_created_on: this.formatDate,
+    //         notification_created_on_friendly: ele.notification_created_on_friendly,
+    //         notification_id: ele.notification_id,
+    //         notification_is_read: ele.notification_is_read,
+    //         notification_message: ele.notification_message,
+    //         notification_recipient: ele.notification_recipient,
+    //         notification_reference_id: ele.notification_reference_id,
+    //         notification_sub_category: ele.notification_sub_category,
+    //         notification_subscriber_types: ele.notification_subscriber_types,
+    //         notification_title: ele.notification_title,
 
-          }
-          this.pendingNotificationList.push(this.notificationFilter);
-        });
+    //       }
+    //       this.pendingNotificationList.push(this.notificationFilter);
+    //     });
 
 
-        // this.pendingNotificationList = data.items;
-        this.showLoader = false;
-        console.log('getNotifications -> API Call', 'start', this.pendingNotificationListPagination);
-        this.getNotificationCount();
-      }, (error: Response | any) => {
-        this.showLoader = false;
-        return throwError(new Error(error.status));
-      });
-      resolve(this.pendingNotificationList);
-    });
+    //     // this.pendingNotificationList = data.items;
+    //     this.showLoader = false;
+    //     console.log('getNotifications -> API Call', 'start', this.pendingNotificationListPagination);
+    //     this.getNotificationCount();
+    //   }, (error: Response | any) => {
+    //     this.showLoader = false;
+    //     return throwError(new Error(error.status));
+    //   });
+    //   resolve(this.pendingNotificationList);
+    // });
 
 
     // this.getApprovalsWithInterval();
@@ -287,42 +287,42 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem('pendingNotificationList');
 
 
-      return new Promise((resolve, reject) => {
-        this._employeeConfig.getPendingNotificationCount(this.notificationPageNo, this.notificationPageSize).subscribe((data: any) => {
-          // this._localStorageService.setLocalStorage('pendingNotificationList', JSON.stringify(data));
+      // return new Promise((resolve, reject) => {
+      //   this._employeeConfig.getPendingNotificationCount(this.notificationPageNo, this.notificationPageSize).subscribe((data: any) => {
+      //     // this._localStorageService.setLocalStorage('pendingNotificationList', JSON.stringify(data));
 
-          this.pendingNotificationListPagination = data;
-          data.items.forEach(ele => {
-            this.notificationFilter = [];
-            this.formatDate = moment(ele.notification_created_on).fromNow();
-            this.notificationFilter = {
-              notification_category: ele.notification_category,
-              notification_created_by: ele.notification_created_by,
-              notification_created_on: this.formatDate,
-              notification_created_on_friendly: ele.notification_created_on_friendly,
-              notification_id: ele.notification_id,
-              notification_is_read: ele.notification_is_read,
-              notification_message: ele.notification_message,
-              notification_recipient: ele.notification_recipient,
-              notification_reference_id: ele.notification_reference_id,
-              notification_sub_category: ele.notification_sub_category,
-              notification_subscriber_types: ele.notification_subscriber_types,
-              notification_title: ele.notification_title,
-            }
-            this.pendingNotificationList.push(this.notificationFilter);
-          });
+      //     this.pendingNotificationListPagination = data;
+      //     data.items.forEach(ele => {
+      //       this.notificationFilter = [];
+      //       this.formatDate = moment(ele.notification_created_on).fromNow();
+      //       this.notificationFilter = {
+      //         notification_category: ele.notification_category,
+      //         notification_created_by: ele.notification_created_by,
+      //         notification_created_on: this.formatDate,
+      //         notification_created_on_friendly: ele.notification_created_on_friendly,
+      //         notification_id: ele.notification_id,
+      //         notification_is_read: ele.notification_is_read,
+      //         notification_message: ele.notification_message,
+      //         notification_recipient: ele.notification_recipient,
+      //         notification_reference_id: ele.notification_reference_id,
+      //         notification_sub_category: ele.notification_sub_category,
+      //         notification_subscriber_types: ele.notification_subscriber_types,
+      //         notification_title: ele.notification_title,
+      //       }
+      //       this.pendingNotificationList.push(this.notificationFilter);
+      //     });
 
 
-          // this.pendingNotificationList = data.items;
-          this.showLoader = false;
-          this.getNotificationCount();
-          console.log('getNotifications -> API Call', 'start', this.pendingNotificationListPagination);
-        }, (error: Response | any) => {
-          this.showLoader = false;
-          return throwError(new Error(error.status));
-        });
-        resolve(this.pendingNotificationList);
-      });
+      //     // this.pendingNotificationList = data.items;
+      //     this.showLoader = false;
+      //     this.getNotificationCount();
+      //     console.log('getNotifications -> API Call', 'start', this.pendingNotificationListPagination);
+      //   }, (error: Response | any) => {
+      //     this.showLoader = false;
+      //     return throwError(new Error(error.status));
+      //   });
+      //   resolve(this.pendingNotificationList);
+      // });
     });
   }
 

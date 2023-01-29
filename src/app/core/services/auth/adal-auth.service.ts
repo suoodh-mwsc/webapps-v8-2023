@@ -111,7 +111,7 @@ export class AdalAuthService {
     console.log('AdalAuthService - Save Token To Cookies and Subject ::');
     this._tokenStorageService.saveAdalToken(token);
     this.adalTokenSubject.next(token);
-    this._staffPortalAuth.postGetCoreApiToken(token, 'staff-portal');
+    // this._staffPortalAuth.postGetCoreApiToken(token, 'staff-portal');
   }
 
   getAdalToken() {

@@ -62,7 +62,7 @@ const AppRoutes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { 
-        path: 'finance', 
+        path: 'payment', 
         loadChildren: () => import('./features/payment/payment-routing.module').then(m => m.paymentRoutes) 
       }
     ]

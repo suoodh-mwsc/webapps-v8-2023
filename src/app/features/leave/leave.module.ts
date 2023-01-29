@@ -24,7 +24,6 @@ import { ComponentLibraryModule } from 'src/app/shared/sub-module/component-libr
 // Page Components
 import { MyLeavesComponent } from './pages/my-leaves/my-leaves.component';
 import { MyWorkHandoversComponent } from './pages/my-work-handovers/my-work-handovers.component';
-import { SubordinateLeavesComponent } from './pages/subordinate-leaves/subordinate-leaves.component';
 import { LeaveActionModelComponent } from './components/leave/leave-action-model/leave-action-model.component';
 import { LeaveCreateModelComponent } from './components/leave/leave-create-model/leave-create-model.component';
 import { LeaveDetailsCommonViewComponent } from './components/leave/leave-details-common-view/leave-details-common-view.component';
@@ -34,11 +33,6 @@ import { WorkHandoverDetailsCommonViewComponent } from './components/work-handov
 import { WorkHandoverViewComponent } from './components/work-handover/work-handover-view/work-handover-view.component';
 import { MedicalLeaveCreateModelComponent } from './components/leave/medical-leave-create-model/medical-leave-create-model.component';
 
-import { SupvLeaveActionModelComponent } from './components/subord-leave/supv-leave-action-model/supv-leave-action-model.component';
-import { SupvLeaveCreateModelComponent } from './components/subord-leave/supv-leave-create-model/supv-leave-create-model.component';
-import { SupvLeaveDetailsCommonViewComponent } from './components/subord-leave/supv-leave-details-common-view/supv-leave-details-common-view.component';
-import { SupvLeaveViewComponent } from './components/subord-leave/supv-leave-view/supv-leave-view.component';
-import { SupvMedicalLeaveCreateModelComponent } from './components/subord-leave/supv-medical-leave-create-model/supv-medical-leave-create-model.component';
 import { AuthGuard } from '@app/core/services/adal-8/authentication.guard';
 
 
@@ -60,7 +54,6 @@ import { AuthGuard } from '@app/core/services/adal-8/authentication.guard';
   declarations: [
     MyLeavesComponent,                                  // Pages-Component
     MyWorkHandoversComponent,                           // Pages-Component
-    SubordinateLeavesComponent,                         // Pages-Component
 
     LeaveActionModelComponent,
     LeaveCreateModelComponent,
@@ -71,17 +64,10 @@ import { AuthGuard } from '@app/core/services/adal-8/authentication.guard';
     WorkHandoverActionModelComponent,
     WorkHandoverDetailsCommonViewComponent,
     WorkHandoverViewComponent,
-
-    SupvLeaveActionModelComponent,
-    SupvLeaveCreateModelComponent,
-    SupvLeaveDetailsCommonViewComponent,
-    SupvLeaveViewComponent,
-    SupvMedicalLeaveCreateModelComponent,
   ],
   exports: [
     MyLeavesComponent,                                  // Pages-Component
     MyWorkHandoversComponent,                           // Pages-Component
-    SubordinateLeavesComponent,                         // Pages-Component
 
     LeaveActionModelComponent,
     LeaveCreateModelComponent,
@@ -92,12 +78,6 @@ import { AuthGuard } from '@app/core/services/adal-8/authentication.guard';
     WorkHandoverActionModelComponent,
     WorkHandoverDetailsCommonViewComponent,
     WorkHandoverViewComponent,
-
-    SupvLeaveActionModelComponent,
-    SupvLeaveCreateModelComponent,
-    SupvLeaveDetailsCommonViewComponent,
-    SupvLeaveViewComponent,
-    SupvMedicalLeaveCreateModelComponent,
   ],
   providers:[
     AuthGuard

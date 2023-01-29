@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         console.log('Home Url ::', event.url);
         if (event.url === '/' && this._adalService.userInfo.authenticated) {
-          this._router.navigate(['/general/my-calendar']);
+          this._router.navigate(['/payment/online-payments']);
         } else {
         }
       }
