@@ -1,0 +1,107 @@
+<div *ngIf="request_item?.data">
+  <app-weeklyshift-common-view [request_item]="request_item">
+  </app-weeklyshift-common-view>
+
+  <div class="alert alert-warning px-3 py-2 mt-3 mb-3 alert-dismissible fade show" role="alert"
+    *ngIf="request_item?.data.PaymentStatus === 0">
+    <span class="alert-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </span>
+    <span class="alert-text"><strong>Warning !</strong> You are about to update this transaction to SAP. Please make
+      sure all the transaction details are correct.!</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="card card-stats border mt-3 mb-0">
+    <div class="card-body px-3 py-2">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6 class="card-title text-uppercase text-muted mb-2">Actions</h6>
+        </div>
+        <div class="col-lg-auto" *ngIf="request_item?.data">
+          <button type="button" class="btn btn-warning btn-sm" (click)="changeAction('UpdatedEditingPossible')">
+            <span class="btn-inner--icon"><i class="fas fa-calendar"></i></span>
+            <span class="btn-inner--text"> Updated Editing Possible </span>
+          </button>
+        </div>
+        <div class="col-lg-auto" *ngIf="request_item?.data">
+          <button type="button" class="btn btn-warning btn-sm" (click)="changeAction('UpdatedShiftTemplate')">
+            <span class="btn-inner--icon"><i class="fas fa-clock"></i></span>
+            <span class="btn-inner--text"> Update Shift Template </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectActionType ==='UpdatedEditingPossible'">
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-success" type="button" (click)="updatedToSap(request_item.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                class="fas fa-check-circle"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Loading ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Updated To SAP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectActionType ==='UpdatedShiftTemplate'">
+    <div class="row mt-3">
+      <div class="col-lg-12">
+        <div class="card card-stats border mb-0">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-lg px-4">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group mb-2">
+                      <label for="toDate" class="h5 text-muted ml-2 mb-1">SAP Reference</label>
+                      <input type="text" class="form-control col-12" placeholder="SAP Reference" name="sapReference"
+                        id="sapReference" [(ngModel)]="sapReference">
+                    </div>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-danger" type="button" (click)="manuallyUpdatedToSap(request_item.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i class="fas fa-ban"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Loading ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Manually Updated To SAP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,39 @@
+
+@media only screen and (min-width: 1024px) and (max-width: 3840px)  {
+  .toast-notification-server {
+    position: fixed !important;
+    z-index: 3000 !important; //change your number as per elements lies on your page.
+    text-align: center !important;
+    vertical-align: middle !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.5;
+    top: -3px;
+    right: 400px;
+    max-width: 300px !important;
+  
+    .toast-body {
+      font-size: 12px !important;
+    }
+  }
+}
+
+
+@media only screen and (min-width: 200px) and (max-width: 1023px)  {
+  .toast-notification-server {
+    position: fixed !important;
+    z-index: 3000 !important; //change your number as per elements lies on your page.
+    text-align: center !important;
+    vertical-align: middle !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.5;
+    top: -3px;
+    right: 400px;
+    max-width: 300px !important;
+  
+    .toast-body {
+      font-size: 12px !important;
+    }
+  }
+}

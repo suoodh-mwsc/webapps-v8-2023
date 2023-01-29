@@ -1,0 +1,186 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <section>
+            <div class="table-responsive" *ngIf="request && request?.items?.length > 0">
+                <table class="table table-hover align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="px-3 py-2">Transaction</th>
+                            <th scope="col" class="px-2 py-2 text-center">Meter & Account</th>
+                            <th scope="col" class="px-2 py-2">Organization & Outlet </th>
+                            <th scope="col" class="px-2 py-2 text-center">Payment Details</th>
+                            <th scope="col" class="px-2 py-2 text-center">Payment Details</th>
+                            <th scope="col" class="px-2 py-2">Payment Method</th>
+                            <th scope="col" class="px-2 py-2 text-center">Payment Status</th>
+                            <th scope="col" class="px-3 py-2 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" *ngFor="let requestObj of request?.items">
+                        <tr (mouseenter)="selectTransaction(requestObj)" (click)="showViewActionModal(requestObj)"
+                            [ngClass]="requestObj?.Id === request_item?.selected_transaction?.Id ? 'bg-primary-light' : ''">
+                            <th class="px-3 py-1" style="width: 170px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fab fa-slack-hash mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.Id}}</span>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.TakenOn | date:
+                                        'dd MMM yyyy HH:mm'}}</span>
+                                </div>
+                            </th>
+                            <th class="px-2 py-1 text-center"
+                                style="width: 180px !important; max-width: 190px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-tachometer-alt ml-2 mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.CustomerSearch?.CustomerDetail?.AccountNo}}</span>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold mb-0 mr-1"
+                                        [ngClass]="requestObj?.CustomerSearch?.WasMeterDisconnected ? 'text-danger' : 'text-success'">
+                                        <i class="fas "
+                                            [ngClass]="requestObj?.CustomerSearch?.WasMeterDisconnected ? 'fa-lock' : 'fa-unlock'"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary"
+                                        [ngClass]="requestObj?.CustomerSearch?.WasMeterDisconnected ? 'text-danger' : 'text-success'">{{requestObj?.CustomerSearch?.CustomerDetail?.MeterNo}}</span>
+                                </div>
+                            </th>
+                            <th class="px-2 py-1" style="width: 180px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-building mr-2"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.Outlet?.Organaization.Name}}</span>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-store mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.Outlet?.Name}}</span>
+                                </div>
+                            </th>
+                            <td class="px-3 py-1" style="width: 230px !important;">
+                                <div class="col-12 px-0">
+                                    <div class="row px-3">
+                                        <div class="col px-0">
+                                            <span class="h5 font-weight-bold mb-0">Payment MVR</span>
+                                        </div>
+                                        <div class="col-auto px-0">
+                                            <span
+                                                class="h4 font-weight-bold text-primary mb-0">{{requestObj?.PaymentAmount
+                                                | number: '0.2'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-1" style="width: 200px !important;">
+                                <div class="col-12 px-0">
+                                    <div class="row px-3">
+                                        <div class="col px-0">
+                                            <span class="h5 font-weight-bold mb-0">Balance MVR</span>
+                                        </div>
+                                        <div class="col-auto px-0">
+                                            <span
+                                                class="h5 font-weight-bold text-muted mb-0">{{requestObj?.CustomerSearch?.BalanceAmount
+                                                | number: '0.2'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <div class="row px-3">
+                                        <div class="col px-0">
+                                            <span class="h5 font-weight-bold mb-0">Due MVR</span>
+                                        </div>
+                                        <div class="col-auto px-0">
+                                            <span
+                                                class="h5 font-weight-bold text-muted mb-0">{{requestObj?.CustomerSearch?.DueAmount
+                                                |
+                                                number:
+                                                '0.2'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td th class="px-2 py-1">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class=""
+                                            [ngClass]="requestObj?.PaymentMethod == 0 ? 'fas fa-money-bill mr-1' : 'far fa-credit-card mr-1'"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaymentMethod == 0
+                                        ? 'Cash': 'Card'}}</span>
+
+                                    <span class="h5 font-weight-bold text-dark mb-0"
+                                        *ngIf="requestObj?.PaymentMethod == 1">
+                                        <i class="far fa-credit-card ml-3 mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary"
+                                        *ngIf="requestObj?.PaymentMethod == 1">{{requestObj?.CardType}}</span>
+                                </div>
+                                <div class="col-12 px-0" *ngIf="requestObj?.PaymentMethod == 1">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fab fa-slack-hash mr-1"></i>
+                                        <span class="h5 font-weight-bold text-dark mb-0 mr-1">TraceNo:</span>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.TraceNo}}</span>
+                                </div>
+                            </td>
+                            <td th class="px-2 py-1 text-center">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold mb-0"
+                                        [ngClass]="requestObj?.PaymentStatus == 0 ? 'text-primary' : requestObj?.PaymentStatus == 1 ? 'text-warning' : 'text-success'">
+                                        <i
+                                            [ngClass]="requestObj?.PaymentStatus == 0 ? 'fad fa-info-circle mr-1' : requestObj?.PaymentStatus == 1 ? 'far fa-exclamation-triangle mr-1' : 'fas fa-check-circle mr-1'"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary"
+                                        [ngClass]="requestObj?.PaymentStatus == 0 ? 'text-primary' : requestObj?.PaymentStatus == 1 ? 'text-warning' : 'text-success'">
+                                        {{requestObj?.PaymentStatus == 0 ? 'Created': requestObj?.PaymentStatus == 1 ?
+                                        'Voided': 'Approved'}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 py-1 text-center">
+                                <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip"
+                                    data-placement="top" title="Actions" (click)="showViewActionModal(requestObj)">
+                                    <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Actions</h5>
+                <button type="button" class="close py-3" (click)="hideViewActionModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="request_item?.data">
+                <app-external-payments-actions (closeThisModel)="hideViewActionModal()" [request_item]="request_item">
+                </app-external-payments-actions>
+            </div>
+        </div>
+    </div>
+</div>

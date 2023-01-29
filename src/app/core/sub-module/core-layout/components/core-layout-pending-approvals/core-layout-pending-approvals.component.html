@@ -1,0 +1,160 @@
+<!-- request_count: 5
+request_key: "9000"
+request_name: "Annual leave"
+request_type: "leave-request" -->
+
+
+<!-- Dropdown header -->
+<div class="px-3 py-2 text-light">
+  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">{{totalCount}}</strong> Pending Approvals.
+  </h6>
+</div>
+<!-- List group -->
+<div class="list-group list-group-flush">
+  <ng-container *ngFor="let approvalItem of pendingApprovalNotificationList">
+    <a class="list-group-item list-group-item-action py-2" *ngIf="approvalItem.request_type === 'Leave_Request' && approvalItem.request_count > 0" 
+      [routerLink]="['/approval/pending-leave-approvals']">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+            'btn-facebook': approvalItem.request_type.includes('Leave_Request'),
+            'btn-twitter': approvalItem.request_type.includes('Overtime_Request'),
+            'btn-google-plus': approvalItem.request_type.includes('Overtime_Prior_Approval_Request'), 
+            'btn-pinterest': approvalItem.request_type.includes('Work_Handover_Request')}">
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Leave_Request'">L</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Overtime_Request'">O</span>
+            <span class="btn-inner--icon"
+              *ngIf="approvalItem.request_type === 'Overtime_Prior_Approval_Request'">Pa</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Work_Handover_Request'">W</span>
+          </button>
+        </div>
+        <div class="col ml--3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-0 text-sm text-primary">{{approvalItem.request_name}}</h5>
+            </div>
+            <div class="text-right text-muted">
+              <!-- <small>{{approvalItem.request_count}}</small> -->
+              <!-- <span class="badge badge-md badge-circle badge-floating badge-danger border-white">{{approvalItem.request_count}}</span> -->
+              <span class="badge badge-md badge-circle badge-floating badge-secondary border-white" *ngIf="approvalItem.request_count === 0">-</span>
+              <span class="badge badge-md badge-circle badge-floating badge-danger border-white" *ngIf="approvalItem.request_count != 0">{{approvalItem.request_count}}</span>
+            </div>
+          </div>
+          <span class="h5 mb-0 font-weight-normal">{{approvalItem.request_name}} Pending Approvals</span>
+          <!-- <h5 class="mb-0 font-weight-light text-sm">{{approvalItem.request_name}} Pending Approvals</h5> -->
+          <!-- <p class="text-sm mb-0">{{approvalItem.request_name}} Pending Approvals</p> -->
+        </div>
+      </div>
+    </a>
+
+    <a class="list-group-item list-group-item-action py-2" *ngIf="approvalItem.request_type === 'Overtime_Request' && approvalItem.request_count > 0"
+      [routerLink]="['/approval/pending-overtime-approvals']">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+            'btn-facebook': approvalItem.request_type.includes('Leave_Request'),
+            'btn-twitter': approvalItem.request_type.includes('Overtime_Request'),
+            'btn-google-plus': approvalItem.request_type.includes('Overtime_Prior_Approval_Request'), 
+            'btn-pinterest': approvalItem.request_type.includes('Work_Handover_Request')}">
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Leave_Request'">L</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Overtime_Request'">O</span>
+            <span class="btn-inner--icon"
+              *ngIf="approvalItem.request_type === 'Overtime_Prior_Approval_Request'">Pa</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Work_Handover_Request'">W</span>
+          </button>
+        </div>
+        <div class="col ml--3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-0 text-sm text-primary">{{approvalItem.request_name}}</h5>
+            </div>
+            <div class="text-right text-muted">
+              <!-- <small>{{approvalItem.request_count}}</small> -->
+              <!-- <span class="badge badge-md badge-circle badge-floating badge-danger border-white">{{approvalItem.request_count}}</span> -->
+              <span class="badge badge-md badge-circle badge-floating badge-secondary border-white" *ngIf="approvalItem.request_count === 0">-</span>
+              <span class="badge badge-md badge-circle badge-floating badge-danger border-white" *ngIf="approvalItem.request_count != 0">{{approvalItem.request_count}}</span>
+            </div>
+          </div>
+          <span class="h5 mb-0 font-weight-normal">{{approvalItem.request_name}} Pending Approvals</span>
+          <!-- <h5 class="mb-0 font-weight-light text-sm">{{approvalItem.request_name}} Pending Approvals</h5> -->
+          <!-- <p class="text-sm mb-0">{{approvalItem.request_name}} Pending Approvals</p> -->
+        </div>
+      </div>
+    </a>
+
+    <a class="list-group-item list-group-item-action py-2"
+      *ngIf="approvalItem.request_type === 'Overtime_Prior_Approval_Request' && approvalItem.request_count > 0"
+      [routerLink]="['/approval/pending-overtime-prior-approvals']">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+            'btn-facebook': approvalItem.request_type.includes('Leave_Request'),
+            'btn-twitter': approvalItem.request_type.includes('Overtime_Request'),
+            'btn-google-plus': approvalItem.request_type.includes('Overtime_Prior_Approval_Request'), 
+            'btn-pinterest': approvalItem.request_type.includes('Work_Handover_Request')}">
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Leave_Request'">L</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Overtime_Request'">O</span>
+            <span class="btn-inner--icon"
+              *ngIf="approvalItem.request_type === 'Overtime_Prior_Approval_Request'">Pa</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Work_Handover_Request'">W</span>
+          </button>
+        </div>
+        <div class="col ml--3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="mb-0 text-sm text-primary">{{approvalItem.request_name}}</h5>
+            </div>
+            <div class="text-right text-muted">
+              <!-- <small>{{approvalItem.request_count}}</small> -->
+              <!-- <span class="badge badge-md badge-circle badge-floating badge-danger border-white">{{approvalItem.request_count}}</span> -->
+                <span class="badge badge-md badge-circle badge-floating badge-secondary border-white" *ngIf="approvalItem.request_count === 0">-</span>
+                <span class="badge badge-md badge-circle badge-floating badge-danger border-white" *ngIf="approvalItem.request_count != 0">{{approvalItem.request_count}}</span>
+            </div>
+          </div>
+          <span class="h5 mb-0 font-weight-normal">{{approvalItem.request_name}} Pending Approvals</span>
+          <!-- <h5 class="mb-0 font-weight-light text-sm">{{approvalItem.request_name}} Pending Approvals</h5> -->
+          <!-- <p class="text-sm mb-0">{{approvalItem.request_name}} Pending Approvals</p> -->
+        </div>
+      </div>
+    </a>
+
+    <a class="list-group-item list-group-item-action py-2" *ngIf="approvalItem.request_type === 'Work_Handover_Request' && approvalItem.request_count > 0"
+      [routerLink]="['/approval/pending-work-handover-approvals']">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+            'btn-facebook': approvalItem.request_type.includes('Leave_Request'),
+            'btn-twitter': approvalItem.request_type.includes('Overtime_Request'),
+            'btn-google-plus': approvalItem.request_type.includes('Overtime_Prior_Approval_Request'), 
+            'btn-pinterest': approvalItem.request_type.includes('Work_Handover_Request')}">
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Leave_Request'">L</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Overtime_Request'">O</span>
+            <span class="btn-inner--icon"
+              *ngIf="approvalItem.request_type === 'Overtime_Prior_Approval_Request'">Pa</span>
+            <span class="btn-inner--icon" *ngIf="approvalItem.request_type === 'Work_Handover_Request'">W</span>
+          </button>
+        </div>
+        <div class="col ml--3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h4 class="mb-0 text-sm text-primary">{{approvalItem.request_name}}</h4>
+            </div>
+            <div class="text-right text-muted">
+              <!-- <small>{{approvalItem.request_count}}</small> -->
+              <!-- <span class="badge badge-md badge-circle badge-floating badge-danger border-white">{{approvalItem.request_count}}</span> -->
+              <span class="badge badge-md badge-circle badge-floating badge-secondary border-white" *ngIf="approvalItem.request_count === 0">-</span>
+              <span class="badge badge-md badge-circle badge-floating badge-danger border-white" *ngIf="approvalItem.request_count != 0">{{approvalItem.request_count}}</span>
+            </div>
+          </div>
+          <span class="h5 mb-0 font-weight-normal">{{approvalItem.request_name}} Pending Approvals</span>
+          <!-- <h5 class="mb-0 font-weight-light text-sm">{{approvalItem.request_name}} Pending Approvals</h5> -->
+          <!-- <p class="text-sm mb-0">{{approvalItem.request_name}} Pending Approvals</p> -->
+        </div>
+      </div>
+    </a>
+  </ng-container>
+
+</div>
+
+<!-- View all -->
+<!-- <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all Approvals</a> -->

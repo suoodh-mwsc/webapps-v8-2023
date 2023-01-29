@@ -1,0 +1,38 @@
+<div class="row" *ngIf="localStorePagination && requestListWithPagination">
+  <div class="col my-auto">
+    <span class="h5 text-light">Showing {{localStorePagination.currentPageItemNoStart}} to
+      {{localStorePagination.currentPageItemNoEnd}} of {{localStorePagination.totalItemCount}}
+      entries</span>
+  </div>
+  <div class="col">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end mb-1">
+        <li class="page-item"
+          [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoStart}">
+          <a class="page-link"
+            [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoStart}"
+            (click)="getRequestFromPaginationPrv(localStorePagination.currentPage)" tabindex="-1">
+            <i class="fa fa-angle-left"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <ng-container *ngFor="let data of requestListWithPagination">
+          <li class="page-item"
+            [ngClass]="{'active': data.pagination.pageNo === localStorePagination.currentPage}"><a
+              class="page-link"
+              (click)="getRequestFromPagination(data.pagination.pageNo)">{{data.pagination.pageNo}}</a>
+          </li>
+        </ng-container>
+        <li class="page-item"
+          [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoEnd}">
+          <a class="page-link"
+            [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoEnd}"
+            (click)="getRequestFromPaginationNext(localStorePagination.currentPage)">
+            <i class="fa fa-angle-right"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<ng-container *ngIf="request_item?.show_model_loader">
+  <div class="alert alert-info mt-3 py-1 px-3" role="alert">
+    <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+    <span class="alert-text"><strong>Info !</strong> Please wait, Loading Calender Events ... !</span>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="!request_item?.show_model_loader && fullcalendarEvents.length > 0">
+  <div class="alert alert-info px-3 py-2 mb-0 mt-3" role="alert" *ngIf="!request_item?.statistics?.absenceHoursForYear">
+    <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="alert-text"><strong>Oh Snap!</strong> No Calendar events to view yet ...!</span>
+  </div>
+</ng-container>
+
+
+<app-comp-lib-loading [viewType]="requestUi?.loader_size" *ngIf="request_item?.show_model_loader">
+</app-comp-lib-loading>
+
+
+<div class="row align-items-center justify-content-center" *ngIf="fullcalendarData?.title">
+  <div class="col-xl-10 col-lg-11 col-md-12 col-12">
+    <div class="card card-calendar mb-0 mt-3">
+      <!-- <div class="card-header py-3" *ngIf="fullcalendarData.title"> -->
+      <div class="card-header pt-3 pb--1">
+        <div class="row align-items-center py-0">
+          <div class="col">
+          </div>
+          <div class="col">
+            <h6 class="fullcalendar-title h2 text-primary d-inline-block mb-0">
+              {{fullcalendarData?.title | date: 'MMM yyyy'}}</h6>
+          </div>
+          <div class="col-auto mt-3 mt-lg-0 text-lg-right">
+            <a class="fullcalendar-btn-prev btn btn-sm btn-neutral" (click)="getEventsByMonthBefore('month')">
+              <i class="fas fa-angle-left"></i>
+            </a>
+            <a class="fullcalendar-btn-next btn btn-sm btn-neutral" (click)="getEventsByMonthAfter('month')">
+              <i class="fas fa-angle-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body p-0">
+
+        <!-- <full-calendar #fullcalendar [options]="calendarOptions"></full-calendar> -->
+
+        <full-calendar #fullcalendar [defaultView]="fullcalendarOptions.defaultView"
+          [customButtons]="fullcalendarOptions.customButtons" [header]="fullcalendarOptions.header"
+          [plugins]="fullcalendarOptions.plugins" [weekends]="true" [events]="fullcalendarEvents"
+          [displayEventTime]="fullcalendarOptions.displayEventTime">
+        </full-calendar>
+
+      </div>
+    </div>
+  </div>
+</div>

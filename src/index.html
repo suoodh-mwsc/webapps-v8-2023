@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Staff Portal</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+
+  <!-- Favicon -->
+  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+  <link rel="icon" href="./assets/img/brand/favicon.png" type="image/png">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="./assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="./assets/css/argon.min.css" type="text/css">
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="./assets/css/bootstrap/bootstrap.min.css">
+  <!-- Datatables CSS -->
+  <link rel="stylesheet" href="./assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="./assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="./assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+  <!-- Fullcalendar JS -->
+  <!-- <link rel="stylesheet" href="./assets/vendor/fullcalendar/dist/fullcalendar.min.css"> -->
+  <link rel="stylesheet" href="./assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+  <!-- Quill -->
+  <link rel="stylesheet" href="./assets/vendor/quill/dist/quill.core.css" type="text/css">
+  <!-- Notify -->
+  <link rel="stylesheet" href="./assets/vendor/animate.css/animate.min.css">
+  <!-- Sweet Alerts -->
+  <link rel="stylesheet" href="./assets/vendor/sweetalert2/dist/sweetalert2.min.css">
+
+
+
+
+
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="./assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="./assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./assets/vendor/js-cookie/js.cookie.js"></script>
+  <script src="./assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="./assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+  <!-- Chart JS -->
+  <script src="./assets/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="./assets/vendor/chart.js/dist/Chart.extension.js"></script>
+  <!-- Datatables JS -->
+  <script src="./assets/vendor/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="./assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="./assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="./assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+  <script src="./assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+  <script src="./assets/vendor/datatables.net-buttons/js/buttons.flash.min.js"></script>
+  <script src="./assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+  <script src="./assets/vendor/datatables.net-select/js/dataTables.select.min.js"></script>
+  <!-- Datetimepicker JS -->
+  <script src="./assets/vendor/moment.min.js"></script>
+  <script src="./assets/vendor/bootstrap-datetimepicker.js"></script>
+  <!-- Dropdown JS -->
+  <script src="./assets/vendor/select2/dist/js/select2.min.js"></script>
+  <!-- Dropzone JS -->
+  <script src="./assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
+  <!-- Fullcalendar JS -->
+  <script src="./assets/vendor/moment/min/moment.min.js"></script>
+  <!-- <script src="./assets/vendor/fullcalendar/dist/fullcalendar.min.js"></script> -->
+  <script src="./assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <!-- Datepicker -->
+  <script src="./assets/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+  <!-- jVectorMap JS -->
+  <script src="./assets/vendor/jvectormap-next/jquery-jvectormap.min.js"></script>
+  <script src="./assets/js/vendor/jvectormap/jquery-jvectormap-world-mill.js"></script>
+  <!-- List JS -->
+  <script src="./assets/vendor/list.js/dist/list.min.js"></script>
+  <!-- Maps -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> -->
+  <!-- Quill -->
+  <script src="./assets/vendor/quill/dist/quill.min.js"></script>
+  <!-- Notify -->
+  <script src="./assets/vendor/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <!-- noUiSlider -->
+  <script src="./assets/vendor/nouislider/distribute/nouislider.min.js"></script>
+  <!-- Sweet Alerts -->
+  <script src="./assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+  <!-- Tags -->
+  <script src="./assets/vendor/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
+
+
+
+  <!-- Argon JS -->
+  <script src="./assets/js/argon.min.js"></script>
+
+
+  <!-- Google Analytics -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDSgfgjWxQOPoryIzHL1F7Oz34RnhXnkrM",
+      authDomain: "staff-portal-2cb77.firebaseapp.com",
+      projectId: "staff-portal-2cb77",
+      storageBucket: "staff-portal-2cb77.appspot.com",
+      messagingSenderId: "629358668158",
+      appId: "1:629358668158:web:0652bd4bd241b9ce61eb2f",
+      measurementId: "G-L82H438ZXW"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
+  <script>
+    if (global === undefined) {
+      var global = window;
+    }
+  </script>
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>

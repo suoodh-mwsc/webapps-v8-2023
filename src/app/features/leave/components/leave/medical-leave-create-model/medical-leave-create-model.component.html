@@ -1,0 +1,630 @@
+<div>
+  <div class="alert alert-info py-1 px-3" role="alert" id="createModel-info-alert">
+    <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="alert-text"><strong>Information!</strong> Select Leave Type to Continue... !</span>
+  </div>
+
+  <div class="alert alert-info py-1 px-3" role="alert">
+    <span class="alert-icon"><i class="fas fa-user-tie"></i></span>
+    <span class="alert-text"><strong>Supervisor Info: </strong> Approval request will be sent to <strong>
+        {{request?.logged_in_profile?.employee_manager?.employee_name_with_id}}</strong></span>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+
+          <div class="row my-auto" *ngIf="!requestCreated && !requestAddWorkhandOver && !requestSendForApproval">
+            <div class="col-lg-12">
+              <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='request_item?.general_api_error'>
+                <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}} ... !</span>
+              </div>
+            </div>
+
+            <div class="col-lg-12 px-4 mb-2">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="selectMedicalLeaveType1" name="selectSelfCerification" checked
+                      [(ngModel)]="selectMedicalLeaveType" value="Self Certification" class="custom-control-input"
+                      (ngModelChange)="onChangeEventForMedical($event)">
+                    <label class="custom-control-label" for="selectMedicalLeaveType1">Self Certification</label>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="selectMedicalLeaveType2" name="selectSelfCerification"
+                      [(ngModel)]="selectMedicalLeaveType" value="Medical Certificate" class="custom-control-input"
+                      (ngModelChange)="onChangeEventForMedical($event)">
+                    <label class="custom-control-label" for="selectMedicalLeaveType2">Medical Certificate</label>
+                  </div>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.AdditionalValidationMessage">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.AdditionalValidationMessage">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.AdditionalValidationMessage">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_absence_type_sap_id">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_absence_type_sap_id">
+                    <li class="mt-0">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">Please select Leave Type.</span>
+                    </li>
+                    <li class="mt-0"
+                      *ngFor="let error of request_item?.model_state_error?.leave_request_absence_type_sap_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.division_id">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.division_id">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.division_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.division_name">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.division_name">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.division_name">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.department_id">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.department_id">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.department_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.department_name">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.department_name">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.department_name">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.section_id">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.section_id">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.section_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.section_name">
+                  <ul class="pl-5 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.section_name">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.section_name">
+                      <span class="h5 text-danger mb-1 mt-0 d-block"> {{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-lg-12 px-4 mt-2 mb-3"
+              *ngIf="request?.leave_quota && request_new.absence_type_sap_id === '9001'">
+              <ul class="list-group list-group-flush list" *ngFor="let item of request?.leave_quota">
+
+                <li class="list-group-item px-3 py-1" *ngIf="request_new.absence_type_sap_id === item?.absence_type_sap_id"
+                  style="background-color: #e2e3e5;">
+                  <div class="row align-items-center">
+                    <div class="col-lg-12">
+                      <span class="h5">Info! Quota Validity.</span>
+                      <span class="h5"><i class="fas fa-calendar mx-2"></i>
+                        <span class="text-primary">
+                          {{item?.absence_quota_from_friendly | date: 'dd MMM yyyy'}}
+                        </span>
+                        <i class="fas fa-arrow-right mx-2"></i>
+                        <span class="text-primary">
+                          {{item?.absence_quota_to_friendly | date: 'dd MMM yyyy'}}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item px-3 py-1"
+                  *ngIf="request_new.absence_type_sap_id === item.absence_type_sap_id" style="background-color: #f6f9fc;">
+                  <div class="row align-items-center">
+                    <div class="col-lg-6">
+                      <small class="h6 text-uppercase py-0 text-muted">Leave Type:</small>
+                      <h5 class="mb-0 text-primary">{{item.absence_type_name}}</h5>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                      <small class="h6 text-uppercase py-0 text-muted">Entitled:</small>
+                      <h5 class="mb-0 text-primary">{{("00"+item.absence_quota_entitled).slice(-2)}}</h5>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                      <small class="h6 text-uppercase py-0 text-muted">Deducted:</small>
+                      <h5 class="mb-0 text-danger">{{("00"+item.absence_quota_deducted).slice(-2)}}</h5>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                      <small class="h6 text-uppercase py-0 text-muted">Remaining:</small>
+                      <h5 class="mb-0 text-success">{{("00"+item.absence_quota_remaining).slice(-2)}}</h5>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+
+
+            <ng-container *ngIf="selectMedicalLeaveType === 'Self Certification'">
+              <div class="col-lg-12 px-2">
+                <div class="input-daterange datepicker row align-items-center m-0 p-0">
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="fromDate" class="h5 text-muted ml-2 mb-1">From</label>
+                          <input type="date" class="form-control col-12" placeholder="Enter Leave Taken From Date"
+                            name="taken_from" id="taken_from" [(ngModel)]="request_new.taken_from"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_from">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_from">
+                          <li class="mt-0"
+                            *ngFor="let error of request_item?.model_state_error?.leave_request_taken_from">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="toDate" class="h5 text-muted ml-2 mb-1">To</label>
+                          <input type="date" class="form-control col-12" placeholder="Enter Leave Taken To Date"
+                            name="taken_to" id="taken_to" [(ngModel)]="request_new.taken_to"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_to">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_to">
+                          <li class="mt-0"
+                            *ngFor="let error of request_item?.model_state_error?.leave_request_taken_to">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 px-4">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group mb-2">
+                      <label for="toDate" class="h5 text-muted ml-2 mb-1">Nature of Sickness</label>
+                      <input type="test" class="form-control col-12" placeholder="Enter Leave Additional Details"
+                        name="nature_of_sickness" id="nature_of_sickness" [(ngModel)]="request_new.nature_of_sickness"
+                        (ngModelChange)="onChangeEvent($event)">
+                    </div>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_nature_of_sickness">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_nature_of_sickness">
+                      <li class="mt-0"
+                        *ngFor="let error of request_item?.model_state_error?.leave_request_nature_of_sickness">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.leave_request_employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="selectMedicalLeaveType === 'Medical Certificate' ">
+              <div class="col-lg-12 mb-3 px-2">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <form class="form-inline">
+                      <div class="form-group col-12">
+                        <label for="InputTo" class="h5 text-muted mb-1">Nature of Sickness</label>
+                        <input type="to" class="form-control col-12" aria-describedby="emailHelp"
+                          placeholder="Enter Nature of Sickness" id="nature_of_sickness" name="nature_of_sickness"
+                          [(ngModel)]="request_new.nature_of_sickness" (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_nature_of_sickness">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_nature_of_sickness">
+                      <li class="mt-0"
+                        *ngFor="let error of request_item?.model_state_error?.leave_request_nature_of_sickness">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 px-2">
+                <div class="input-daterange datepicker row align-items-center m-0 p-0">
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="fromDate" class="h5 text-muted ml-2 mb-1">From</label>
+                          <input type="date" class="form-control col-12" placeholder="Enter Leave Taken From Date"
+                            name="taken_from" id="taken_from" [(ngModel)]="request_new.taken_from"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_from">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_from">
+                          <li class="mt-0"
+                            *ngFor="let error of request_item?.model_state_error?.leave_request_taken_from">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="toDate" class="h5 text-muted ml-2 mb-1">To</label>
+                          <input type="date" class="form-control col-12" placeholder="Enter Leave Taken To Date"
+                            name="taken_to" id="taken_to" [(ngModel)]="request_new.taken_to"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_to">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_taken_to">
+                          <li class="mt-0"
+                            *ngFor="let error of request_item?.model_state_error?.leave_request_taken_to">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label class="h5 text-muted ml-2 mt-2 mb-1">Starting files</label>
+                      <small class="form-text text-muted ml-2 mb-3">
+                        Choose the images you want to upload. Please use an image no larger than 1200px * 600px.
+                      </small>
+                      <div class="card">
+                        <div class="card-body p-3">
+                          <ngx-dropzone (change)="createMedicalLeave($event)">
+                            <ngx-dropzone-label> Drop it here ! </ngx-dropzone-label>
+                            <ngx-dropzone-preview class="avatar avatar-xxl" *ngFor="let file of fileList"
+                              [removable]="true" (removed)="removeDocument(file)">
+                              <ngx-dropzone-label class="h6">{{ file.name }}
+                                ({{ file.type }})
+                              </ngx-dropzone-label>
+                            </ngx-dropzone-preview>
+                          </ngx-dropzone>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_uploaded_document">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_uploaded_document">
+                      <li class="mt-0"
+                        *ngFor="let error of request_item?.model_state_error?.leave_request_uploaded_document">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.leave_request_employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="col-lg-12 px-2 py-2 my-0" *ngIf="selectMedicalLeaveType ==='Self Certification'">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <button class="btn btn-icon btn-primary mb-2" type="button" (click)="createLeave()"
+                    [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                    <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                        class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                        class="fas fa-save"></i></span>
+                    <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Saving ...</span>
+                    <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Save</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row my-auto" *ngIf="requestCreated && !requestAddWorkhandOver && !requestSendForApproval">
+            <div class="col-lg-12">
+              <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='request_item?.general_api_error'>
+                <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}} ... !</span>
+              </div>
+              <div class="alert alert-info py-1" role="alert">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Info !</strong> Add Workhandover to Continue Request !</span>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <h5 class="card-title text-uppercase text-muted mb-3">Handover</h5>
+            </div>
+
+            <div class="col-lg-12 mb-2">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Responsibility</label>
+                        <input type="text" class="form-control col-12" placeholder="Enter Work handover responsibility"
+                          name="responsibilities" id="responsibilities" [(ngModel)]="responsibilities"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.responsibilities">
+                      <ul class="pl-5 mb-2"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.responsibilities">
+                        <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.responsibilities">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Employee Id</label>
+                        <input type="text" class="form-control col-12" placeholder="Enter Work handover Employee ID"
+                          name="workhandoverEmployeeId" id="workhandoverEmployeeId" [(ngModel)]="workhandoverEmployeeId"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.work_handover_employee_id">
+                      <ul class="pl-5 mb-2"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.work_handover_employee_id">
+                        <li class="mt-0"
+                          *ngFor="let error of request_item?.model_state_error?.work_handover_employee_id">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-lg-12"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                      <ul class="pl-5 mb-2"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error?.employee_id">
+                        <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.employee_id">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                  <ul class="pl-5 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg">
+                </div>
+                <div class="col-lg-auto">
+                  <div class="form-group float-right mt-1 mb-0">
+                    <button class="btn btn-icon btn-warning mb-2" type="button" (click)="skipHandover()"
+                      [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                      <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                          class="fas fa-spinner fa-spin"></i></span>
+                      <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                          class="fas fa-fast-forward"></i></span>
+                      <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Skipping to Next Step
+                        ...</span>
+                      <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Skip to Next Step</span>
+                    </button>
+
+                    <button class="btn btn-icon btn-primary mb-2" type="button" (click)="saveHandover()"
+                      [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                      <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                          class="fas fa-spinner fa-spin"></i></span>
+                      <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                          class="fas fa-save"></i></span>
+                      <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Adding Work Handover to
+                        Request ...</span>
+                      <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Add Handover</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row my-auto" *ngIf="requestCreated && requestAddWorkhandOver && !requestSendForApproval">
+            <div class="col-lg-12 py-2 px-4 my-0">
+              <div class="alert alert-info py-1" role="alert">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Info !</strong> Request is not send for Supervisor Approval ...
+                  !</span>
+              </div>
+
+              <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='request_item?.general_api_error'>
+                <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong>
+                  {{request_item?.general_api_error}}
+                  ... !</span>
+                <hr class="my-2">
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_id">
+                  <ul class="pl-2 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_id">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.leave_request_id">
+                      <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                  <ul class="pl-2 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error?.leave_request_employee_id">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error?.leave_request_employee_id">
+                      <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12"
+                  *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+                  <ul class="pl-2 mb-2"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error['expires on']">
+                      <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                  <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                    <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                      <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 px-2 py-2 my-0">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <div class="form-group float-right my-0">
+                    <button class="btn btn-icon btn-warning mb-2" type="button" (click)="skipSendForApproval()"
+                      [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                      <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                          class="fas fa-spinner fa-spin"></i></span>
+                      <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                          class="fas fa-fast-forward"></i></span>
+                      <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Skipping to Next Step
+                        ...</span>
+                      <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Skip to Next Step</span>
+                    </button>
+
+                    <button class="btn btn-icon btn-success mb-2" type="button" (click)="sendForApproval()"
+                      [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                      <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                          class="fas fa-spinner fa-spin"></i></span>
+                      <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                          class="fas fa-check-circle"></i></span>
+                      <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Sending for Approval
+                        ...</span>
+                      <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Send For Approval</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

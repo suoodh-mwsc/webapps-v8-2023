@@ -1,0 +1,165 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <section>
+            <div class="table-responsive" *ngIf="request && request?.items?.length > 0">
+                <table class="table table-hover align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" class="px-3 py-2">Transaction</th>
+                            <th scope="col" class="px-3 py-2">Bank & Ref</th>
+                            <th scope="col" class="px-3 py-2 text-center">E-Service User</th>
+                            <th scope="col" class="px-3 py-2">Payment Details</th>
+                            <th scope="col" class="px-3 py-2">Bank Response & SAP Status</th>
+                            <th scope="col" class="px-3 py-2 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" *ngFor="let requestObj of request?.items">
+                        <tr (mouseenter)="selectTransaction(requestObj)" (click)="showViewActionModal(requestObj)"
+                            [ngClass]="requestObj?.Id === request_item?.selected_transaction?.Id ? 'bg-primary-light' : ''">
+                            <th class="px-3 py-1" style="width: 150px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fab fa-slack-hash mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.OurReference}}</span>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-window-restore mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaymentTypeDescription}}</span>
+                                </div>
+                            </th>
+                            <th class="px-3 py-1" style="width: 250px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-window-restore mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaymentGatewayDescription}}</span>
+                                </div>
+                                <div class="col-12 px-0" *ngIf="requestObj?.BanksReferenceNo">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fab fa-slack-hash mr-1"></i>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.BanksReferenceNo}}</span>
+                                </div>
+                            </th>
+                            <th class="px-2 py-1" style="width: 180px !important;">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-envelope mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaidBy}}</span>
+                                </div>
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaidOn
+                                        | date: 'dd MMM yyyy HH:mm'}}</span>
+                                </div>
+                            </th>
+                            <td class="px-3 py-1" style="width: 280px !important;">
+                                <div class="col-12 px-0">
+                                    <div class="row px-3">
+                                        <div class="col px-0">
+                                            <span class="h5 font-weight-bold mb-0">Payment Amount MVR</span>
+                                        </div>
+                                        <div class="col-auto px-0">
+                                            <span
+                                                class="h4 font-weight-bold text-primary mb-0">{{requestObj?.PaymentAmount
+                                                | number: '0.2'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td th class="px-2 py-1">
+                                <div class="col-12 px-0">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                        <span class="h5 font-weight-bold text-dark mb-0 mr-1">Paid On:</span>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.PaidOn
+                                        | date: 'dd MMM yyyy HH:mm'}}</span>
+                                </div>
+                                <div class="col-12 px-0" *ngIf="requestObj?.IsSuccessful">
+                                    <span class="h5 font-weight-bold text-success mb-0">
+                                        <i class="fas fa-check-circle mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-success mr-4">Transaction is Successful</span>
+
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-calendar-alt mr-1"></i>
+                                        <span class="h5 font-weight-bold text-dark mb-0 mr-1">SAP Updated On:</span>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-success mr-3">{{requestObj?.UpdatedToSAPOn
+                                        |
+                                        date: 'dd MMM yyyy HH:mm'}}</span>
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fab fa-slack-hash mr-1"></i>
+                                        <span class="h5 font-weight-bold text-dark mb-0 mr-1">Ref:</span>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-success">{{requestObj?.SAPReference}}</span>
+                                </div>
+
+                                <div class="col-12 px-0"
+                                    *ngIf="!requestObj?.IsSuccessful && requestObj?.BanksReasonCodeDescription">
+                                    <span class="h5 font-weight-bold text-dark mb-0">
+                                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                                        <span class="h5 font-weight-bold text-danger mb-0 mr-1">Gateway Response:</span>
+                                    </span>
+                                    <span
+                                        class="h5 font-weight-bold mb-0 text-danger mr-3">{{requestObj?.BanksReasonCodeDescription}}</span>
+                                </div>
+                                <div class="col-12 px-0" *ngIf="!requestObj?.ResponseRecievedOn">
+                                    <span class="h5 font-weight-bold text-warning mb-0">
+                                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                                    </span>
+                                    <span class="h5 font-weight-bold mb-0 text-warning mr-3">No Response Recieved from
+                                        Bank</span>
+                                </div>
+                            </td>
+                            <td class="px-2 py-1 text-center">
+                                <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip"
+                                    data-placement="top" title="Actions" (click)="showViewActionModal(requestObj)">
+                                    <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Actions</h5>
+                <button type="button" class="close py-3" (click)="hideViewActionModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="request_item?.data">
+                <app-multiple-ac-payments-actions (closeThisModel)="hideViewActionModal()"
+                    [request_item]="request_item">
+                </app-multiple-ac-payments-actions>
+            </div>
+        </div>
+    </div>
+</div>

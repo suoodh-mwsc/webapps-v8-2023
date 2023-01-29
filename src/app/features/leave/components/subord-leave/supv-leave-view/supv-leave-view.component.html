@@ -1,0 +1,264 @@
+<section>
+  <div class="row" *ngIf="request && request?.items?.length > 0 && requestUi?.view_type === 'card'">
+    <ng-container *ngFor="let requestObj of request?.items">
+      <div class="col-xl-6 col-md-6">
+        <div class="card card-stats shadow mb-3">
+          <div class="card-body my-auto">
+            <div class="row">
+              <div class="col-auto my-auto pl-2">
+                <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+                  'btn-facebook': requestObj.leave_request_absence_type_description.includes('Annual'),
+                  'btn-twitter': requestObj.leave_request_absence_type_description.includes('Medical'),
+                  'btn-google-plus': requestObj.leave_request_absence_type_description.includes('Compassionate'), 
+                  'btn-pinterest': requestObj.leave_request_absence_type_description.includes('Circumcision'), 
+                  'btn-youtube': requestObj.leave_request_absence_type_description.includes('Paternity'), 
+                  'btn-instagram': requestObj.leave_request_absence_type_description.includes('Maternity')}">
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Annual Leave' || requestObj.leave_request_absence_type_description === 'Annual leave'">A</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Medical Leave' && requestObj.leave_request_is_self_certification === null || requestObj.leave_request_absence_type_description === 'Medical leave' && requestObj.leave_request_is_self_certification === null">Mc</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Medical Leave' && requestObj.leave_request_is_self_certification != null || requestObj.leave_request_absence_type_description === 'Medical leave' && requestObj.leave_request_is_self_certification != null">Ms</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Maternity Leave' || requestObj.leave_request_absence_type_description === 'Maternity leave'">M</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Paternity Leave' || requestObj.leave_request_absence_type_description === 'Paternity leave'">P</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Compassionate Leave' || requestObj.leave_request_absence_type_description === 'Compassionate leave'">Co</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj.leave_request_absence_type_description === 'Circumcision Leave' || requestObj.leave_request_absence_type_description === 'Circumcision leave'">Ci</span>
+                  <span class="badge badge-md badge-circle badge-floating badge-success border-white"
+                    *ngIf="requestObj.leave_request_is_approved">
+                    <i class="fas fa-check-circle"></i>
+                  </span>
+                  <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+                    *ngIf="!requestObj.leave_request_is_approved">
+                    <i class="fas fa-times-circle"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col-lg-12 pr-2">
+                    <div class="row align-items-center">
+                      <div class="col-lg-auto">
+                        <h3 class="font-weight-bold mb-0">{{requestObj.leave_request_employee_details}}</h3>
+                      </div>
+                      <div class="col-lg-auto">
+                        <h4 class="text-primary font-weight-bold mb-0">
+                          {{requestObj.leave_request_absence_type_description}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-lg-auto my-auto">
+                        <h5 class="mb-0">
+                          <i class="fas fa-calendar"></i>
+                          <span class="text-primary"> {{requestObj.leave_request_taken_from | date: 'dd MMM yyyy'}}
+                          </span>
+                          <i class="fas fa-arrow-right"></i>
+                          <span class="text-primary"> {{requestObj.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+                        </h5>
+                      </div>
+                      <div class="col-lg-auto">
+                        <span class="h5 font-weight-bold mb-0">
+                          <i class="fas fa-clock"></i> <span class="h5 text-muted">
+                            {{requestObj.leave_request_requested_duration_date}}</span>
+                        </span>
+                      </div>
+                      <div class="col-lg-auto my-auto" *ngIf="requestObj.leave_request_status_description">
+                        <app-clib-leave-status-description [requestObj]="requestObj"
+                          [viewType]="requestStatusDescriptionViewType">
+                        </app-clib-leave-status-description>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col my-auto">
+
+                  </div>
+                </div>
+              </div>
+              <div class=" col-auto my-auto pl-2">
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle" data-toggle="tooltip"
+                  data-placement="top" title="View Details" (click)="showViewActionModal(requestObj)">
+                  <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</section>
+
+
+<section>
+  <ul class="list-group list-group-flush list mt--2 mb-3"
+    *ngIf="request && request?.items?.length > 0 && requestUi?.view_type === 'list'">
+    <ng-container *ngFor="let requestObj of request?.items">
+      <li class="list-group-item px-0 py-2">
+        <div class="row align-items-center">
+          <div class="col-auto my-auto mx-2">
+            <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+              'btn-facebook': requestObj.leave_request_absence_type_description.includes('Annual'),
+              'btn-twitter': requestObj.leave_request_absence_type_description.includes('Medical'),
+              'btn-google-plus': requestObj.leave_request_absence_type_description.includes('Compassionate'), 
+              'btn-pinterest': requestObj.leave_request_absence_type_description.includes('Circumcision'), 
+              'btn-youtube': requestObj.leave_request_absence_type_description.includes('Paternity'), 
+              'btn-instagram': requestObj.leave_request_absence_type_description.includes('Maternity')}">
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Annual Leave' || requestObj.leave_request_absence_type_description === 'Annual leave'">A</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Medical Leave' && requestObj.leave_request_is_self_certification === null || requestObj.leave_request_absence_type_description === 'Medical leave' && requestObj.leave_request_is_self_certification === null">Mc</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Medical Leave' && requestObj.leave_request_is_self_certification != null || requestObj.leave_request_absence_type_description === 'Medical leave' && requestObj.leave_request_is_self_certification != null">Ms</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Maternity Leave' || requestObj.leave_request_absence_type_description === 'Maternity leave'">M</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Paternity Leave' || requestObj.leave_request_absence_type_description === 'Paternity leave'">P</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Compassionate Leave' || requestObj.leave_request_absence_type_description === 'Compassionate leave'">Co</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj.leave_request_absence_type_description === 'Circumcision Leave' || requestObj.leave_request_absence_type_description === 'Circumcision leave'">Ci</span>
+              <span class="badge badge-md badge-circle badge-floating badge-success border-white"
+                *ngIf="requestObj.leave_request_is_approved">
+                <i class="fas fa-check-circle"></i>
+              </span>
+              <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+                *ngIf="!requestObj.leave_request_is_approved">
+                <i class="fas fa-times-circle"></i>
+              </span>
+            </button>
+          </div>
+          <div class="col ml--2">
+            <div class="row align-items-center">
+              <div class="col-lg-12">
+                <div class="row align-items-center">
+                  <div class="col-lg-auto">
+                    <h3 class="font-weight-bold mb-0">{{requestObj.leave_request_employee_details}}</h3>
+                  </div>
+                  <div class="col-lg-auto">
+                    <h4 class="text-primary font-weight-bold mb-0">{{requestObj.leave_request_absence_type_description}}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <h5 class="mb-0">
+                      <i class="fas fa-calendar"></i>
+                      <span class="text-primary"> {{requestObj.leave_request_taken_from | date: 'dd MMM yyyy'}} </span>
+                      <i class="fas fa-arrow-right"></i>
+                      <span class="text-primary"> {{requestObj.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+                    </h5>
+                  </div>
+
+                  <div class="col-auto">
+                    <span class="h5 font-weight-bold mb-0">
+                      <i class="fas fa-clock"></i> <span class="h5 text-muted">
+                        {{requestObj.leave_request_requested_duration_date}}</span>
+                    </span>
+                  </div>
+
+                  <div class="col my-auto" *ngIf="requestObj.leave_request_status_description">
+                    <app-clib-leave-status-description [requestObj]="requestObj"
+                      [viewType]="requestStatusDescriptionViewType">
+                    </app-clib-leave-status-description>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="View Details" (click)="showViewActionModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</section>
+
+
+<section>
+  <div class="card shadow-none border-0"
+    *ngIf="request && request?.items?.length > 0 && requestUi?.view_type === 'table'">
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Employee</th>
+            <th scope="col">Leave Type</th>
+            <th scope="col">From - To</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="list" *ngFor="let requestObj of request?.items">
+          <tr>
+            <th class="px-3 py-2">
+              <span class="h5 text-primary">{{requestObj?.leave_request_employee_details}}</span>
+            </th>
+            <th class="px-3 py-2">
+              <span class="h5 text-dark">{{requestObj?.leave_request_absence_type_description}}</span>
+            </th>
+            <td class="px-3 py-2">
+              <i class="fas fa-calendar"></i>
+              <span class="h5 text-primary"> {{requestObj?.leave_request_taken_from | date: 'dd MMM yyyy'}} </span>
+              <i class="fas fa-arrow-right"></i>
+              <span class="h5 text-primary"> {{requestObj?.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+            </td>
+            <td class="px-3 py-2">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-clock"></i> <span class="h5 text-muted">
+                  {{requestObj?.leave_request_requested_duration_date}}</span>
+              </span>
+            </td>
+            <td class="px-3 py-2" *ngIf="requestObj?.leave_request_status_description">
+              <app-clib-leave-status-description [requestObj]="requestObj"
+                [viewType]="requestStatusDescriptionViewType">
+              </app-clib-leave-status-description>
+            </td>
+            <td class="px-3 py-2 text-right">
+              <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+                title="View Details" (click)="showViewActionModal(requestObj)">
+                <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Leave</h5>
+        <button type="button" class="close py-3" (click)="hideViewActionModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="request_item?.data && request_item?.history">
+        <app-supv-leave-action-model (closeThisModel)="hideViewActionModal()" [request_item]="request_item">
+        </app-supv-leave-action-model>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,329 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Supervisor Portal</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/supervisor-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">Leave Requests</li>
+            </ol>
+          </nav>
+        </div>
+
+        <div class="col-lg col text-right">
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="nav btn-group" role="tablist" *ngIf="requestUi?.viewType">
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'card' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneOne" role="tab" aria-controls="tabPaneOne" aria-selected="true"
+              (click)="changeView('card')">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'list' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneTwo" role="tab" aria-controls="tabPaneTwo" aria-selected="false"
+              (click)="changeView('list')">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'table' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneThree" role="tab" aria-controls="tabPaneThree"
+              aria-selected="false" (click)="changeView('table')">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary" (click)="showViewCreateLeaveModal()">Apply for
+                Leave (On Behalf)</button>
+            </div>
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="showViewCreateMedicalLeaveModal()">Apply for
+                Medical Leave (On Behalf)</button>
+            </div>
+
+            <div class="col-sm-auto col-md-auto col-lg-auto my-auto">
+              <label class="form-control-label" for="example-text-input">Selected Employee</label>
+            </div>
+
+            <div class="col-sm-auto col-md-auto col-lg-auto my-auto">
+              <div class="row">
+                <div class="col-auto my-auto">
+                  <!-- <button type="button" class="btn btn-facebook btn-icon-only rounded-circle">
+                    <span class="btn-inner--icon">{{selectedEmployee?.employee_id}}</span>
+                  </button> -->
+                  <div class="avatar rounded-circle">
+                    <img [src]="selectedEmployee?.employee_picture_path" alt="..." class="rounded-circle"
+                      style="width: 44px; height: 44px; object-fit: cover;">
+                  </div>
+                </div>
+                <div class="col my-auto">
+                  <div class="row">
+                    <div class="col-12 pl-0">
+                      <span class="h5 font-weight-bold mb-0 text-primary">
+                        {{selectedEmployee?.employee_name_with_id}}
+                      </span>
+                    </div>
+                    <div class="col-12 pl-0">
+                      <span class="h5 font-weight-bold mb-0 text-primary">
+                        {{selectedEmployee?.employee_designation}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto d-none d-sm-block mb--2">
+              <div class="d-flex align-items-center justify-content-sm-end">
+                <div class="avatar-group" *ngFor="let employeeObj of subordinateAvatorFilters; let i = index">
+                  <a class="avatar rounded-circle"
+                    [ngClass]="[i < 1 ? '' : 'ml--3', employeeObj?.employee_id === selectedEmployeeId ? 'ml-3 ml-5 border border-danger' : 'avatar-sm']"
+                    data-toggle="tooltip" data-placement="bottom" title="{{employeeObj?.employee_name_with_id}}"
+                    (click)="selectSubordinate(employeeObj, 'fromFilter')"
+                    *ngIf="employeeObj?.employee_show_on_filter_avatar_ui">
+                    <img [src]="employeeObj?.employee_picture_path" alt="..." class="rounded-circle"
+                      style="width: 44px; height: 44px; object-fit: cover;"
+                      *ngIf="employeeObj?.employee_id === selectedEmployeeId">
+                    <img [src]="employeeObj?.employee_picture_path" alt="..." class="rounded-circle"
+                      style="width: 33px; height: 33px; object-fit: cover;"
+                      *ngIf="employeeObj?.employee_id != selectedEmployeeId">
+                  </a>
+                </div>
+                <a (click)="showViewAvatorLeaveModal()" *ngIf="subordinateAvatorFilters.length > 10">
+                  <small class="pl-2 font-weight-bold">and {{subordinateAvatorFilters.length - 10}} more</small>
+                </a>
+              </div>
+            </div>
+            <div class="col-auto" style="width: 100px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!requestUi?.show_loader && request?.items && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No leave requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="requestUi?.show_loader && request?.items && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ...</span>
+          </div>
+
+          <app-comp-lib-loading [viewType]="requestUi?.loader_size" *ngIf="requestUi?.show_loader">
+          </app-comp-lib-loading>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'card' ? 'active show' : ''" id="tabPaneOne"
+              role="tabpanel">
+              <!-- Card-View -->
+              <!-- <app-supv-leave-view-card [request.items]="request.items" [requestUi?.show_loader]="requestUi?.show_loader">
+              </app-supv-leave-view-card> -->
+              <app-supv-leave-view [request]="request" [requestUi]="requestUi">
+              </app-supv-leave-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'list' ? 'active show' : ''" id="tabPaneTwo"
+              role="tabpanel">
+              <!-- List-View -->
+              <app-supv-leave-view [request]="request" [requestUi]="requestUi">
+              </app-supv-leave-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'table' ? 'active show' : ''" id="tabPaneThree"
+              role="tabpanel">
+              <!-- Table-View -->
+              <app-supv-leave-view [request]="request" [requestUi]="requestUi">
+              </app-supv-leave-view>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+            <div class="row" *ngIf="request.pagination">
+              <div class="col my-auto">
+                <span class="h5 text-muted">Showing {{request.pagination.item_start}} to
+                  {{request.pagination.item_end}} of {{request.pagination.total_count}}
+                  entries</span>
+              </div>
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end mb-1">
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationFirst(1)" tabindex="-1">
+                        <i class="fa fa-fast-backward"></i> <span class="sr-only">First</span>
+                      </a>
+                    </li>
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationPrv(request.pagination.page_number)" tabindex="-1">
+                        <i class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+
+                    <ng-container
+                      *ngFor="let data of request.pagination.page_list; index as i; first as isFirst; last as isLast">
+                      <li class="page-item" [ngClass]="{'active': data.page_number === request.pagination.page_number}">
+                        <a class="page-link" (click)="getRequestFromPagination(data.page_number)"
+                          *ngIf="data.show_page">{{data.page_number}}</a>
+                      </li>
+                    </ng-container>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationNext(request.pagination.page_number)">
+                        <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                      </a>
+                    </li>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationLast(request.pagination.total_pages)">
+                        <i class="fa fa-fast-forward"></i><span class="sr-only">Last</span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div #ViewCreateLeaveModal id="ViewCreateLeaveModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave (On behalf)</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request?.items && request?.leave_quota">
+        <app-supv-leave-create-model (closeThisModel)="hideViewCreateLeaveModal()" [myLeaveQuota]="request.leave_quota"
+          [newRequest]="newRequest" [selectedEmployeeId]="selectedEmployeeId" [selectedEmployee]="selectedEmployee">
+        </app-supv-leave-create-model>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #ViewCreateMedicalLeaveModal id="ViewCreateMedicalLeaveModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave (On behalf)</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateMedicalLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request?.items && request?.leave_quota">
+        <app-supv-medical-leave-create-model (closeThisModel)="hideViewCreateMedicalLeaveModal()"
+          [myLeaveQuota]="request.leave_quota" [selectedEmployeeId]="selectedEmployeeId"
+          [selectedEmployee]="selectedEmployee">
+        </app-supv-medical-leave-create-model>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #ViewAvatorLeaveModal id="ViewAvatorLeaveModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Filter Employee</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewAvatorLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="subordinateAvatorFilters">
+
+        <!-- <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-stats mb-1 shadow-lg border" style="background-color: #e9ecef;">
+              <div class="card-body py-3">
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                    <form class="navbar-search navbar-search-light" id="navbar-search-main">
+                      <div class="form-group mb-0">
+                        <div class="input-group input-group-alternative input-group-merge">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                          </div>
+                          <input class="form-control" placeholder="Search" type="text" [(ngModel)]="searchText"
+                            name="search" #search (keydown)="onKeydownSearch($event)"
+                            (blur)="onSearchUpdate(search.value)">
+                        </div>
+                      </div>
+                      <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
+                        aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="mt-1 mb-3">
+          <div class="list-group list-group-flush list" *ngFor="let employee of subordinateAvatorFilters">
+            <a class="list-group-item ml--2 px-3 py-2" (click)="selectSubordinate(employee, 'fromModel')"
+              [ngClass]="{'border border-danger': employee?.employee_id === selectedEmployee?.employee_id}"
+              *ngIf="employee?.employee_show_on_model_ui">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <span class="avatar avatar-lg rounded-circle shadow">
+                    <img [src]="employee?.employee_picture_path" alt="..."
+                      style="width: 58px; height: 58px; object-fit: cover;">
+                  </span>
+                </div>
+                <div class="col ml--2">
+                  <h4 class="mb-0">{{employee?.employee_name_with_id}}</h4>
+                  <p class="text-sm text-muted mb-0">{{employee?.employee_designation}}</p>
+                </div>
+                <div class="col-auto">
+                </div>
+              </div>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

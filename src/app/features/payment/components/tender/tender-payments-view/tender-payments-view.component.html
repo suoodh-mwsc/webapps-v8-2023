@@ -1,0 +1,135 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <section>
+      <div class="table-responsive" *ngIf="request && request?.items?.length > 0">
+        <table class="table table-hover align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="px-1 py-2 text-center">Transaction</th>
+                    <th scope="col" class="pl-1 pr-3 text-center">Account Info</th>
+                    <th scope="col" class="px-3 py-2 text-center">Organization & Outlet</th>
+                    <th scope="col" class="px-3 py-2 text-center">Payment</th>
+                    <th scope="col" class="px-1 py-2 text-center">Payment Method</th>
+                    <th scope="col" class="pl-1 pr-3 py-2">Status</th>
+                    <th scope="col" class="px-3 py-2 text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody class="list" *ngFor="let requestObj of request?.items">
+                <tr>
+                    <th class="px-1 py-1 align-items-center" style="max-width: 38px !important;">
+                        <div class="col-auto px-0">
+                            <span class="avatar avatar-sm rounded-circle"
+                                *ngIf="requestObj?.leave_request_employee_picture_path">
+                                <img [src]="requestObj?.leave_request_employee_picture_path" alt="..."
+                                    style="width: 36px; height: 36px; object-fit: cover;" />
+                            </span>
+                            <span class="avatar avatar-sm rounded-circle"
+                                *ngIf="!requestObj?.leave_request_employee_picture_path">
+                                <img src="../../assets/img/theme/team-00.jpg" alt="..."
+                                    style="width: 36px; height: 36px; object-fit: cover;">
+                            </span>
+                        </div>
+                    </th>
+                    <th class="pl-1 pr-3 py-1">
+                        <div class="col-12 px-0">
+                            <span
+                                class="h5 text-primary font-weight-bold mb-1">{{requestObj?.leave_request_employee_details}}</span>
+                        </div>
+                        <div class="col-12 px-0" *ngIf="requestObj?.leave_request_status_description">
+                        </div>
+                    </th>
+                    <th scope="row" class="px-3 py-1">
+                        <div class="col-12 px-0">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj?.leave_request_taken_from_friendly}}
+                                </span>
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj?.leave_request_taken_to_friendly}}</span>
+                            </h5>
+                        </div>
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-clock mr-1"></i> <span
+                                    class="h5 text-muted">{{requestObj?.leave_request_requested_duration_date}}</span>
+                            </span>
+                        </div>
+                    </th>
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="text-danger"><i class="fas fa-certificate"></i></span>
+                            <span class="h5 text-primary font-weight-bold mb-0">
+                                {{requestObj?.leave_request_absence_type_description}}
+                            </span>
+                        </div>
+                        <div class="col-12 px-0" *ngIf="requestObj?.leave_request_is_self_certification">
+                            <span class="text-danger"><i class="fas fa-user-plus"></i></span>
+                            <span class="h5 text-primary font-weight-bold mb-0">
+                                Self Certification
+                            </span>
+                        </div>
+                    </td>
+                    <td th class="px-1 py-1 align-items-center" style="max-width: 38px !important;">
+                        <div class="col-auto px-0">
+                            <span class="avatar avatar-sm rounded-circle"
+                                *ngIf="requestObj?.leave_request_supervisor_employee_picture_path">
+                                <img [src]="requestObj?.leave_request_supervisor_employee_picture_path" alt="..."
+                                    style="width: 36px; height: 36px; object-fit: cover;" />
+                            </span>
+                            <span class="avatar avatar-sm rounded-circle"
+                                *ngIf="!requestObj?.leave_request_supervisor_employee_picture_path">
+                                <img src="../../assets/img/theme/team-00.jpg" alt="..."
+                                    style="width: 36px; height: 36px; object-fit: cover;">
+                            </span>
+                        </div>
+                    </td>
+                    <td class="pl-1 pr-3 py-1">
+                        <div class="col-12 px-0">
+                            <h5 class="mb-0">
+                                <!-- <span class="text-dark">
+                                    <i class="fas fa-user mr-1"></i>
+                                </span> -->
+                                <span class="text-primary">
+                                    {{requestObj?.leave_request_supervisor_details}}
+                                </span>
+                            </h5>
+                        </div>
+                    </td>
+                    <td class="px-3 py-1 text-right">
+                        <!-- <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="Actions" (click)="showViewActionModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+                        </button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </section>
+  </div>
+</div>
+
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Actions</h5>
+        <button type="button" class="close py-3" (click)="hideViewActionModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request_item?.data">
+        <!-- <app-tppa-payments-actions (closeThisModel)="hideViewActionModal()" [request_item]="request_item">
+        </app-tppa-payments-actions> -->
+      </div>
+    </div>
+  </div>
+</div>

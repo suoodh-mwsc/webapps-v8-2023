@@ -1,0 +1,215 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+    <section>
+      <div class="row" *ngIf="request && request?.items?.length > 0 && requestUi?.viewType === 'card'">
+        <ng-container *ngFor="let requestObj of request?.items">
+          <div class="col-xl-12 col-md-12">
+
+            <summary class="card card-stats border mb-1" (mouseenter) ="selectAccount(requestObj)" [ngClass]="requestObj?.UserName === request_item?.selected_user?.UserName ? 'bg-primary-light border-primary' : ''" >
+              <!-- Card body -->
+              <div class="card-body my-auto px-3 py-2">
+                <div class="row">
+                  <div class="col-xl col-lg col">
+                    <div class="row">
+                      <div class="col-lg-12 pr-2 my-auto">
+                        <div class="row">
+                          <div class="col-lg">
+                            <span class="h5 font-weight-bold mb-0">{{requestObj?.Name}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 pr-2">
+                        <div class="row">
+                          <div class="col-auto my-auto">
+                            <h5 class="mb-0">
+                              <i class="fas fa-user"></i>
+                              <span class="text-primary"> {{requestObj?.UserName}}
+                              </span>
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 pr-2">
+                        <div class="row">
+                          <div class="col-lg-auto my-auto">
+                            <h5 class="mb-0">
+                              <i class="fas fa-envelope"></i>
+                              <span class="text-primary"> {{requestObj?.Email}}
+                              </span>
+                            </h5>
+                          </div>
+                          <div class="col-lg-auto my-auto">
+                            <h5 class="mb-0">
+                              <i class="fas fa-phone-square"></i>
+                              <span class="text-primary"> {{requestObj?.PhoneNumber}}
+                              </span>
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </summary>
+            <!-- <div class="card card-stats shadow mb-1">
+
+            </div> -->
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+    <div class="card card-stats shadow mb-1">
+      <div class="card-body my-auto p-2">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div>
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link px-4" type="button"
+                    [ngClass]="tabUi.selectedTab === 'requestAccounts' ? 'active' : 'inactive'"
+                    (click)="selectTab('requestAccounts')" id="nav-ml-requestAccounts-tab" data-toggle="tab" role="tab"
+                    aria-controls="nav-requestAccounts" aria-selected="true">
+                    <span class="h4 font-weight-bold mb-0">
+                      <i class="fas fa-list-alt"></i> Accounts
+                    </span>
+                  </a>
+                  <a class="nav-item nav-link px-4" type="button" *ngIf="request_item?.selected_user?.UserName"
+                    [ngClass]="tabUi.selectedTab === 'requestNotifications' ? 'active' : 'inactive'"
+                    (click)="selectTab('requestNotifications')" id="nav-ml-notification-tab" data-toggle="tab"
+                    role="tab" aria-controls="nav-notification" aria-selected="false">
+                    <span class="h4 font-weight-bold mb-0">
+                      <i class="fas fa-history"></i> Notifications
+                    </span>
+                    <span class="badge badge-pill badge-default"
+                      *ngIf="request_item?.history && request_item?.history.length < 1">{{request_item?.history.length}}</span>
+                    <span class="badge badge-pill badge-light"
+                      *ngIf="request_item?.history && request_item?.history.length > 0">{{request_item?.history.length}}</span>
+                  </a>
+                  <a class="nav-item nav-link px-4" type="button" *ngIf="request_item?.selected_user?.UserName"
+                    [ngClass]="tabUi.selectedTab === 'requestApplications' ? 'active' : 'inactive'"
+                    (click)="selectTab('requestHistory')" id="nav-ml-application-tab" data-toggle="tab" role="tab"
+                    aria-controls="nav-application" aria-selected="false">
+                    <span class="h4 font-weight-bold mb-0">
+                      <i class="fas fa-history"></i> Online Applications
+                    </span>
+                    <span class="badge badge-pill badge-default"
+                      *ngIf="request_item?.history && request_item?.history.length < 1">{{request_item?.history.length}}</span>
+                    <span class="badge badge-pill badge-light"
+                      *ngIf="request_item?.history && request_item?.history.length > 0">{{request_item?.history.length}}</span>
+                  </a>
+                </div>
+              </nav>
+
+              <div class="tab-content" id="nav-tabContent">
+
+                <div class="tab-pane fade"
+                  [ngClass]="tabUi.selectedTab === 'requestAccounts' ? 'show active' : 'hide inactive'"
+                  id="nav-ml-requestAccounts" role="tabpanel" aria-labelledby="nav-ml-requestAccounts-tab">
+
+                  <div class="row mt-3 mb-3 px-3" *ngIf="request_item?.accounts && request_item?.accounts?.length">
+                    <ng-container *ngFor="let requestAccountObj of request_item?.accounts">
+                      <div class="col-lg-3 px-1">
+                        <div class="card card-stats border mb-1" [ngClass]="requestAccountObj.IsDeleted ? 'bg-light' : ''">
+                          <div class="card-body px-3 py-2">
+                            <div class="row">
+                              <div class="col-lg-6 text-center">
+                                <h6 class="card-title text-uppercase text-muted mb-0">Account</h6>
+                              </div>
+                              <div class="col-lg-6 text-center">
+                                <h6 class="card-title text-uppercase text-muted mb-0">Meter</h6>
+                              </div>
+                              <div class="col-lg-6 text-center">
+                                <span class="h5 font-weight-bold mb-0" [ngClass]="requestAccountObj.IsDeleted ? 'text-danger' : 'text-primary'">{{requestAccountObj?.AccountNo}}</span>
+                              </div>
+                              <div class="col-lg-6 text-center">
+                                <span class="h5 font-weight-bold mb-0" [ngClass]="requestAccountObj.IsDeleted ? 'text-danger' : 'text-primary'">{{requestAccountObj?.MeterNo}}</span>
+                              </div>
+                              <div class="col-lg-12 text-center" *ngIf="requestAccountObj.IsDeleted">
+                                <span class="h6 font-weight-bold mb-0" [ngClass]="requestAccountObj.IsDeleted ? 'text-danger' : 'text-primary'">Removed On : {{requestAccountObj?.DeletedOn | date: 'dd MMM yyyy HH:mm'}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                </div>
+
+
+
+
+                <div class="tab-pane fade"
+                  [ngClass]="tabUi.selectedTab === 'requestNotifications' ? 'show active' : 'hide inactive'"
+                  id="nav-ml-notification" role="tabpanel" aria-labelledby="nav-ml-notification-tab">
+
+                  <div class="row mt-3" *ngIf="request_item?.accounts?.leave_request_medical_certificate_file_path">
+                    <div class="col-lg-12">
+                      <div class="card card-stats border mb-0">
+                        <div class="card-header bg-info py-2">
+                          <h5 class="h4 mb-0">Medical Certificate</h5>
+                        </div>
+
+                        <div class="card-body p-3">
+
+                          <div class="alert alert-light py-1 px-3" role="alert"
+                            *ngIf="request_item?.accounts?.leave_request_medical_certificate_file_path">
+                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                            <span class="alert-text"><strong>Medical Certificate !</strong> <a class="text-white"
+                                (click)="openMedicalCertificate(request_item?.accounts?.leave_request_medical_certificate_file_path)">
+                                Click here to View Medical Certificate </a> </span>
+                          </div>
+
+                          <img alt="..." [src]="request_item?.accounts?.leave_request_medical_certificate_file_path"
+                            class="img-fluid rounded" style="max-height:500px;">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade"
+                  [ngClass]="tabUi.selectedTab === 'requestApplications' ? 'show active' : 'hide inactive'"
+                  id="nav-ml-application" role="tabpanel" aria-labelledby="nav-ml-application-tab">
+
+                  <div class="row mt-3" *ngIf="request_item?.accounts?.leave_request_medical_certificate_file_path">
+                    <div class="col-lg-12">
+                      <div class="card card-stats border mb-0">
+                        <div class="card-header bg-info py-2">
+                          <h5 class="h4 mb-0">Medical Certificate</h5>
+                        </div>
+
+                        <div class="card-body p-3">
+
+                          <div class="alert alert-light py-1 px-3" role="alert"
+                            *ngIf="request_item?.accounts?.leave_request_medical_certificate_file_path">
+                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                            <span class="alert-text"><strong>Medical Certificate !</strong> <a class="text-white"
+                                (click)="openMedicalCertificate(request_item?.accounts?.leave_request_medical_certificate_file_path)">
+                                Click here to View Medical Certificate </a> </span>
+                          </div>
+
+                          <img alt="..." [src]="request_item?.accounts?.leave_request_medical_certificate_file_path"
+                            class="img-fluid rounded" style="max-height:500px;">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

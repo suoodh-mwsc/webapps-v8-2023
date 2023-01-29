@@ -1,0 +1,14 @@
+<a class="btn btn btn-link p-1" role="button" [href]="document.SafeFile"
+  download="{{document.DocumentType.Description}}-{{document.File.FileName}}" title="{{document.File.FileName}}">
+  <div class="row">
+    <div class="col-md-12 text-muted">
+      <i class="fas fa-file-pdf fa-3x" aria-hidden="true"></i>
+    </div>
+    <div class="col-md-12">
+      <span class="h6 text-primary">{{document.DocumentType.Description}}</span>
+    </div>
+    <div class="col-md-12">
+      <span class="h6 text-primary">{{document.File.FileName}}</span>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,72 @@
+<div class="col-12 px-0 mx-0 my-auto" *ngIf="picturePath && viewType">
+  <div *ngIf="viewType === 'xs'">
+    <span class="avatar avatar-xs rounded-circle bg-white" *ngIf="picturePath">
+      <img class="bg-white"  [src]="picturePath" alt="..."
+        style="width: 24px; height: 24px; object-fit: scale-down;" />
+    </span>
+  
+    <span class="avatar avatar-xs rounded-circle bg-white" *ngIf="!picturePath">
+      <img class="bg-white"  src="../../assets/img/theme/team-00.jpg" alt="..."
+        style="width: 24px; height: 24px; object-fit: scale-down;">
+    </span>
+  </div>
+
+
+
+  <div *ngIf="viewType === 'sm'">
+    <span class="avatar avatar-sm rounded-circle bg-white" *ngIf="picturePath">
+      <img class="bg-white"  [src]="picturePath" alt="..."
+        style="width: 36px; height: 36px; object-fit: scale-down;" />
+    </span>
+  
+    <span class="avatar avatar-sm rounded-circle bg-white" *ngIf="!picturePath">
+      <img class="bg-white"  src="../../assets/img/theme/team-00.jpg" alt="..."
+        style="width: 36px; height: 36px; object-fit: scale-down;">
+    </span>
+  </div>
+
+
+
+  <div *ngIf="viewType === 'md'">
+    <span class="avatar avatar rounded-circle bg-white" *ngIf="picturePath">
+      <img class="bg-white"  [src]="picturePath" alt="..."
+        style="width: 48px; height: 48px; object-fit: scale-down;" />
+    </span>
+  
+    <span class="avatar avatar rounded-circle bg-white" *ngIf="!picturePath">
+      <img class="bg-white"  src="../../assets/img/theme/team-00.jpg" alt="..."
+        style="width: 48px; height: 48px; object-fit: scale-down;">
+    </span>
+  </div>
+
+
+
+  <div *ngIf="viewType === 'lg'">
+    <span class="avatar avatar-lg rounded-circle bg-white" *ngIf="picturePath">
+      <img class="bg-white"  [src]="picturePath" alt="..."
+        style="width: 58px; height: 58px; object-fit: scale-down;" />
+    </span>
+  
+    <span class="avatar avatar-lg rounded-circle bg-white" *ngIf="!picturePath">
+      <img class="bg-white"  src="../../assets/img/theme/team-00.jpg" alt="..."
+        style="width: 58px; height: 58px; object-fit: scale-down;">
+    </span>
+  </div>
+
+
+
+  <div *ngIf="viewType === 'xl'">
+    <span class="avatar avatar-xl rounded-circle bg-white" *ngIf="picturePath">
+      <img class="bg-white"  [src]="picturePath" alt="..."
+        style="width: 74px; height: 74px; object-fit: scale-down;" />
+    </span>
+  
+    <span class="avatar avatar-xl rounded-circle bg-white" *ngIf="!picturePath">
+      <img class="bg-white"  src="../../assets/img/theme/team-00.jpg" alt="..."
+        style="width: 74px; height: 74px; object-fit: scale-down;">
+    </span>
+  </div>
+  
+
+
+</div>

@@ -1,0 +1,242 @@
+<div class="card">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Application Details</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Contact Name'"
+          [fieldText]="selectedApplication.ContactName"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Contact No'"
+          [fieldText]="selectedApplication.ContactNumber"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Application Status'"
+          [fieldText]="selectedApplication.CurrentStageDescription"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Created User'"
+        [fieldText]="selectedApplication.CreatedBy"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Created Date'"
+        [fieldText]="selectedApplication.CreatedOn  | date: 'dd/MM/yyyy hh:mm a'"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Sales Order No'"
+        [fieldText]="selectedApplication.SalesOrderNo"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Remarks'"
+        [fieldText]="selectedApplication.MWSCRemarks"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" *ngIf="selectedApplication.OwnerDetails || selectedApplication.OwnerDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Owner Details</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Secondary Contact'"
+        [fieldText]="selectedApplication.OwnerDetails.SecondaryContactNo"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Identification Details'"
+        [fieldText]="selectedApplication.OwnerDetails.IdentificationDetails"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Business Partner'"
+        [fieldText]="selectedApplication.OwnerDetails.BusinessPartnerId"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" *ngIf="selectedApplication.OwnerDetails || selectedApplication.OwnerDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Permenant Address</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'House Name'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.Name"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Street Name'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.Street"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Premise'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.Premise"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Ward'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.Ward"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'City'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.City"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Postal Code'"
+        [fieldText]="selectedApplication.OwnerDetails.PermenantAddress.PostalCode"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="selectedApplication.ConnectionDetails && selectedApplication.ConnectionDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Connection Details</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <ng-container *ngFor="let connectionDetail of selectedApplication.ConnectionDetails">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body p-2">
+              <div class="row">
+                <div class="col-xl-12">
+                  <span class="h5 text-muted text-uppercase mb-1">{{connectionDetail.AccountNo}}</span>
+                </div>
+                <div class="col-xl-12">
+                  <span class="h5 text-muted text-uppercase mb-1">{{connectionDetail.MeterNo}}</span>
+                </div>
+                <div class="col-xl-12">
+                  <span class="h5 text-muted text-uppercase mb-1">{{connectionDetail.Address}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+<div class="card"
+  *ngIf="selectedApplication.NewConnectionDetails || selectedApplication.NewConnectionDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">New Connection Details</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-12">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Service Category'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceCategoryDescription"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card"
+  *ngIf="selectedApplication.NewConnectionDetails || selectedApplication.NewConnectionDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Service Required Location</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'House Name'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.Name"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Street Name'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.Street"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Premise'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.Premise"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Ward'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.Ward"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'City'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.City"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Postal Code'"
+        [fieldText]="selectedApplication.NewConnectionDetails.ServiceRequiredLocation.PostalCode"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card"
+  *ngIf="selectedApplication.NewConnectionDetails || selectedApplication.NewConnectionDetails?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Billing Address</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-3">
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'House Name'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.Name"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Street Name'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.Street"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Premise'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.Premise"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'Ward'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.Ward"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'City'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.City"></app-clib-service-application-form-text-field>
+      </div>
+      <div class="col-md-4">
+        <app-clib-service-application-form-text-field [fieldLabel]="'PostalCode'"
+        [fieldText]="selectedApplication.NewConnectionDetails.BillingAddress.PostalCode"></app-clib-service-application-form-text-field>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" *ngIf="selectedApplication.Documents && selectedApplication.Documents?.length > 0">
+  <div class="card-header px-4 py-2 bg-primary">
+    <h3 class="text-white mb-0">Documents Details</h3>
+  </div>
+  <div class="card-body px-4 pt-3 pb-2">
+    <div class="row" *ngIf="selectedApplication.Documents?.length > 0">
+      <ng-container *ngFor="let document of selectedApplication.Documents">
+        <div class="col-xl-2 col-md-3 px-2">
+          <app-clib-service-application-form-file-tile [document]="document" [showLoader]="showLoader">
+          </app-clib-service-application-form-file-tile>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

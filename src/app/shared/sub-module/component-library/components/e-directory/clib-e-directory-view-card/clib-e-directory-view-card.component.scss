@@ -1,0 +1,52 @@
+// .avatar-xl {
+//     width: 140px !important;
+//     height: 140px !important;
+//     overflow: hidden;
+//     img {
+//           /* IE */
+//         filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+//         /* Chrome, Safari */
+//         -webkit-filter: grayscale(1);
+//         /* Firefox */
+//         filter: grayscale(1);
+
+//         position: absolute;
+//         width: 140px;
+//         height: auto;
+//     }
+// }
+
+
+// .avatar-image-base64 {
+//     // object-fit: contain;
+//     display: block;
+// }
+
+
+// .avatar {
+//     position: absolute;
+//     left: 50%;
+//     top: 10px;
+//     margin-left: -50px;
+//     z-index: 5;
+//     width: 70px;
+//     height: 70px;
+//     border-radius: 50%;
+//     overflow: hidden;
+//     // background: #ccc;
+//     background: $bg-primary-500 !important;
+//     // border:3px solid #fff;
+//     border: 3px solid $bg-primary-100 !important;
+//     img {
+//         position: absolute;
+//         top: 50%;
+//         left: 50%;
+//         -webkit-transform: translate(-50%, -50%);
+//         -moz-transform: translate(-50%, -50%);
+//         -ms-transform: translate(-50%, -50%);
+//         -o-transform: translate(-50%, -50%);
+//         transform: translate(-50%, -50%);
+//         width: 70px;
+//         height: auto;
+//     }
+// }

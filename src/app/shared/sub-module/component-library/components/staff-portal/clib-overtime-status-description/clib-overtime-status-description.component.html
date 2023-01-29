@@ -1,0 +1,39 @@
+<div *ngIf="requestObj && viewType ==='badge-full'">
+  <span class="badge badge-muted"
+    [ngClass]="getStatusDescriptionColorCode(requestObj)">{{requestObj?.overtime_request_status_description}}</span>
+</div>
+
+<div *ngIf="requestObj && viewType ==='badge-trim-30'">
+  <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">{{
+    (requestObj.overtime_request_status_description.length>30)?
+    (requestObj.overtime_request_status_description | slice:0:30)+'
+    ...':(requestObj.overtime_request_status_description) }}</span>
+</div>
+
+<div *ngIf="requestObj && viewType ==='badge-trim-40'">
+  <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">{{
+    (requestObj.overtime_request_status_description.length>40)?
+    (requestObj.overtime_request_status_description | slice:0:40)+'
+    ...':(requestObj.overtime_request_status_description) }}</span>
+</div>
+
+<div *ngIf="requestObj && viewType ==='badge-trim-50'">
+  <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">{{
+    (requestObj.overtime_request_status_description.length>50)?
+    (requestObj.overtime_request_status_description | slice:0:50)+'
+    ...':(requestObj.overtime_request_status_description) }}</span>
+</div>
+
+<div *ngIf="requestObj && viewType ==='badge-trim-55'">
+  <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">{{
+    (requestObj.overtime_request_status_description.length>55)?
+    (requestObj.overtime_request_status_description | slice:0:55)+'
+    ...':(requestObj.overtime_request_status_description) }}</span>
+</div>
+
+<div *ngIf="requestObj && viewType ==='badge-trim-60'">
+  <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">{{
+    (requestObj.overtime_request_status_description.length>60)?
+    (requestObj.overtime_request_status_description | slice:0:60)+'
+    ...':(requestObj.overtime_request_status_description) }}</span>
+</div>

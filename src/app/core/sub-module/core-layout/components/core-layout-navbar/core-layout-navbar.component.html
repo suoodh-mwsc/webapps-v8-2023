@@ -1,0 +1,185 @@
+<div class="container-fluid">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <!-- Search form -->
+    <!-- <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
+      <div class="form-group mb-0">
+        <div class="input-group input-group-alternative input-group-merge">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" placeholder="Search" type="text">
+        </div>
+      </div>
+      <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main"
+        aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </form> -->
+    <span class="navbar-nav align-items-center  ml-auto ml-md-0">
+      <div class="media align-items-center">
+        <div class="media-body mr-2 d-none d-lg-block" *ngIf="appTitle">
+          <!-- <span class="mb-0 h3 font-weight-bold text-light">{{appTitle}}</span> -->
+          <!-- <span class="mb-0 h3 font-weight-bold text-light" *ngIf="appTitle === 'Staff Portal'"><i
+              class="fas fa-user"></i></span>
+          <span class="mb-0 h3 font-weight-bold text-light" *ngIf="appTitle === 'Supervisor Portal'"><i
+              class="fas fa-user-friends"></i></span> -->
+        </div>
+      </div>
+    </span>
+
+    <!-- Navbar links -->
+    <ul class="navbar-nav align-items-center  ml-md-auto ">
+      <li class="nav-item d-xl-none">
+        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
+          <div class="sidenav-toggler-inner">
+            <i class="sidenav-toggler-line"></i>
+            <i class="sidenav-toggler-line"></i>
+            <i class="sidenav-toggler-line"></i>
+          </div>
+        </div>
+      </li>
+
+      <!-- <li class="nav-item d-sm-none">
+        <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
+          <i class="ni ni-zoom-split-in"></i>
+        </a>
+      </li> -->
+
+      <!-- <li class="nav-item dropdown" (mouseover)="refreshCounter()"  (mouseover)="refreshCounter()"> -->
+
+      <li class="nav-item dropdown" (click)="refreshPendingApprovalCounter()">
+        <a class="nav-link" href="#navbardrop-pending-approvals" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" (click)="refreshPendingApprovalCounter()">
+          <!-- <i class="ni ni-bell-55"></i> -->
+          <i class="fas fa-clipboard-list"></i>
+          <!-- <span class="badge badge-md badge-circle badge-floating badge-danger border-white">{{totalCount}}</span> -->
+          <!-- <span class="badge badge-md badge-circle badge-floating badge-secondary border-white"
+            *ngIf="totalCount === 0">-</span> -->
+          <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+            *ngIf="totalCount != 0">{{totalCount}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden"
+          id="navbardrop-pending-approvals">
+          <!-- <app-core-layout-pending-approvals></app-core-layout-pending-approvals> -->
+
+          <app-core-layout-pending-approvals [totalCount]="totalCount"
+            [pendingApprovalNotificationList]="pendingApprovalNotificationList"
+            [pendingApprovalNotificationType]="pendingApprovalNotificationType" [showLoader]="showLoader">
+          </app-core-layout-pending-approvals>
+        </div>
+      </li>
+
+      <!-- <li class="nav-item dropdown" (click)="refreshNotificationCounter()">
+        <a class="nav-link" href="#navbardrop-notifications" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false" (click)="refreshNotificationCounter()">
+          <i class="ni ni-bell-55"></i>
+          <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+            *ngIf="totalNotificationCount != 0">{{totalNotificationCount}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden"
+          id="navbardrop-notifications">
+          <app-core-layout-notification [totalNotificationCount]="totalNotificationCount"
+            [pendingNotificationList]="pendingNotificationList"
+            [pendingNotificationListPagination]="pendingNotificationListPagination" [showLoader]="showLoader">
+          </app-core-layout-notification>
+        </div>
+      </li> -->
+
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#navbardrop-apps" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <i class="ni ni-ungroup"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right"
+          id="navbardrop-apps">
+          <app-core-layout-apptiles></app-core-layout-apptiles>
+        </div>
+      </li>
+
+      <!-- <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/home']">
+          <i class="ni ni-shop"></i>
+        </a>
+      </li> -->
+    </ul>
+
+
+    <!-- <ul class="navbar-nav align-items-center  ml-auto ml-md-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link pr-0" href="#navbardrop-apptile" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <div class="media align-items-center">
+            <div class="media-body mr-2 d-none d-lg-block" *ngIf="selectedAppTitle">
+              <span class="mb-0 text-sm font-weight-bold">{{selectedAppTitle}}</span>
+            </div>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="displayPicture && displayName && displayPicturePath">
+              <img [src]="displayPicturePath" alt="..." style="width: 36px; height: 36px; object-fit: cover;" />
+            </span>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="!displayPicturePath">
+              <img src="../../assets/img/theme/team-4.jpg" alt="..."
+                style="width: 36px; height: 36px; object-fit: cover;">
+            </span>
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right"
+          id="navbardrop-apptile">
+          <app-core-layout-apptiles [selectedAppTitle]="selectedAppTitle" [selectedAppIcon]="selectedAppIcon"></app-core-layout-apptiles>
+        </div>
+      </li>
+    </ul> -->
+
+
+    <ul class="navbar-nav align-items-center  ml-auto ml-md-0">
+      <li class="nav-item dropdown">
+        <a class="nav-link pr-0" href="#navbardrop-profile" role="button" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <!-- <div class="media align-items-center">
+            <div class="media-body  mr-2  d-none d-lg-block" *ngIf="displayName">
+              <span class="mb-0 text-sm  font-weight-bold">{{displayName}}</span>
+            </div>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="displayPicture && displayName">
+              <img [src]="displayPicture" alt="..." style="width: 36px; height: 36px; object-fit: cover;" />
+            </span>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="!displayPicture">
+              <img src="../../assets/img/theme/team-4.jpg" alt="..."
+                style="width: 36px; height: 36px; object-fit: cover;">
+            </span>
+          </div> -->
+          <div class="media align-items-center">
+            <div class="media-body  mr-2  d-none d-lg-block" *ngIf="displayName">
+              <span class="mb-0 text-sm  font-weight-bold">{{displayName}}</span>
+            </div>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="displayPicture && displayName && displayPicturePath">
+              <img [src]="displayPicturePath" alt="..." style="width: 36px; height: 36px; object-fit: cover;" />
+            </span>
+            <span class="avatar avatar-sm rounded-circle" *ngIf="!displayPicturePath">
+              <img src="../../assets/img/theme/team-4.jpg" alt="..."
+                style="width: 36px; height: 36px; object-fit: cover;">
+            </span>
+          </div>
+        </a>
+        <div class="dropdown-menu  dropdown-menu-right" id="navbardrop-profile">
+          <div class="dropdown-header noti-title">
+            <h6 class="text-overflow m-0">Welcome!</h6>
+          </div>
+          <a class="dropdown-item" [routerLink]="['/staff-portal', {outlets: {pages: ['profile']}}]"
+            aria-disabled="true">
+            <i class="ni ni-single-02"></i><span>My Profile</span>
+          </a>
+          <!-- <a class="dropdown-item">
+            <i class="ni ni-settings-gear-65"></i><span>Settings</span>
+          </a>
+          <a class="dropdown-item">
+            <i class="ni ni-calendar-grid-58"></i><span>Activity</span>
+          </a>
+          <a class="dropdown-item">
+            <i class="ni ni-support-16"></i><span>Support</span>
+          </a> -->
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()">
+            <i class="ni ni-user-run"></i><span>Logout</span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>

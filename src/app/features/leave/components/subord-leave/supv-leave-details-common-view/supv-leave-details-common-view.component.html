@@ -1,0 +1,394 @@
+<div *ngIf="request_item?.data">
+  <!-- <div class="alert alert-danger py-1 px-3" role="alert" *ngIf="request_item?.general_api_error">
+    <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+    <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}}</span>
+  </div> -->
+
+  <nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestDetails' ? 'active' : 'inactive'"
+        (click)="selectTab('requestDetails')" id="nav-ml-requestdetails-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-requestdetails" aria-selected="true">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="fas fa-list-alt"></i> Leave
+        </span>
+      </a>
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestAttachment' ? 'active' : 'inactive'"
+        (click)="selectTab('requestAttachment')" id="nav-ml-attachment-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-attachment" aria-selected="false"
+        *ngIf="request_item?.data.leave_request_medical_certificate_file_path">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="fas fa-first-aid"></i> Medical Certificate
+        </span>
+      </a>
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestHandover' ? 'active' : 'inactive'"
+        (click)="selectTab('requestHandover')" id="nav-ml-handover-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-handover" aria-selected="false">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="fas fa-briefcase"></i> Work Hardover
+        </span>
+        <span class="badge badge-pill badge-light"
+          *ngIf="request_item?.work_handover && request_item?.work_handover.length < 1">{{request_item?.work_handover.length}}</span>
+        <span class="badge badge-pill badge-info"
+          *ngIf="request_item?.work_handover && request_item?.work_handover.length > 0">{{request_item?.work_handover.length}}</span>
+      </a>
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestHistory' ? 'active' : 'inactive'"
+        (click)="selectTab('requestHistory')" id="nav-ml-history-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-history" aria-selected="false">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="fas fa-history"></i> Request History
+        </span>
+        <span class="badge badge-pill badge-default"
+          *ngIf="request_item?.history && request_item?.history.length < 1">{{request_item?.history.length}}</span>
+        <span class="badge badge-pill badge-light"
+          *ngIf="request_item?.history && request_item?.history.length > 0">{{request_item?.history.length}}</span>
+
+      </a>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestDetails' ? 'show active' : 'hide inactive'"
+      id="nav-ml-requestdetails" role="tabpanel" aria-labelledby="nav-ml-requestdetails-tab">
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-4 pr-1">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Leave Request Type & Expiry</h6>
+                </div>
+                <div class="col-lg-12">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{request_item?.data?.leave_request_absence_type_description}}</span>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 text-danger font-weight-bold mb-0">Expiry: </span>
+                  <span class="h5 font-weight-bold mb-0">{{request_item?.data?.leave_request_expires_on_friendly}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 pr-1">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Leave Duration</h6>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 font-weight-bold mb-0">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{request_item?.data?.leave_request_taken_from | date: 'dd MMM yyyy '}} <i
+                      class="fas fa-arrow-right"></i>
+                    {{request_item?.data?.leave_request_taken_to | date: 'dd MMM yyyy '}}
+                  </span>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 font-weight-bold mb-0">
+                    <i class="fas fa-clock"></i> {{request_item?.data?.leave_request_quota_used}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Created By</h6>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 font-weight-bold mb-0">
+                    {{request_item?.data?.leave_request_created_by}}
+                  </span>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 font-weight-bold mb-0">
+                    {{request_item?.data?.leave_request_created_on | date: 'dd MMM yyyy HH:mm'}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-lg-12">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="row">
+                    <div class="col-lg my-auto">
+                      <h6 class="card-title text-uppercase text-muted mb-0">
+                        {{request_item?.data?.leave_request_absence_type_description}}
+                        Additional Details</h6>
+                    </div>
+                    <div class="col-lg-auto" *ngIf="request_item?.data?.leave_request_status_description">
+                      <app-clib-leave-status-description [requestObj]="request_item?.data"
+                        [viewType]="requestStatusDescriptionViewType">
+                      </app-clib-leave-status-description>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <span class="h5 font-weight-bold text-muted mb-0">Additional Details : </span>
+                    </div>
+                    <div class="col-lg">
+                      <span
+                        class="h5 font-weight-bold mb-0">{{request_item?.data?.leave_request_additional_details}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <span class="h5 font-weight-bold text-muted mb-0">Nature of Sickness : </span>
+                    </div>
+                    <div class="col-lg">
+                      <span
+                        class="h5 font-weight-bold mb-0">{{request_item?.data?.leave_request_nature_of_sickness}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="request_item?.data?.leave_request_absence_type_description === 'Medical leave'">
+                <div class="col-lg-12" *ngIf="request_item?.data?.leave_request_is_self_certification">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <span class="h5 font-weight-bold text-muted mb-0"> Leave Type: </span>
+                    </div>
+                    <div class="col-lg">
+                      <span class="h5 font-weight-bold mb-0">Self Certification</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12" *ngIf="!request_item?.data?.leave_request_is_self_certification">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <span class="h5 font-weight-bold text-muted mb-0"> Leave Type: </span>
+                    </div>
+                    <div class="col-lg">
+                      <span class="h5 font-weight-bold mb-0">Medical Certificate</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestAttachment' ? 'show active' : 'hide inactive'"
+      id="nav-ml-attachment" role="tabpanel" aria-labelledby="nav-ml-attachment-tab">
+
+      <div class="row mt-3" *ngIf="request_item?.data?.leave_request_medical_certificate_file_path">
+        <div class="col-lg-12">
+          <div class="card card-stats border mb-0">
+            <div class="card-header bg-info py-2">
+              <h5 class="h4 mb-0">Medical Certificate</h5>
+            </div>
+
+            <div class="card-body p-3">
+
+              <div class="alert alert-light py-1 px-3" role="alert"
+                *ngIf="request_item?.data?.leave_request_medical_certificate_file_path">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Medical Certificate !</strong> <a class="text-white"
+                    (click)="openMedicalCertificate(request_item?.data?.leave_request_medical_certificate_file_path)">
+                    Click here to View Medical Certificate </a> </span>
+              </div>
+
+              <img alt="..." [src]="request_item?.data?.leave_request_medical_certificate_file_path"
+                class="img-fluid rounded" style="max-height:500px;">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestHandover' ? 'show active' : 'hide inactive'"
+      id="nav-ml-handover" role="tabpanel" aria-labelledby="nav-ml-handover-tab">
+      <div class="row mt-3">
+        <div class="col-lg-12">
+
+          <div class="alert alert-info px-3 py-2 mb-0" role="alert"
+            *ngIf="request_item?.work_handover && request_item?.work_handover.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No Handover request to view yet ...!</span>
+          </div>
+
+          <div class="card card-stats border mb-0"
+            *ngIf="request_item?.work_handover && request_item?.work_handover.length > 0">
+            <div class="card-header border-0 px-3 py-2">
+              <h6 class="card-title text-uppercase text-muted mb-0">Handover</h6>
+            </div>
+            <div class="table-responsive" *ngIf="request_item?.work_handover && request_item?.work_handover.length">
+              <table class="table table-striped align-items-center table-hover table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="px-3 py-2">Handed over to</th>
+                    <th scope="col" class="px-3 py-2">Responsibilities</th>
+                    <th scope="col" class="px-3 py-2">Leave Type</th>
+                    <th scope="col" class="px-3 py-2">Status</th>
+                  </tr>
+                </thead>
+                <tbody class="list" *ngFor="let handover of request_item?.work_handover">
+                  <tr>
+                    <th class="px-3 py-2">
+                      <span class="h5 "
+                        [ngClass]="handover.work_handover_is_approved ? 'text-success' : 'text-warning'">{{handover.work_handover_employee_details}}</span>
+                    </th>
+                    <td class="px-3 py-2">
+                      <span class="h5 "
+                        [ngClass]="handover.work_handover_is_approved ? 'text-success' : 'text-warning'">{{handover.work_handover_responsibilities}}</span>
+                    </td>
+                    <td class="px-3 py-2">
+                      <span class="h5 "
+                        [ngClass]="handover.work_handover_is_approved ? 'text-success' : 'text-warning'">{{handover.leave_request_absence_type_description}}</span>
+                    </td>
+                    <td class="px-3 py-2 text-center">
+
+                      <!-- [ngClass]="tabUi.selectedTab === 'requestDetails' ? 'active' : 'inactive'" -->
+
+                      <span class="text-danger" *ngIf="!handover.work_handover_is_approved" data-toggle="tooltip"
+                        data-placement="top"
+                        [attr.title]="handover.work_handover_take_over_approved_on_friendly === '' ? '<i>Not Approved</i>': handover.work_handover_take_over_approved_on_friendly "><i
+                          class="fas fa-times-circle"></i></span>
+                      <span class="text-success" *ngIf="handover.work_handover_is_approved" data-toggle="tooltip"
+                        data-placement="top" [attr.title]="handover.work_handover_take_over_approved_on_friendly"><i
+                          class="fas fa-check-circle"></i></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestHistory' ? 'show active' : 'hide inactive'"
+      id="nav-ml-history" role="tabpanel" aria-labelledby="nav-ml-history-tab">
+      <div class="row mt-3">
+        <div class="col-lg-12">
+          <div class="card card-stats border mb-0">
+            <div class="card-header py-2 bg-light">
+              <h4 class="mb-0">Request History</h4>
+            </div>
+            <div class="card-body pt-2">
+
+              <div class="alert alert-info px-3 py-2 mb-0" role="alert"
+                *ngIf="request_item?.history && request_item?.history.length < 1">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Oh Snap!</strong> No History request to view yet ...!</span>
+              </div>
+
+              <ng-container *ngIf="request_item?.history && request_item?.history.length > 0">
+                <ng-container *ngFor="let history of request_item?.history; index as i">
+                  <div class="timeline timeline-one-side" data-timeline-content="axis"
+                    data-timeline-axis-style="dashed">
+                    <div class="timeline-block">
+                      <span class="timeline-step badge-success">
+                        <i class="ni ni-bell-55"></i>
+                      </span>
+                      <div class="timeline-content pt-0 pb-0 mr-3">
+                        <div class="row pl-2">
+                          <div class="col-lg-auto my-auto">
+                            <small class="text-muted font-weight-bold">
+                              <span><i class="fas fa-calendar"></i></span>
+                              {{history.leave_request_history_created_on | date: 'dd MMM yyyy HH:mm'}}
+                            </small>
+                          </div>
+                          <div class="col-lg my-auto">
+                            <h5 class="text-primary mt-0 mb-0">{{history.leave_request_history_type}}</h5>
+                          </div>
+                          <div class="col-lg-12">
+                            <!-- <p class="text-sm mt-1 mb-2">{{history.leave_request_history_description}}</p> -->
+                            <span
+                              class="h5 text-dark ml-3 mt-0 mb-3">{{history.leave_request_history_description}}</span>
+                            <!-- <div class="mt-3">
+                          <span class="badge badge-pill badge-success">design</span>
+                          <span class="badge badge-pill badge-success">system</span>
+                          <span class="badge badge-pill badge-success">creative</span>
+                        </div> -->
+                          </div>
+                        </div>
+                        <hr class="mt-1 mb-0 py-0" *ngIf="(i + 1) < request_item?.history.length">
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='request_item?.general_api_error'>
+    <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong>
+      {{request_item?.general_api_error}}
+      ... !</span>
+    <hr class="my-2">
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error['expires on']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.responsibilities">
+          <span class="h5 text-white mb-1 mt-0 d-block">Responsibilities : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12"
+      *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+      <ul class="pl-2 mb-2"
+        *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.work_handover_employee_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">Work handover Employee : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.expires_on">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.expires_on">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.expires_on">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

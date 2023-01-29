@@ -1,0 +1,397 @@
+<div *ngIf="request_item?.data">
+  <nav>
+    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestDetails' ? 'active' : 'inactive'"
+        (click)="selectTab('requestDetails')" id="nav-ml-requestdetails-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-requestdetails" aria-selected="true">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="fas fa-list-alt"></i> Transaction
+        </span>
+      </a>
+      <a class="nav-item nav-link px-4" [ngClass]="tabUi.selectedTab === 'requestHistory' ? 'active' : 'inactive'"
+        (click)="selectTab('requestHistory')" id="nav-ml-history-tab" data-toggle="tab" role="tab"
+        aria-controls="nav-history" aria-selected="false">
+        <span class="h4 font-weight-bold mb-0">
+          <i class="far fa-list-alt"></i> Payments
+        </span>
+        <span class="badge badge-pill badge-default"
+          *ngIf="request_item?.utility_payments && request_item?.utility_payments.length < 1">{{request_item?.utility_payments.length}}</span>
+        <span class="badge badge-pill badge-light"
+          *ngIf="request_item?.utility_payments && request_item?.utility_payments.length > 0">{{request_item?.utility_payments.length}}</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="tab-content" id="nav-tabContent">
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestDetails' ? 'show active' : 'hide inactive'"
+      id="nav-ml-requestdetails" role="tabpanel" aria-labelledby="nav-ml-requestdetails-tab">
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-4 pr-1">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">MWSC Ref & Payment Type</h6>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fab fa-slack-hash mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.OurReference}}</span>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-window-restore mr-1"></i>
+                  </span>
+                  <span
+                    class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.PaymentTypeDescription}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 pr-1">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Bank & Ref</h6>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-window-restore mr-1"></i>
+                  </span>
+                  <span
+                    class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.PaymentGatewayDescription}}</span>
+                </div>
+                <div class="col-12" *ngIf="request_item?.data?.BanksReferenceNo">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fab fa-slack-hash mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.BanksReferenceNo}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Meter & Account</h6>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-envelope mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.PaidBy}}</span>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.PaidOn
+                    | date: 'dd MMM yyyy HH:mm'}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3 mb-0">
+        <div class="col-lg-8 pr-1">
+          <div class="card card-stats border mb-0 h-100">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">SAP Record Status</h6>
+                </div>
+                <div class="col-12">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    <span class="h5 font-weight-bold text-dark mb-0 mr-1">Paid On:</span>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{request_item?.data?.PaidOn
+                    | date: 'dd MMM yyyy HH:mm'}}</span>
+                </div>
+                <div class="col-12" *ngIf="request_item?.data?.IsSuccessful">
+                  <span class="h5 font-weight-bold text-success mb-0">
+                    <i class="fas fa-check-circle mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-success mr-4">Transaction is Successful</span>
+
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-calendar-alt mr-1"></i>
+                    <span class="h5 font-weight-bold text-dark mb-0 mr-1">SAP Updated On:</span>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-success mr-3">{{request_item?.data?.UpdatedToSAPOn
+                    |
+                    date: 'dd MMM yyyy HH:mm'}}</span>
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fab fa-slack-hash mr-1"></i>
+                    <span class="h5 font-weight-bold text-dark mb-0 mr-1">Ref:</span>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-success">{{request_item?.data?.SAPReference}}</span>
+                </div>
+                <div class="col-12 px-0"
+                  *ngIf="!request_item?.data?.IsSuccessful && request_item?.data?.BanksReasonCodeDescription">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                    <span class="h5 font-weight-bold text-danger mb-0 mr-1">Gateway Response:</span>
+                  </span>
+                  <span
+                    class="h5 font-weight-bold mb-0 text-danger mr-3">{{request_item?.data?.BanksReasonCodeDescription}}</span>
+                </div>
+                <div class="col-12 px-0" *ngIf="!request_item?.data?.ResponseRecievedOn">
+                  <span class="h5 font-weight-bold text-warning mb-0">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-warning mr-3">No Response Recieved from
+                    Bank</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card card-stats border mb-0">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mb-0">Payment Details</h6>
+                </div>
+                <div class="col-12">
+                  <div class="row px-3">
+                    <div class="col px-0">
+                      <span class="h5 font-weight-bold mb-0">Payment Amount MVR</span>
+                    </div>
+                    <div class="col-auto px-0">
+                      <span class="h4 font-weight-bold text-primary mb-0">{{request_item?.data?.PaymentAmount
+                        | number: '0.2'}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-12">
+          <div class="table-responsive" *ngIf="request_item?.utility_payments">
+            <table class="table table-hover align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col" class="px-3 py-2 text-center">BP</th>
+                  <th scope="col" class="px-3 py-2 text-center">Company Code</th>
+                  <th scope="col" class="px-3 py-2 text-center">Main Transaction</th>
+                  <th scope="col" class="px-3 py-2">Sub Transaction</th>
+                  <th scope="col" class="px-3 py-2 text-right">Amount</th>
+                  <th scope="col" class="px-3 py-2 text-center">Account</th>
+                </tr>
+              </thead>
+              <tbody class="list" *ngFor="let requestObj of request_item?.utility_payments">
+                <tr>
+
+                  <th class="px-3 py-1 text-center">
+                    <div class="col-12 px-0">
+                      <span class="h5 font-weight-bold text-dark mb-0">
+                        <i class="fas fa-browser mr-1"></i>
+                      </span>
+                      <span
+                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.payment_additional_detail_created_on
+                        | date: 'dd MMM yyyy HH:mm'}}</span>
+                    </div>
+                  </th>
+                  <th class="px-2 py-1 text-center">
+                    <div class="col-12 px-0">
+                      <span
+                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.payments_additional_detail_type}}</span>
+                    </div>
+                  </th>
+                  <td th class="px-2 py-1">
+                    <div class="col-12 px-0">
+                      <span
+                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.payments_additional_detail_value}}</span>
+                    </div>
+                  </td>
+                  <th class="px-2 py-1 text-center">
+                    <div class="col-12 px-0">
+                      <span
+                        class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.payments_additional_detail_type}}</span>
+                    </div>
+                  </th>
+                  <th class="px-3 py-1 text-right">
+                    <div class="col-12 px-0">
+                      <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.Amount | number: '0.2'}}</span>
+                    </div>
+                  </th>
+                  <td th class="px-2 py-1 text-center">
+                    <div class="col-12 px-0">
+                      <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.AccountNo}}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade" [ngClass]="tabUi.selectedTab === 'requestHistory' ? 'show active' : 'hide inactive'"
+      id="nav-ml-history" role="tabpanel" aria-labelledby="nav-ml-history-tab">
+      <div class="row mt-3 mb-3">
+        <div class="col-lg-12">
+          <div class="list-group">
+            <ng-container *ngFor="let requestObj of request_item?.utility_payments">
+              <div class="list-group-item list-group-item-action py-2">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <div class="row">
+                      <div class="col-lg-auto">
+                        <div class="row">
+                          <div class="col-12">
+                            <span class="h5 font-weight-bold mb-0 mr-4">Transaction Id</span>
+                          </div>
+                          <div class="col-12">
+                            <span class="h5 font-weight-bold text-dark mb-0">
+                              <i class="fab fa-slack-hash mr-1"></i>
+                            </span>
+                            <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.Transaction_Id}}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg">
+                        <div class="row">
+                          <div class="col-12">
+                            <span class="h5 font-weight-bold text-dark mb-0">
+                              <i class="fas fa-tachometer-alt mr-1"></i>
+                            </span>
+                            <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.AccountNo}}</span>
+                          </div>
+                          <div class="col-12">
+                            <span class="h5 font-weight-bold mb-0 mr-1"
+                              [ngClass]="requestObj?.WasDisconnected ? 'text-danger' : 'text-success'">
+                              <i class="fas " [ngClass]="requestObj?.WasDisconnected ? 'fa-lock' : 'fa-unlock'"></i>
+                            </span>
+                            <span class="h5 font-weight-bold mb-0 text-primary"
+                              [ngClass]="requestObj?.WasDisconnected ? 'text-danger' : 'text-success'">{{requestObj?.MeterNo}}</span>
+                          </div>
+                        </div>
+
+
+
+                      </div>
+                      <div class="col-lg-2">
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="row px-3">
+                          <div class="col px-0">
+                            <span class="h5 font-weight-bold mb-0 mr-4">Payment Amount MVR</span>
+                          </div>
+                          <div class="col-auto px-0">
+                            <span class="h4 font-weight-bold text-primary mb-0">{{request_item?.data?.PaymentAmount
+                              | number: '0.2'}}</span>
+                          </div>
+                        </div>
+                        <div class="row px-3">
+                          <div class="col px-0">
+                            <span class="h5 font-weight-bold mb-0 mr-4">Due Amount MVR</span>
+                          </div>
+                          <div class="col-auto px-0">
+                            <span class="h5 font-weight-bold text-muted mb-0">{{request_item?.data?.PaymentAmount
+                              | number: '0.2'}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='request_item?.general_api_error'>
+    <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong>
+      {{request_item?.general_api_error}}
+      ... !</span>
+    <hr class="my-2">
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.employee_id">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.employee_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.employee_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['expires on']">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error['expires on']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.responsibilities">
+          <span class="h5 text-white mb-1 mt-0 d-block">Responsibilities : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12"
+      *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+      <ul class="pl-2 mb-2"
+        *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.work_handover_employee_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">Work handover Employee : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_id">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_id">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.work_handover_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">Work handover : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error.expires_on">
+      <ul class="pl-2 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error.expires_on">
+        <li class="mt-0" *ngFor="let error of request_item?.model_state_error.expires_on">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

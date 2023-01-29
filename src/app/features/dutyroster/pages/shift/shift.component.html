@@ -1,0 +1,302 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-auto col-auto">
+          <h6 class="h2 text-white d-inline-block mb-0">Duty Roster</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">{{pageInfo.page_title | titlecase}}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-success px-2 py-1" (click)="goToShiftGroup()">
+            <i class="fas fa-arrow-circle-left mr-2"></i>Shiftgroup List
+          </button>
+        </div>
+        <div class="col-lg">
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="row mt-2">
+            <div class="col">
+              <label class="form-control-label mb-0 text-light" for="example3cols1Input">Turn Filters </label>
+            </div>
+            <div class="col-auto">
+              <div class="form-group mb-0">
+                <label class="custom-toggle custom-toggle-default">
+                  <input type="checkbox" checked="" [(ngModel)]="filter.show_filters"
+                    (change)="showHideFilters(filter.show_filters ? true : false)">
+                  <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="nav btn-group" role="tablist" *ngIf="requestUi?.viewType">
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'card' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneOne" role="tab" aria-controls="tabPaneOne" aria-selected="true"
+              (click)="changeView('card')">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'list' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneTwo" role="tab" aria-controls="tabPaneTwo" aria-selected="false"
+              (click)="changeView('list')">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'table' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneThree" role="tab" aria-controls="tabPaneThree"
+              aria-selected="false" (click)="changeView('table')">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+
+    <div class="col">
+      <div class="card card-stats mb-3 shadow-lg border" *ngIf="filter.show_filters">
+        <div class="card-body px-3 py-3">
+          <div class="row">
+            <div class="col-sm-6 col-md-2 col-lg-3 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label form-control-sm-label" for="example3cols3Input">Leave Type</label>
+                <select class="form-control form-control-sm" [(ngModel)]="filter.leave_type"
+                  [disabled]="filter.disable_leave_type">
+                  <option value="{{leavetype.Id}}" *ngFor="let leavetype of filter.leave_type_list">
+                    {{leavetype.Name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-1 col-lg-3 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example3cols1Input">Search Text</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Search Text"
+                  name="filter.serachText" [(ngModel)]="filter.serachText" [disabled]="filter.disable_search_text">
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-auto col-lg-2 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example4cols1Input">Supervisor Approval
+                </label>
+                <select class="form-control form-control-sm" [(ngModel)]="filter.supervisor_approval_status"
+                  [disabled]="filter.disable_filter_supervisor_approval_status">
+                  <option value="{{supervisorApprovalStatus.Name}}"
+                    *ngFor="let supervisorApprovalStatus of filter.supervisor_approval_status_list">
+                    {{supervisorApprovalStatus.Label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-1 col-lg-2 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example3cols1Input">Year</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Year" name="filter.year"
+                  [(ngModel)]="filter.year" [disabled]="filter.disable_filter_year">
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md text-right align-self-end">
+              <div class="form-group mb-0">
+                <button class="btn btn-primary btn-sm" (click)="getRequestForPageOneOnly(1)">Search
+                  <i class="fas fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <!-- <div class="card-header p-3">
+          <div class="row">
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary" (click)="showViewCreateLeaveModal()">Apply for
+                Leave</button>
+            </div>
+
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="showViewMedicalCreateLeaveModal()">Apply for
+                Medical Leave</button>
+            </div>
+
+            <div class="col-auto">
+            </div>
+          </div>
+        </div> -->
+
+        <div class="card-body p-3">
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No E-Service User requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ..!</span>
+          </div>
+
+          <app-comp-lib-loading [viewType]="requestUi.loader_size" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                  <ng-container *ngFor="let headerObj of headerButtons">
+                    <a class="nav-item nav-link py-2 px-2"
+                      [ngClass]="filter?.selected_tab === headerObj?.weekNo  ? 'active' : 'inactive'"
+                      (click)="selectTab(headerObj.weekNo, headerObj.year)"
+                      [attr.id]="'nav-tab'+ headerObj?.weekNo + headerObj.year" data-toggle="tab" role="tab"
+                      [attr.aria-controls]="'nav-tab'+ headerObj.weekNo + headerObj.year" aria-selected="true">
+                      <span class="h5 font-weight-bold mb-0"
+                        [ngClass]="filter.selected_tab === headerObj.weekNo  ? 'text-primary' : 'text-dark'">
+                        <i class="fas fa-list-alt"></i> {{headerObj.title}}
+                      </span>
+                    </a>
+                  </ng-container>
+                </div>
+              </nav>
+
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-2">
+
+                  <div class="table-responsive">
+                    <table class="table table-hover align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col" class="text-center px-1 py-2">Employee</th>
+                          <th scope="col" class="text-center px-1 py-2">Shifts</th>
+                          <th scope="col" class="text-center px-1 py-2">Offs</th>
+                        </tr>
+                      </thead>
+                      <tbody class="list"
+                        *ngFor="let employeeObj of week_shifts.weeklyshift_data?.ShiftGroup?.ShiftEmployees">
+                        <tr>
+                          <th class="px-1 py-1">
+                            <span class="h5 text-primary font-weight-bold mb-1">{{employeeObj?.Name}} ({{employeeObj?.EmployeeId}})</span>
+                          </th>
+                          <th class="px-1 py-1">
+                            <span class="h5 text-primary font-weight-bold mb-1">{{requestObj?.noOfNormalShifts}}</span>
+                          </th>
+                          <th class="px-3 py-1">
+                            <span class="h5 text-primary font-weight-bold mb-1">{{requestObj?.noOfOffShifts}}</span>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-10">
+
+                  <div class="table-responsive">
+                    <table class="table table-hover align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col" class="text-center px-1 py-2"></th>
+                          <th scope="col" class="text-center px-1 py-2" *ngFor="let weekObj of week_shifts?.week_data">
+                            <div class="col-12 px-0">
+                              <span>{{weekObj.date | date: 'EEEE'}}</span>
+                            </div>
+                            <div class="col-12 px-0">
+                              <span>{{weekObj.date | date: 'dd MMM yyyy'}}</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="list" *ngFor="let requestObj of request?.items">
+                        <tr>
+                          <th class="px-1 py-1">
+                          </th>
+                          <th class="pl-1 pr-3 py-1">
+                          </th>
+                          <th scope="row" class="px-3 py-1">
+                          </th>
+                          <td class="px-3 py-2">
+                          </td>
+                          <td class="px-1 py-1">
+                          </td>
+                          <td class="pl-1 pr-3 py-1">
+                          </td>
+                          <td class="px-3 py-1 text-right">
+                          </td>
+                          <td class="px-3 pt-2 pb-3 text-right">
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <!-- <ul class="nav nav-tabs side_nav" role="tablist">
+            <li *ngFor="let wallet of headerButtons; let first = first;" [ngClass]="{firstItem: first}" role="presentation" class="accounts_li" [class.active]="selectedwallet===wallet">
+              <a (click)="selectedwallet = wallet" aria-controls="one" role="tab" data-toggle="tab">{{wallet}}</a>
+            </li>
+          </ul>
+          
+          <div class="tab-content">
+            <div *ngIf="selectedwallet === coinwallet[0]" role="tabpanel" class="tab-pane active" id="one">wallet 1 content</div>
+            <div *ngIf="selectedwallet === coinwallet[1]" role="tabpanel" class="tab-pane active" id="two">wallet 2 content</div>
+          </div> -->
+
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'card' ? 'active show' : ''" id="tabPaneOne"
+              role="tabpanel">
+              <!-- Card-View -->
+              <app-shiftgroup-view [request]="request" [requestUi]="requestUi"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'list' ? 'active show' : ''" id="tabPaneTwo"
+              role="tabpanel">
+              <!-- List-View -->
+              <app-shiftgroup-view [request]="request" [requestUi]="requestUi"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'table' ? 'active show' : ''" id="tabPaneThree"
+              role="tabpanel">
+              <!-- Table-View -->
+              <app-shiftgroup-view [request]="request" [requestUi]="requestUi"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-view>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

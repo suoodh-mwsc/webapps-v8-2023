@@ -1,0 +1,224 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Finance</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">{{pageInfo.page_title | titlecase}}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg">
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="row mt-2">
+            <div class="col">
+              <label class="form-control-label mb-0 text-light" for="example3cols1Input">Turn Filters </label>
+            </div>
+            <div class="col-auto">
+              <div class="form-group mb-0">
+                <label class="custom-toggle custom-toggle-default">
+                  <input type="checkbox" checked="" [(ngModel)]="filter.show_filters"
+                    (change)="showHideFilters(filter.show_filters ? true : false)">
+                  <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="nav btn-group" role="tablist" *ngIf="requestUi?.viewType">
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'card' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneOne" role="tab" aria-controls="tabPaneOne" aria-selected="true"
+              (click)="changeView('card')">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'list' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneTwo" role="tab" aria-controls="tabPaneTwo" aria-selected="false"
+              (click)="changeView('list')">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'table' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneThree" role="tab" aria-controls="tabPaneThree"
+              aria-selected="false" (click)="changeView('table')">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+
+    <div class="col">
+      <div class="card card-stats mb-3 shadow-lg border" *ngIf="filter.show_filters">
+        <div class="card-body px-3 py-3">
+          <div class="row">
+            <div class="col-sm-6 col-md-2 col-lg-3 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label form-control-sm-label" for="example3cols3Input">Leave Type</label>
+                <select class="form-control form-control-sm" [(ngModel)]="filter.leave_type"
+                  [disabled]="filter.disable_leave_type">
+                  <option value="{{leavetype.Id}}" *ngFor="let leavetype of filter.leave_type_list">
+                    {{leavetype.Name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-1 col-lg-3 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example3cols1Input">Search Text</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Search Text"
+                  name="filter.serachText" [(ngModel)]="filter.serachText" [disabled]="filter.disable_search_text">
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-auto col-lg-2 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example4cols1Input">Supervisor Approval
+                </label>
+                <select class="form-control form-control-sm" [(ngModel)]="filter.supervisor_approval_status"
+                  [disabled]="filter.disable_filter_supervisor_approval_status">
+                  <option value="{{supervisorApprovalStatus.Name}}"
+                    *ngFor="let supervisorApprovalStatus of filter.supervisor_approval_status_list">
+                    {{supervisorApprovalStatus.Label}}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-1 col-lg-2 pl-xl-2 pr-xl-2">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example3cols1Input">Year</label>
+                <input type="text" class="form-control form-control-sm" placeholder="Year" name="filter.year"
+                  [(ngModel)]="filter.year" [disabled]="filter.disable_filter_year">
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md text-right align-self-end">
+              <div class="form-group mb-0">
+                <button class="btn btn-primary btn-sm" (click)="getRequestForPageOneOnly(1)">Search
+                  <i class="fas fa-search" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col-lg-auto pb-2">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectActionType1" name="selectActionType" checked="true"
+                  [(ngModel)]="filter.selected_action" value="search_by_text" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForType($event)" [disabled]="requestUi.show_loader">
+                <label class="custom-control-label" for="selectActionType1"
+                  [ngClass]="filter.selected_action === 'search_by_text' ? 'font-weight-bold text-primary' : ''">Search
+                  By Customer ID</label>
+              </div>
+            </div>
+            <div class="col-lg-auto pb-2">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectActionType2" name="selectActionType" [(ngModel)]="filter.selected_action"
+                  value="search_by_daily" class="custom-control-input" (ngModelChange)="onChangeEventForType($event)"
+                  [disabled]="requestUi.show_loader">
+                <label class="custom-control-label" for="selectActionType2"
+                  [ngClass]="filter.selected_action === 'search_by_daily' ? 'font-weight-bold text-primary' : ''">Daily
+                  Payments</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="filter.selected_action === 'search_by_text'">
+            <div class="col-lg-4 col-sm-12">
+              <div class="form-group mb-0">
+                <div class="input-group mb-0">
+                  <input class="form-control" (keyup.enter)="getSearchRequest()" [(ngModel)]="filter.search_text"
+                    id="searchText" name="searchText" placeholder="">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" (click)="getSearchRequest()">
+                      <span class="mr-2">Search</span>
+                      <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="filter.selected_action === 'search_by_daily'">
+
+            <div class="col-sm-6 col-md-6 col-lg-3"
+              *ngIf="filter.selected_action === 'search_by_daily' || filter.selected_action === 'search_by_dc_payments'">
+              <div class="form-group mb-0">
+                <label class="form-control-label" for="example4cols1Input">Date
+                </label>
+                <input type="date" class="form-control" (keyup.enter)="getSearchRequest()"
+                  [(ngModel)]="filter.search_date" id="searchDate" name="searchDate" placeholder="">
+              </div>
+            </div>
+
+            <div class="col-sm-auto col-md-auto col-lg-auto mt-auto">
+              <button class="btn btn-primary" (click)="getSearchRequest()">Search
+                <i class="fas fa-search" aria-hidden="true"></i></button>
+            </div>
+            <div class="col-sm col-md col-lg">
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card-body p-3">
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No E-Service User requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ..!</span>
+          </div>
+
+          <app-comp-lib-loading [viewType]="requestUi.loader_size" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'card' ? 'active show' : ''" id="tabPaneOne"
+              role="tabpanel">
+              <app-external-payments-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-external-payments-view>
+            </div>
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'list' ? 'active show' : ''" id="tabPaneTwo"
+              role="tabpanel">
+              <app-external-payments-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-external-payments-view>
+            </div>
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'table' ? 'active show' : ''" id="tabPaneThree"
+              role="tabpanel">
+              <app-external-payments-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-external-payments-view>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

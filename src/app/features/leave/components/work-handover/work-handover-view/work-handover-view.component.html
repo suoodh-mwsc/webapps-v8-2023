@@ -1,0 +1,287 @@
+<section>
+  <div class="row" *ngIf="request && request?.items?.length > 0 && requestUi?.viewType === 'card'">
+    <ng-container *ngFor="let requestObj of request?.items">
+      <div class="col-xl-6 col-md-6">
+        <div class="card card-stats shadow mb-3">
+          <!-- Card body -->
+          <div class="card-body my-auto">
+            <div class="row">
+              <div class="col-auto my-auto pl-2">
+                <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+                  'btn-facebook': requestObj?.leave_request_absence_type_description.includes('Annual'),
+                  'btn-twitter': requestObj?.leave_request_absence_type_description.includes('Medical'),
+                  'btn-google-plus': requestObj?.leave_request_absence_type_description.includes('Compassionate'), 
+                  'btn-pinterest': requestObj?.leave_request_absence_type_description.includes('Circumcision'), 
+                  'btn-youtube': requestObj?.leave_request_absence_type_description.includes('Paternity'), 
+                  'btn-instagram': requestObj?.leave_request_absence_type_description.includes('Maternity')}">
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Annual Leave' || requestObj?.leave_request_absence_type_description === 'Annual leave'">A</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Medical Leave' || requestObj?.leave_request_absence_type_description === 'Medical leave'">M</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Maternity Leave' || requestObj?.leave_request_absence_type_description === 'Maternity leave'">M</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Paternity Leave' || requestObj?.leave_request_absence_type_description === 'Paternity leave'">P</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Compassionate Leave' || requestObj?.leave_request_absence_type_description === 'Compassionate leave'">Co</span>
+                  <span class="btn-inner--icon"
+                    *ngIf="requestObj?.leave_request_absence_type_description === 'Circumcision Leave' || requestObj?.leave_request_absence_type_description === 'Circumcision leave'">Ci</span>
+                  <span class="badge badge-md badge-circle badge-floating badge-success border-white"
+                    *ngIf="requestObj?.leave_request_is_approved">
+                    <i class="fas fa-check-circle"></i>
+                  </span>
+                  <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+                    *ngIf="!requestObj?.leave_request_is_approved">
+                    <i class="fas fa-times-circle"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="col">
+                <div class="row">
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-lg-auto">
+                        <span class="h5 font-weight-bold mb-0">{{requestObj?.leave_request_employee_details}}</span>
+                      </div>
+                      <div class="col-lg-auto">
+                        <span class="h5 font-weight-bold mb-0">
+                          <i class="fas fa-comment"></i>
+                          <span class="h5"> {{requestObj?.leave_request_absence_type_description}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-lg-auto my-auto">
+                        <h5 class="mb-0">
+                          <i class="fas fa-calendar"></i>
+                          <span class="text-primary"> {{requestObj?.leave_request_taken_from | date: 'dd MMM yyyy'}}
+                          </span>
+                          <i class="fas fa-arrow-right"></i>
+                          <span class="text-primary"> {{requestObj?.leave_request_taken_to | date: 'dd MMM
+                            yyyy'}}</span>
+                        </h5>
+                      </div>
+                      <div class="col-lg-auto my-auto">
+                        <span class="h5 font-weight-bold mb-0">
+                          <i class="fas fa-briefcase"></i>
+                          <span class="h5 text-muted"> {{requestObj?.work_handover_responsibilities |
+                            slice:0:48}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col my-auto">
+                    <span class="badge badge-success"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request is approved' || requestObj?.leave_request_status_description === 'Request is approved'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-warning"
+                      *ngIf="requestObj?.leave_request_status_description === 'Pending HR approval' || requestObj?.leave_request_status_description === 'pending HR approval'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-warning"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request is sent for approval' || requestObj?.leave_request_status_description === 'request is sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-danger"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request has expired' || requestObj?.leave_request_status_description === 'request has expired'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-danger"
+                      *ngIf="requestObj?.leave_request_status_description === 'Not sent for approval' || requestObj?.leave_request_status_description === 'not sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class=" col-auto my-auto pl-2">
+                <button type="button" class="btn btn-slack btn-icon-only rounded-circle" data-toggle="tooltip"
+                  data-placement="top" title="Action" (click)="showViewActionModal(requestObj)">
+                  <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</section>
+
+
+
+<section>
+  <ul class="list-group list-group-flush list mt--2 mb-3"
+    *ngIf="request && request.items.length > 0 && requestUi.viewType === 'list'">
+    <ng-container *ngFor="let requestObj of request.items">
+      <li class="list-group-item px-0 py-2">
+        <div class="row align-items-center">
+          <div class="col-auto my-auto mx-2">
+            <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" [ngClass]="{
+              'btn-facebook': requestObj?.leave_request_absence_type_description.includes('Annual'),
+              'btn-twitter': requestObj?.leave_request_absence_type_description.includes('Medical'),
+              'btn-google-plus': requestObj?.leave_request_absence_type_description.includes('Compassionate'), 
+              'btn-pinterest': requestObj?.leave_request_absence_type_description.includes('Circumcision'), 
+              'btn-youtube': requestObj?.leave_request_absence_type_description.includes('Paternity'), 
+              'btn-instagram': requestObj?.leave_request_absence_type_description.includes('Maternity')}">
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Annual Leave' || requestObj?.leave_request_absence_type_description === 'Annual leave'">A</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Medical Leave' || requestObj?.leave_request_absence_type_description === 'Medical leave'">M</span>
+
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Maternity Leave' || requestObj?.leave_request_absence_type_description === 'Maternity leave'">M</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Paternity Leave' || requestObj?.leave_request_absence_type_description === 'Paternity leave'">P</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Compassionate Leave' || requestObj?.leave_request_absence_type_description === 'Compassionate leave'">Co</span>
+              <span class="btn-inner--icon"
+                *ngIf="requestObj?.leave_request_absence_type_description === 'Circumcision Leave' || requestObj?.leave_request_absence_type_description === 'Circumcision leave'">Ci</span>
+              <span class="badge badge-md badge-circle badge-floating badge-success border-white"
+                *ngIf="requestObj?.leave_request_is_approved">
+                <i class="fas fa-check-circle"></i>
+              </span>
+              <span class="badge badge-md badge-circle badge-floating badge-danger border-white"
+                *ngIf="!requestObj?.leave_request_is_approved">
+                <i class="fas fa-times-circle"></i>
+              </span>
+            </button>
+          </div>
+          <div class="col ml--2">
+            <div class="row align-items-center">
+              <div class="col-lg-12">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <h4 class="font-weight-bold mb-0">{{requestObj?.leave_request_employee_details}}</h4>
+                  </div>
+                  <div class="col-auto">
+                    <span class="h5 font-weight-bold mb-0">
+                      <i class="fas fa-comment"></i> <span class="h5 text-muted">
+                        {{requestObj?.leave_request_absence_type_description}}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <h5 class="mb-0">
+                      <i class="fas fa-calendar"></i>
+                      <span class="text-primary"> {{requestObj?.leave_request_taken_from | date: 'dd MMM yyyy'}} </span>
+                      <i class="fas fa-arrow-right"></i>
+                      <span class="text-primary"> {{requestObj?.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+                    </h5>
+                  </div>
+                  <div class="col-auto">
+                    <span class="h5 font-weight-bold mb-0">
+                      <i class="fas fa-briefcase"></i>
+                      <span class="h5 text-muted"> {{requestObj?.work_handover_responsibilities | slice:0:48}}</span>
+                    </span>
+                  </div>
+                  <div class="col my-auto">
+                    <span class="badge badge-success"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request is approved' || requestObj?.leave_request_status_description === 'Request is approved'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-warning"
+                      *ngIf="requestObj?.leave_request_status_description === 'Pending HR approval' || requestObj?.leave_request_status_description === 'pending HR approval'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-warning"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request is sent for approval' || requestObj?.leave_request_status_description === 'request is sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-danger"
+                      *ngIf="requestObj?.leave_request_status_description === 'Request has expired' || requestObj?.leave_request_status_description === 'request has expired'">{{requestObj?.leave_request_status_description}}</span>
+                    <span class="badge badge-danger"
+                      *ngIf="requestObj?.leave_request_status_description === 'Not sent for approval' || requestObj?.leave_request_status_description === 'not sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"
+              title="Approve" (click)="showViewActionModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+            </button>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</section>
+
+
+
+<section>
+  <div class="card shadow-none border-0" *ngIf="request && request?.items?.length > 0 && requestUi?.viewType === 'table'">
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th class="px-3 py-2" scope="col">Requested By</th>
+            <th class="px-3 py-2" scope="col">Responsibilities</th>
+            <th class="px-3 py-2" scope="col">From - To</th>
+            <th class="px-3 py-2" scope="col">Leave Type</th>
+            <th class="px-3 py-2" scope="col">Status</th>
+            <th class="px-3 py-2" scope="col" class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="list" *ngFor="let requestObj of request?.items">
+          <tr>
+            <th class="px-3 py-2">
+              <span class="h5 text-dark">{{requestObj?.leave_request_employee_details}}</span>
+            </th>
+            <td class="px-3 py-2">
+              <span class="h5 font-weight-boldtext-muted">{{requestObj?.work_handover_responsibilities |
+                slice:0:48}}</span>
+            </td>
+            <td class="px-3 py-2">
+              <i class="fas fa-calendar"></i>
+              <span class="h5 text-primary"> {{requestObj?.leave_request_taken_from | date: 'dd MMM yyyy'}} </span>
+              <i class="fas fa-arrow-right"></i>
+              <span class="h5 text-primary"> {{requestObj?.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+            </td>
+            <td class="px-3 py-2">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-comment"></i> <span class="h5 text-muted">
+                  {{requestObj?.leave_request_absence_type_description}}</span>
+              </span>
+            </td>
+            <td class="px-3 py-2">
+              <span class="badge badge-success"
+                *ngIf="requestObj?.leave_request_status_description === 'Request is approved' || requestObj?.leave_request_status_description === 'Request is approved'">{{requestObj?.leave_request_status_description}}</span>
+              <span class="badge badge-warning"
+                *ngIf="requestObj?.leave_request_status_description === 'Pending HR approval' || requestObj?.leave_request_status_description === 'pending HR approval'">{{requestObj?.leave_request_status_description}}</span>
+              <span class="badge badge-warning"
+                *ngIf="requestObj?.leave_request_status_description === 'Request is sent for approval' || requestObj?.leave_request_status_description === 'request is sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+              <span class="badge badge-danger"
+                *ngIf="requestObj?.leave_request_status_description === 'Request has expired' || requestObj?.leave_request_status_description === 'request has expired'">{{requestObj?.leave_request_status_description}}</span>
+              <span class="badge badge-danger"
+                *ngIf="requestObj?.leave_request_status_description === 'Not sent for approval' || requestObj?.leave_request_status_description === 'not sent for approval'">{{requestObj?.leave_request_status_description}}</span>
+            </td>
+            <td class="px-3 py-1 text-right">
+              <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"
+                title="Action" (click)="showViewActionModal(requestObj)">
+                <span class="btn-inner--icon"><i class="fas fa-tasks"></i></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade hide" style="display: none;" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Work Handover Details</h5>
+        <button type="button" class="close py-3" (click)="hideViewActionModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request_item?.data">
+        <app-work-handover-action-model (closeThisModel)="hideViewActionModal()" [request_item]="request_item">
+        </app-work-handover-action-model>
+      </div>
+    </div>
+  </div>
+</div>

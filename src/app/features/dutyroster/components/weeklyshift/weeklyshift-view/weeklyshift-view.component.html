@@ -1,0 +1,158 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <section>
+      <div class="table-responsive" *ngIf="request && request?.items?.length > 0">
+        <table class="table table-hover align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" class="px-3 py-2">Week No</th>
+              <th scope="col" class="px-3 py-2 text-center">Week Details</th>
+              <th scope="col" class="px-3 py-2 text-center">Editing</th>
+              <th scope="col" class="px-3 py-2 text-center">Published</th>
+              <th scope="col" class="px-3 py-2 text-center">Shift Template</th>
+              <th scope="col" class="px-3 py-2 text-center">View Roster</th>
+            </tr>
+          </thead>
+          <tbody class="list" *ngFor="let requestObj of request?.items">
+            <tr (mouseenter)="selectWeek(requestObj)"
+              [ngClass]="requestObj?.Id === request_item?.selected_week?.Id ? 'bg-primary-light' : ''">
+              <th class="px-3 py-1">
+                <div class="col-12 px-0">
+                  <span class="badge badge-primary mr-2">{{requestObj?.Year}}</span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.WeekNumber}}</span>
+                </div>
+              </th>
+              <th class="px-3 py-1 text-center">
+                <div class="col-12 px-0">
+                  <span class="h5 font-weight-bold mb-0 text-primary">
+                    <span class="h5 font-weight-bold text-dark mb-0">
+                      <i class="fas fa-calendar mr-1"></i>
+                    </span>
+                    <span class="text-primary"> {{requestObj?.StartsOn | date: 'dd MMM yyyy'}} </span>
+                    <span class="h5 font-weight-bold text-dark mb-0">
+                      <i class="fas fa-arrow-right mx-1"></i>
+                    </span>
+                    <span class="text-primary"> {{requestObj?.EndsOn | date: 'dd MMM yyyy'}}</span>
+                  </span>
+                </div>
+              </th>
+              <th class="px-3 py-1 text-center">
+                <div class="col-12 px-0">
+                  <span class="h5 font-weight-bold mb-0"
+                    [ngClass]="requestObj?.IsEditingPossible ? 'text-success' : 'text-danger'">
+                    <i class="fas "
+                      [ngClass]="requestObj?.IsEditingPossible ? 'fa-unlock-alt fa-lg mr-2' : 'fa-lock fa-lg mr-2'"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary mr-2">{{requestObj?.EditingPossibleUpto | date: 'dd
+                    MMM
+                    yyyy'}}</span>
+                  <button type="button" class="btn btn-link btn-sm" data-toggle="tooltip" data-placement="top"
+                    title="Update Editing Possible" (click)="showViewUpdateEditingPossibleModal(requestObj)">
+                    <span class="btn-inner--icon text-warning">
+                      <i class="fas fa-edit" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+              </th>
+              <th class="px-3 py-1 text-center">
+                <div class="col-12 px-0">
+                  <span class="h5 font-weight-bold mb-0"
+                    [ngClass]="requestObj?.ReleasedOn ? 'text-success' : 'text-danger'">
+                    <i class="fas "
+                      [ngClass]="requestObj?.ReleasedOn ? 'fa-check-circle fa-lg mr-1' : 'fa-times-circle fa-lg mr-1'"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary">{{requestObj?.ReleasedOn | date: 'dd MMM
+                    yyyy'}}</span>
+                </div>
+              </th>
+              <th class="px-3 py-1 text-center">
+                <div class="col-12 px-0">
+                  <span class="h5 font-weight-bold text-dark mb-0">
+                    <i class="far fa-clock mr-1"></i>
+                  </span>
+                  <span class="h5 font-weight-bold mb-0 text-primary mr-2">{{requestObj?.ShiftTemplate?.Name}}</span>
+                  <button type="button" class="btn btn-link btn-sm" data-toggle="tooltip" data-placement="top"
+                    title="Update Shift Template" (click)="showViewUpdateShiftTemplateModal(requestObj)">
+                    <span class="btn-inner--icon text-warning">
+                      <i class="fas fa-edit" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+              </th>
+              <th class="px-3 py-1 text-center">
+                <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top"
+                  title="Action" (click)="showViewActionModal(requestObj)">
+                  <span class="btn-inner--icon"><i class="fas fa-tasks" aria-hidden="true"></i></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top"
+                  title="Delete" (click)="goToCreateShift(requestObj)">
+                  <span class="btn-inner--icon"><i class="fas fa-arrow-circle-right" aria-hidden="true"></i></span>
+                </button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+<div #ViewActionModal id="ViewActionModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Actions</h5>
+        <button type="button" class="close py-3" (click)="hideViewActionModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request_item?.data">
+        <app-weeklyshift-actions (closeThisModel)="hideViewActionModal()" [request_item]="request_item">
+        </app-weeklyshift-actions>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #ViewUpdateEditingPossibleModal id="ViewUpdateEditingPossibleModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Actions Update Editing Possible</h5>
+        <button type="button" class="close py-3" (click)="hideViewUpdateEditingPossibleModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request_item?.data">
+        <!-- <app-leave-action-model (closeThisModel)="hideViewUpdateEditingPossibleModal()" [request_item]="request_item">
+        </app-leave-action-model> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #ViewUpdateShiftTemplateModal id="ViewUpdateShiftTemplateModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Actions - Update Shift Template</h5>
+        <button type="button" class="close py-3" (click)="hideViewUpdateShiftTemplateModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request_item?.data">
+        <!-- <app-leave-action-model (closeThisModel)="hideViewUpdateShiftTemplateModal()" [request_item]="request_item">
+        </app-leave-action-model> -->
+      </div>
+    </div>
+  </div>
+</div>

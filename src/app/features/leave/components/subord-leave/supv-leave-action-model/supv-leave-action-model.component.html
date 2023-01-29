@@ -1,0 +1,364 @@
+<div *ngIf="request_item?.data">
+  <app-supv-leave-details-common-view [request_item]="request_item">
+  </app-supv-leave-details-common-view>
+
+
+  <div class="card card-stats border mt-3 mb-0">
+    <div class="card-body px-3 py-2">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6 class="card-title text-uppercase text-muted mb-0">Actions</h6>
+        </div>
+
+        <div class="col-lg-12 my-2">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" (click)="changeAction('AddHandover')" *ngIf="request_item?.data?.leave_request_can_add_work_handover">
+              <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+              <span class="btn-inner--text"> Add Handover</span>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="changeAction('Cancel')" *ngIf="request_item?.data?.leave_request_can_cancel">
+              <span class="btn-inner--icon"><i class="fas fa-times-circle"></i></span>
+              <span class="btn-inner--text"> Cancel</span>
+            </button>
+            <button type="button" class="btn btn-info" (click)="changeAction('Recall')" *ngIf="request_item?.data?.leave_request_can_recall">
+              <span class="btn-inner--icon"><i class="fas fa-share"></i></span>
+              <span class="btn-inner--text"> Recall</span>
+            </button>
+            <button type="button" class="btn btn-success" (click)="changeAction('SendForApproval')" *ngIf="request_item?.data?.leave_request_can_send_for_approval">
+              <span class="btn-inner--icon"><i class="fas fa-check-circle"></i></span>
+              <span class="btn-inner--text"> Send for Approval</span>
+            </button>
+            <button type="button" class="btn btn-warning" (click)="changeAction('Shorten')" *ngIf="request_item?.data?.leave_request_can_shorten">
+              <span class="btn-inner--icon"><i class="fas fa-check-circle"></i></span>
+              <span class="btn-inner--text"> Shorten Leave</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="card card-stats border mt-3 mb-0">
+    <div class="card-header px-3 py-2">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6 class="card-title text-uppercase text-muted mb-0">Actions (On Behalf)</h6>
+        </div>
+        <div class="col-lg-12">
+          <div class="row px-2 pt-2">
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_add_work_handover">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType1" name="selectLeaveRequestActionType1"
+                  [(ngModel)]="selectLeaveRequestActionType" value="AddHandover" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'AddHandover' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType1">Add Handover</label>
+              </div>
+            </div>
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_cancel">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType2" name="selectLeaveRequestActionType2"
+                  [(ngModel)]="selectLeaveRequestActionType" value="Cancel" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'Cancel' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType2">Cancel</label>
+              </div>
+            </div>
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_recall">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType3" name="selectLeaveRequestActionType3"
+                  checked="true" [(ngModel)]="selectLeaveRequestActionType" value="Recall" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'Recall' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType3">Recall</label>
+              </div>
+            </div>
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_send_for_approval">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType4" name="selectLeaveRequestActionType4"
+                  [(ngModel)]="selectLeaveRequestActionType" value="SendForApproval" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'SendForApproval' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType4">Send For Supervisor
+                  Approval</label>
+              </div>
+            </div>
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_shorten">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType5" name="selectLeaveRequestActionType5"
+                  [(ngModel)]="selectLeaveRequestActionType" value="Shorten" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'Shorten' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType5">Shorten Leave</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body px-3 py-2">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6 class="card-title text-uppercase text-muted mb-0">Actions (Supervisor Approvals)</h6>
+        </div>
+        <div class="col-lg-12">
+          <div class="row px-2 pt-2">
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_reject">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType8" name="selectLeaveRequestActionType8"
+                  [(ngModel)]="selectLeaveRequestActionType" value="Reject" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'Reject' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType8">Reject</label>
+              </div>
+            </div>
+            <div class="col-lg-6 pb-2" *ngIf="request_item?.data?.leave_request_can_approve">
+              <div class="custom-control custom-radio">
+                <input type="radio" id="selectLeaveRequestActionType9" name="selectLeaveRequestActionType9"
+                  [(ngModel)]="selectLeaveRequestActionType" value="Approve" class="custom-control-input"
+                  (ngModelChange)="onChangeEventForAction($event)"
+                  [checked]=" selectLeaveRequestActionType === 'Approve' ? true : false">
+                <label class="custom-control-label h5" for="selectLeaveRequestActionType9">Approve</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div *ngIf="selectLeaveRequestActionType ==='AddHandover'">
+    <div class="row mt-4 mb-4">
+      <div class="col-lg-12">
+        <div class="card card-stats border mb-0">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-lg-5">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group mb-2">
+                      <label for="toDate" class="h5 text-muted ml-2 mb-1">Employee Id</label>
+                      <input type="text" class="form-control col-12" placeholder="Enter Work handover Employee ID"
+                        name="workhandover_employee_Id" id="workhandover_employee_Id"
+                        [(ngModel)]="request_new.workhandover_employee_Id" (ngModelChange)="onChangeEvent($event)">
+                    </div>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.work_handover_employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.work_handover_employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group mb-2">
+                      <label for="fromDate" class="h5 text-muted ml-2 mb-1">Responsibility</label>
+                      <input type="text" class="form-control col-12" placeholder="Enter Work handover responsibility"
+                        name="responsibilities" id="responsibilities" [(ngModel)]="request_new.responsibilities"
+                        (ngModelChange)="onChangeEvent($event)">
+                    </div>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.responsibilities">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.responsibilities">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                <ul class="pl-5 mb-2" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                  <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                    <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-primary" type="button" (click)="saveHandover()">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i class="fas fa-save"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Adding Work handover ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Add Work handover</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectLeaveRequestActionType ==='Cancel'">
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-danger" type="button" (click)="cancelLeave(request_item?.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                class="fas fa-times-circle"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Cancelling Request ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Cancel Request</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectLeaveRequestActionType ==='Recall'">
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-info" type="button" (click)="recall(request_item?.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i class="fas fa-share"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Sending for Recall ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Recall</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectLeaveRequestActionType ==='SendForApproval'">
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-success" type="button"
+            (click)="sendForSupervisorApproval(request_item?.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                class="fas fa-check-circle"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Sending for Approval ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Send for Approval</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="selectLeaveRequestActionType ==='Shorten'">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card card-stats border mb-0">
+          <div class="card-body p-3">
+            <div class="row">
+              <div class="col-lg-12 px-4">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group mb-2">
+                      <label for="toDate" class="h5 text-muted ml-2 mb-1">Shorten Date</label>
+                      <input type="date" class="form-control col-12" placeholder="Enter Leave new Expiry Date"
+                        name="request_new.expiry_date" id="request_new.expiry_date"
+                        [(ngModel)]="request_new.expiry_date">
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_shorten_date">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_shorten_date">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_shorten_date">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_shorten_to_date">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_shorten_to_date">
+                      <li class="mt-0"
+                        *ngFor="let error of request_item?.model_state_error.leave_request_shorten_to_date">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.employee_id">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.employee_id">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.employee_id">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12"
+                    *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_taken_to">
+                    <ul class="pl-5 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error.leave_request_taken_to">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error.leave_request_taken_to">
+                        <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-12" *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                    <ul class="pl-2 mb-2"
+                      *ngIf="request_item?.model_state_error && request_item?.model_state_error['']">
+                      <li class="mt-0" *ngFor="let error of request_item?.model_state_error['']">
+                        <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 mb-1">
+      <div class="col-lg my-0">
+      </div>
+      <div class="col-lg-auto my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-primary" type="button" (click)="shortenLeave(request_item?.data)">
+            <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i class="fas fa-save"></i></span>
+            <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Saving ...</span>
+            <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Leave Shorten</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="selectLeaveRequestActionType ==='Reject'">
+
+  </div>
+  <div *ngIf="selectLeaveRequestActionType ==='Approve'">
+
+  </div>
+</div>

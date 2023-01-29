@@ -1,0 +1,116 @@
+:root {
+    /* --blue: #5e72e4;
+    --indigo: #5603ad;
+    --purple: #8965e0;
+    --pink: #f3a4b5;
+    --red: #f5365c;
+    --orange: #fb6340;
+    --yellow: #ffd600;
+    --green: #2dce89;
+    --teal: #11cdef;
+    --cyan: #2bffc6;
+    --white: #fff;
+    --gray: #8898aa;
+    --gray-dark: #32325d;
+    --light: #ced4da;
+    --lighter: #e9ecef; */
+    /* --primary: #0063ac; */
+    /* --secondary: #f7fafc;
+    --success: #2dce89;
+    --info: #11cdef;
+    --warning: #fb6340;
+    --danger: #f5365c;
+    --light: #adb5bd;
+    --dark: #212529;
+    --default: #172b4d;
+    --white: #fff;
+    --neutral: #fff;
+    --darker: black;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: Open Sans, sans-serif;
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; */
+}
+
+.text-theme-apple {
+    color: #61b646;
+}
+
+.text-theme-cerulean {
+    color: #00b6eb;
+}
+
+.text-theme-atlantis {
+    color: #afcd36;
+}
+
+.text-theme-endeavour {
+    color: #0063ac;
+}
+
+.bg-primary-light {
+    background-color: #eaecfb !important;
+}
+
+.bg-secondary-light {
+    background-color: #f7fafc !important;
+}
+
+.bg-success-light {
+    background-color: #b0eed3 !important;
+}
+
+.bg-info-light {
+    background-color: #aaedf9 !important;
+}
+
+.bg-warning-light {
+    background-color: #fee6e0 !important;
+}
+
+.bg-danger-light {
+    background-color: #fdd1da !important;
+}
+
+.bg-light-light {
+    background-color: #adb5bd !important;
+}
+
+.bg-dark-light {
+    background-color: #0063ac !important;
+}
+
+.avatar-edirectory {
+    width: 140px !important;
+    height: 140px !important;
+    overflow: hidden;
+}
+
+.avatar-edirectory img {
+    /* IE */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    /* Chrome, Safari */
+    -webkit-filter: grayscale(1);
+    /* Firefox */
+    filter: grayscale(1);
+    /* position: absolute; */
+    width: 140px;
+    height: auto;
+}
+
+
+.avatar-tooltip {
+    width: 140px !important;
+    height: 140px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e9ecef;
+}
+
+
+.border-primary-light
+{
+    border: 1px solid #999999;
+}

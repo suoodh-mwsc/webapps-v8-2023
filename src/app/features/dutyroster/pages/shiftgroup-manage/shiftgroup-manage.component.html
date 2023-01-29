@@ -1,0 +1,364 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-auto">
+          <h6 class="h2 text-white d-inline-block mb-0">Duty Roster</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">Shiftgroup</li>
+              <li class="breadcrumb-item active">{{pageInfo.page_title | titlecase}}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-success px-2 py-1" (click)="showViewCreateModal()">
+            <i class="fas fa-plus-circle mr-2"></i>Add New Year
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-success px-2 py-1" (click)="showViewCreateEmployeeModal()">
+            <i class="fas fa-plus-circle mr-2"></i>Add Employee
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-success px-2 py-1" (click)="showViewCreateSupervisorModal()">
+            <i class="fas fa-plus-circle mr-2"></i>Add Supervisor
+          </button>
+        </div>
+        <div class="col-lg">
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="nav btn-group" role="tablist" *ngIf="requestUi?.viewType">
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'card' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneOne" role="tab" aria-controls="tabPaneOne" aria-selected="true"
+              (click)="changeView('card')">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'list' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneTwo" role="tab" aria-controls="tabPaneTwo" aria-selected="false"
+              (click)="changeView('list')">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" [ngClass]="requestUi.viewType === 'table' ? 'active' : ''"
+              data-toggle="tab" data-target="#tabPaneThree" role="tab" aria-controls="tabPaneThree"
+              aria-selected="false" (click)="changeView('table')">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+
+    <div class="col">
+      <div class="card">
+        <div class="card-body p-3">
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No E-Service User requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ..!</span>
+          </div>
+
+          <app-comp-lib-loading [viewType]="requestUi.loader_size" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'card' ? 'active show' : ''" id="tabPaneOne"
+              role="tabpanel">
+              <!-- Card-View -->
+              <app-shiftgroup-manage-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-manage-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'list' ? 'active show' : ''" id="tabPaneTwo"
+              role="tabpanel">
+              <!-- List-View -->
+              <app-shiftgroup-manage-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-manage-view>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="requestUi.viewType === 'table' ? 'active show' : ''" id="tabPaneThree"
+              role="tabpanel">
+              <!-- Table-View -->
+              <app-shiftgroup-manage-view [request]="request" [requestUi]="requestUi" [filter]="filter"
+                (requestToRefreshApiData)="refreshApiData()">
+              </app-shiftgroup-manage-view>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #ViewModalBackdrop class=""></div>
+
+
+
+<div #ViewCreateModal id="ViewCreateModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Create New</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-stats border mb-0">
+              <div class="card-body p-3">
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='request_item?.general_api_error'>
+                      <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                      <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}} ...
+                        !</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="weeklyshift_year" class="h5 text-muted ml-2 mb-1">Year</label>
+                          <select class="form-control" [(ngModel)]="request_item.weeklyshift_year"
+                            (ngModelChange)="onChangeEvent($event)" [disabled]="request_item.disable_year_list">
+                            <option value="{{requestObj.Year}}" *ngFor="let requestObj of request_item.year_list">
+                              {{requestObj.Year}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                          <li class="mt-0" *ngFor="let error of request_item?.model_state_error['model.Name']">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="shift_template" class="h5 text-muted ml-2 mb-1">Shift Template</label>
+                          <select class="form-control" [(ngModel)]="request_item.shift_template"
+                            (ngModelChange)="onChangeEvent($event)" [disabled]="request_item.disable_shift_template_list">
+                            <option value="{{requestObj.Id}}" *ngFor="let requestObj of request_item.shift_template_list">
+                              {{requestObj.Name}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Description']">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Description']">
+                          <li class="mt-0" *ngFor="let error of request_item?.model_state_error['model.Description']">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-3 my-0">
+            <div class="form-group float-right my-0">
+              <button class="btn btn-icon btn-primary mb-0" type="button" (click)="create()"
+                [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                    class="fas fa-spinner fa-spin"></i></span>
+                <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                    class="fas fa-save"></i></span>
+                <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Saving ...</span>
+                <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #ViewCreateEmployeeModal id="ViewCreateEmployeeModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Add New Employee</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateEmployeeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-stats border mb-0">
+              <div class="card-body p-3">
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='request_item?.general_api_error'>
+                      <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                      <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}} ...
+                        !</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="shiftgroup_employee" class="h5 text-muted ml-2 mb-1">Employee Id</label>
+                          <input type="text" class="form-control col-12" placeholder="Enter Employee Id"
+                            name="request_item.shiftgroup_employee" [(ngModel)]="request_item.shiftgroup_employee"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                          <li class="mt-0" *ngFor="let error of request_item?.model_state_error['model.Name']">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-3 my-0">
+            <div class="form-group float-right my-0">
+              <button class="btn btn-icon btn-primary mb-0" type="button" (click)="create()"
+                [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                    class="fas fa-spinner fa-spin"></i></span>
+                <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                    class="fas fa-save"></i></span>
+                <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Saving ...</span>
+                <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #ViewCreateSupervisorModal id="ViewCreateSupervisorModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Add New Employee</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateSupervisorModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-stats border mb-0">
+              <div class="card-body p-3">
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='request_item?.general_api_error'>
+                      <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                      <span class="alert-text"><strong>Error !</strong> {{request_item?.general_api_error}} ...
+                        !</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group mb-2">
+                          <label for="shiftgroup_supervisor" class="h5 text-muted ml-2 mb-1">Employee Id</label>
+                          <input type="text" class="form-control col-12" placeholder="Enter Employee Id"
+                            name="request_item.shiftgroup_supervisor" [(ngModel)]="request_item.shiftgroup_supervisor"
+                            (ngModelChange)="onChangeEvent($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="request_item?.model_state_error && request_item?.model_state_error['model.Name']">
+                          <li class="mt-0" *ngFor="let error of request_item?.model_state_error['model.Name']">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-3 my-0">
+            <div class="form-group float-right my-0">
+              <button class="btn btn-icon btn-primary mb-0" type="button" (click)="create()"
+                [disabled]="request_item?.disable_save_button || request_item?.show_model_loader">
+                <span class="btn-inner--icon" *ngIf="request_item?.show_model_loader"><i
+                    class="fas fa-spinner fa-spin"></i></span>
+                <span class="btn-inner--icon" *ngIf="!request_item?.show_model_loader"><i
+                    class="fas fa-save"></i></span>
+                <span class="btn-inner--text" *ngIf="request_item?.show_model_loader">Saving ...</span>
+                <span class="btn-inner--text" *ngIf="!request_item?.show_model_loader">Save</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

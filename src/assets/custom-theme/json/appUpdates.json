@@ -1,0 +1,98 @@
+[
+	{
+		"release_id": "9616f874-875b-4dac-f90f-08d8dd8d7923",
+		"release_category": "Staff Portal",
+		"release_created_by": "Mohamed Suoodh (1222)",
+		"release_created_on": "2021-03-11T23:00:00.1950314",
+		"release_build_target": "dev",
+		"release_reference": "staff-portal 1.1.11.7",
+		"release_enviroment": "Production",
+		"release_description": "Beta BugFix",
+		"release_updates_list": [
+			{
+				"updated_type": "UI",
+				"updated_description": "Notifications Avator change to default picture",
+				"updated_module": "Staff Portal",
+				"updated_page": "Nav Bar"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "Not displaying Calendar Event for End of Month (28 FEB 2021) - Error Fixed",
+				"updated_module": "Staff Portal",
+				"updated_page": "Calendar"
+			}
+		]
+	},
+	{
+		"release_id": "9616f874-875b-4dac-f90f-08d8dd8d7923",
+		"release_category": "Staff Portal",
+		"release_created_by": "Mohamed Suoodh (1222)",
+		"release_created_on": "2021-03-05T23:00:00.1950314",
+		"release_build_target": "dev",
+		"release_reference": "staff-portal 1.1.11.7",
+		"release_enviroment": "Production",
+		"release_description": "Beta BugFix",
+		"release_updates_list": [
+			{
+				"updated_type": "UI",
+				"updated_description": "view notifications panel from nav bar",
+				"updated_module": "Staff Portal",
+				"updated_page": "Nav Bar"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "Disable Single Request Create Button",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Overtime Prior Approval"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "Disable Single Request Create Button",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Overtime"
+			}
+		]
+	},
+	{
+		"release_id": "9616f874-875b-4dac-f90f-08d8dd8d7923",
+		"release_category": "Staff Portal",
+		"release_created_by": "Mohamed Suoodh (1222)",
+		"release_created_on": "2021-03-04T16:00:00.1950314",
+		"release_build_target": "dev",
+		"release_reference": "staff-portal 1.1.10.1",
+		"release_enviroment": "Production",
+		"release_description": "Beta BugFix",
+		"release_updates_list": [
+			{
+				"updated_type": "UI, API Intergration",
+				"updated_description": "Certificated medical leave is creating as self medical",
+				"updated_module": "Staff Portal",
+				"updated_page": "Medical Leave - Create"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "Disable Reject Button in Pening Approval View",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Pending Overtime Prior Approval"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "After Approval List view is Not Updating",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Pending Overtime Prior Approval"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "After Approval / Reject List view is Not Updating",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Pending Overtime"
+			},
+			{
+				"updated_type": "UI",
+				"updated_description": "After Approval / Reject List view is Not Updating",
+				"updated_module": "Supervisor Portal",
+				"updated_page": "Pending Leave"
+			}
+		]
+	}
+]

@@ -1,0 +1,78 @@
+<!-- Header -->
+<!-- Header -->
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Common</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">E-Directory</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <!-- Card header -->
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group mb-0">
+                    <div class="input-group mb-0">
+                      <input class="form-control" (keyup.enter)="search(searchValue)" [(ngModel)]="searchValue"
+                        id="searchValue" name="searchValue" placeholder="Staff ID | Domain User | Name">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" (click)="search(searchValue)">Search <i class="fas fa-search"
+                            aria-hidden="true"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+          <!-- <div class="alert alert-warning px-3 py-2 mb-3" role="alert"
+            *ngIf="!showLoader && requestList && requestList.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No Employee Records Found ..!</span>
+          </div> -->
+
+          <div class="alert alert-success fade show px-3 py-2 mb-3" role="alert"
+            *ngIf="showLoader && requestList && requestList.length >= 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Please find the Employee records listed below ...!</span>
+          </div>
+
+          <div class="alert alert-danger py-2 px-3" role="alert" *ngIf="general_api_error">
+            <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span class="alert-text"><strong>Error !</strong> {{general_api_error}}</span>
+          </div>
+
+          <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+          <app-clib-e-directory-view-card [requestList]="requestList" [showLoader]="showLoader">
+          </app-clib-e-directory-view-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,193 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Staff Portal</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active">{{pageInfo.page_title | titlecase}}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg">
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="row mt-2">
+            <div class="col">
+              <label class="form-control-label mb-0 text-light" for="example3cols1Input">Turn Filters </label>
+            </div>
+            <div class="col-auto">
+              <div class="form-group mb-0">
+                <label class="custom-toggle custom-toggle-default">
+                  <input type="checkbox" checked="" [(ngModel)]="filter.show_filters"
+                    (change)="showHideFilters(filter.show_filters ? true : false)">
+                  <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-auto col-auto text-right">
+          <div class="nav btn-group" role="tablist">
+            <button class="btn btn-secondary px-2 py-1 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+              aria-controls="tabPaneOne" aria-selected="true" (click)="changeViewX('card')">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+              aria-controls="tabPaneTwo" aria-selected="false" (click)="changeViewX('list')">
+              <i class="fas fa-list"></i>
+            </button>
+            <button class="btn btn-secondary px-2 py-1" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+              aria-controls="tabPaneThree" aria-selected="false" (click)="changeViewX('table')">
+              <i class="fas fa-table"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <!-- <div class="card-header p-3">
+        </div> -->
+        <div class="card-body p-3">
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No Setting to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="requestUi.show_loader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ..!</span>
+          </div>
+
+          <app-comp-lib-loading [viewType]="requestUi.loader_size" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+
+
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th class="px-3 py-2" scope="col">Page</th>
+                  <th class="px-3 py-2 text-center" scope="col" style="width: 250px;">View Type</th>
+                  <th class="px-3 py-2 text-center" scope="col" style="width: 100px;">Show Avator</th>
+                </tr>
+              </thead>
+              <tbody class="list" *ngFor="let requestObj of request?.items">
+                <tr>
+                  <th class="px-3 py-2">
+                    <span class="h5 text-dark">{{requestObj?.page_title_friendly}}</span>
+                  </th>
+                  <td class="px-3 py-1 text-center">
+                    <button class="btn btn-primary px-2 py-1 mr-2"
+                      [ngClass]="requestObj?.view_type === 'card' ? 'btn-success' : 'btn-primary'"
+                      (click)="changeView(requestObj, 'card')">
+                      <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="btn btn-primary px-2 py-1 mr-2"
+                      [ngClass]="requestObj?.view_type === 'list' ? 'btn-success' : 'btn-primary'"
+                      (click)="changeView(requestObj, 'list')">
+                      <i class="fas fa-list"></i>
+                    </button>
+                    <button class="btn btn-primary px-2 py-1"
+                      [ngClass]="requestObj?.view_type === 'table' ? 'btn-success' : 'btn-primary'"
+                      (click)="changeView(requestObj, 'table')">
+                      <i class="fas fa-table"></i>
+                    </button>
+
+                    <!-- <span class="h5 text-dark">{{requestObj?.view_type}}</span> -->
+                  </td>
+                  <td class="px-3 py-1 text-center">
+                    <span class="h5 font-weight-bold mb-0" *ngIf="requestObj?.avatar_settings">
+                      <button class="btn btn-primary px-2 py-1 mr-2"
+                        [ngClass]="!requestObj?.show_avatar ? 'btn-primary' : ''"
+                        (click)="changeAvatar(requestObj, true)" *ngIf="!requestObj?.show_avatar">
+                        <i class="fas fa-eye-slash"></i>
+                      </button>
+                      <button class="btn btn-primary px-2 py-1 mr-2"
+                        [ngClass]="requestObj?.show_avatar ? 'btn-success' : ''"
+                        (click)="changeAvatar(requestObj, false)" *ngIf="requestObj?.show_avatar">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 
+<div #ViewCreateLeaveModal id="ViewCreateLeaveModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+          *ngIf="!requestUi?.show_loader && !request?.leave_quota">
+          <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+          <span class="alert-text"><strong>Oh Snap!</strong> No leave quota yet ...!</span>
+        </div>
+
+        <div *ngIf="request && request?.leave_quota">
+          <app-leave-create-model (someEvent)="getLeaveQuotaFromSap($event)"
+            (closeThisModel)="hideViewCreateLeaveModal()" [request]="request" [requestUi]="requestUi">
+          </app-leave-create-model>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div #ViewMedicalCreateLeaveModal id="ViewMedicalCreateLeaveModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewMedicalCreateLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+          *ngIf="!requestUi?.show_loader && !request?.leave_quota">
+          <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+          <span class="alert-text"><strong>Oh Snap!</strong> No leave quota yet ...!</span>
+        </div>
+
+        <div *ngIf="request?.leave_quota">
+          <app-medical-leave-create-model (someEvent)="getLeaveQuotaFromSap($event)"
+            (closeThisModel)="hideViewMedicalCreateLeaveModal()" [request]="request" [requestUi]="requestUi">
+          </app-medical-leave-create-model>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

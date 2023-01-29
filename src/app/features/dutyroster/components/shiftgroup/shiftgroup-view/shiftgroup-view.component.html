@@ -1,0 +1,61 @@
+<div class="row" *ngIf="request && request?.items?.length > 0 && requestUi?.viewType === 'card'">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <section>
+      <div class="row" *ngIf="request && request?.items?.length > 0">
+        <ng-container *ngFor="let requestObj of request?.items">
+          <div class="col-xl-4 col-md-4">
+            <summary class="card card-stats mb-3" (mouseenter)="selectAccount(requestObj)"
+              [ngClass]="requestObj?.IsDeleted ? 'bg-light border border-secondary' : 'border'">
+              <div class="card-body my-auto py-2 px-3">
+                <div class="row">
+                  <div class="col-lg">
+                    <div class="row">
+                      <div class="col-12 my-auto">
+                        <span class="h5 text-primary mb-0"
+                          [ngClass]="requestObj?.IsDeleted ? 'text-danger' : ''">{{requestObj?.Name}}</span>
+                      </div>
+                      <div class="col-12 my-auto">
+                        <h5 class="mb-0">
+                          <span class="text-dark" [ngClass]="requestObj?.IsDeleted ? 'text-danger' : ''">
+                            {{requestObj?.Description}}</span>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-auto my-auto">
+
+                    <button type="button" class="btn btn-youtube btn-icon-only rounded-circle" data-toggle="tooltip"
+                      data-placement="top" title="Delete" (click)="getRequestForDelete(requestObj)"
+                      *ngIf="!requestObj?.IsDeleted && request?.user_access === 'hr'">
+                      <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                    </button>
+
+                    <button type="button" class="btn btn-slack btn-icon-only rounded-circle" data-toggle="tooltip"
+                      data-placement="top" title="Restore" (click)="getRequestForRestore(requestObj)"
+                      *ngIf="requestObj?.IsDeleted && request?.user_access === 'hr'">
+                      <span class="btn-inner--icon"><i class="fas fa-undo"></i></span>
+                    </button>
+
+                    <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" data-toggle="tooltip"
+                      data-placement="top" title="HR - Go to Details" (click)="goToWeeklyshift(requestObj)"
+                      *ngIf="request?.user_access === 'hr'">
+                      <span class="btn-inner--icon"><i class="fas fa-arrow-circle-right"></i></span>
+                    </button>
+
+                    <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" data-toggle="tooltip"
+                      data-placement="top" title="Supervisor - Go to Details" (click)="goToCreateShift(requestObj)"
+                      *ngIf="request?.user_access === 'supervisor'">
+                      <span class="btn-inner--icon"><i class="fas fa-arrow-circle-right"></i></span>
+                    </button>
+
+                  </div>
+                </div>
+              </div>
+            </summary>
+
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+</div>

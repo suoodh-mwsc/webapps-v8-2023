@@ -1,0 +1,178 @@
+/* You can add global styles to this file, and also import other style files */
+
+// @import '~@fullcalendar/core/main.css';
+// @import '~@fullcalendar/daygrid/main.css';
+
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+@import "~@fullcalendar/timegrid/main.css";
+@import "~@fullcalendar/list/main.css";
+@import "~@fullcalendar/bootstrap/main.css";
+
+// @import './assets/vendor//nucleo/css/nucleo.css';
+// @import './assets/vendor/@fortawesome/fontawesome-free/css/all.min.css';
+@import "./assets/scss/argon.scss";
+/* bootstrap */
+// @import './assets/scss/bootstrap/bootstrap-grid.scss';
+// @import './assets/scss/bootstrap/bootstrap-reboot.scss';
+// @import './assets/scss/bootstrap/alert';
+// @import './assets/scss/bootstrap/badge';
+// @import './assets/scss/bootstrap/breadcrumb';
+// @import './assets/scss/bootstrap/button-group';
+// @import './assets/scss/bootstrap/buttons';
+// @import './assets/scss/bootstrap/card';
+// @import './assets/scss/bootstrap/carousel';
+// @import './assets/scss/bootstrap/close';
+// @import './assets/scss/bootstrap/code';
+// @import './assets/scss/bootstrap/custom-forms';
+// @import './assets/scss/bootstrap/dropdown';
+// @import './assets/scss/bootstrap/forms';
+// @import './assets/scss/bootstrap/functions';
+// @import './assets/scss/bootstrap/grid';
+// @import './assets/scss/bootstrap/images';
+// @import './assets/scss/bootstrap/input-group';
+// @import './assets/scss/bootstrap/jumbotron';
+// @import './assets/scss/bootstrap/list-group';
+// @import './assets/scss/bootstrap/media';
+// @import './assets/scss/bootstrap/mixins';
+// @import './assets/scss/bootstrap/modal';
+// @import './assets/scss/bootstrap/nav';
+// @import './assets/scss/bootstrap/navbar';
+// @import './assets/scss/bootstrap/pagination';
+// @import './assets/scss/bootstrap/popover';
+// @import './assets/scss/bootstrap/print';
+// @import './assets/scss/bootstrap/progress';
+// @import './assets/scss/bootstrap/reboot';
+// @import './assets/scss/bootstrap/root';
+// @import './assets/scss/bootstrap/spinners';
+// @import './assets/scss/bootstrap/tables';
+// @import './assets/scss/bootstrap/toasts';
+// @import './assets/scss/bootstrap/tooltip';
+// @import './assets/scss/bootstrap/transitions';
+// @import './assets/scss/bootstrap/type';
+// @import './assets/scss/bootstrap/utilities';
+// @import './assets/scss/bootstrap/variables';
+/* bootstrap-mixins */
+// @import './assets/scss/bootstrap/mixins/alert';
+// @import './assets/scss/bootstrap/mixins/background-variant';
+// @import './assets/scss/bootstrap/mixins/badge';
+// @import './assets/scss/bootstrap/mixins/border-radius';
+// @import './assets/scss/bootstrap/mixins/box-shadow';
+// @import './assets/scss/bootstrap/mixins/breakpoints';
+// @import './assets/scss/bootstrap/mixins/buttons';
+// @import './assets/scss/bootstrap/mixins/caret';
+// @import './assets/scss/bootstrap/mixins/clearfix';
+// @import './assets/scss/bootstrap/mixins/deprecate';
+// @import './assets/scss/bootstrap/mixins/float';
+// @import './assets/scss/bootstrap/mixins/forms';
+// @import './assets/scss/bootstrap/mixins/gradients';
+// @import './assets/scss/bootstrap/mixins/grid-framework';
+// @import './assets/scss/bootstrap/mixins/grid';
+// @import './assets/scss/bootstrap/mixins/hover';
+// @import './assets/scss/bootstrap/mixins/image';
+// @import './assets/scss/bootstrap/mixins/list-group';
+// @import './assets/scss/bootstrap/mixins/lists';
+// @import './assets/scss/bootstrap/mixins/nav-divider';
+// @import './assets/scss/bootstrap/mixins/pagination';
+// @import './assets/scss/bootstrap/mixins/reset-text';
+// @import './assets/scss/bootstrap/mixins/resize';
+// @import './assets/scss/bootstrap/mixins/screen-reader';
+// @import './assets/scss/bootstrap/mixins/size';
+// @import './assets/scss/bootstrap/mixins/table-row';
+// @import './assets/scss/bootstrap/mixins/text-emphasis';
+// @import './assets/scss/bootstrap/mixins/text-hide';
+// @import './assets/scss/bootstrap/mixins/text-truncate';
+// @import './assets/scss/bootstrap/mixins/transition';
+// @import './assets/scss/bootstrap/mixins/visibility';
+/* bootstrap-utilities */
+// @import './assets/scss/bootstrap/utilities/align';
+// @import './assets/scss/bootstrap/utilities/background';
+// @import './assets/scss/bootstrap/utilities/borders';
+// @import './assets/scss/bootstrap/utilities/clearfix';
+// @import './assets/scss/bootstrap/utilities/display';
+// @import './assets/scss/bootstrap/utilities/embed';
+// @import './assets/scss/bootstrap/utilities/flex';
+// @import './assets/scss/bootstrap/utilities/float';
+// @import './assets/scss/bootstrap/utilities/overflow';
+// @import './assets/scss/bootstrap/utilities/position';
+// @import './assets/scss/bootstrap/utilities/screenreaders';
+// @import './assets/scss/bootstrap/utilities/shadows';
+// @import './assets/scss/bootstrap/utilities/sizing';
+// @import './assets/scss/bootstrap/utilities/spacing';
+// @import './assets/scss/bootstrap/utilities/stretched-link';
+// @import './assets/scss/bootstrap/utilities/text';
+// @import './assets/scss/bootstrap/utilities/visibility';
+
+// @import "toastr";
+// @import "~ngx-toastr/toastr.css";
+/* regular style toast  */
+@import "~ngx-toastr/toastr";
+/* bootstrap style toast  */
+/* or import a bootstrap 4 alert styled design (SASS ONLY)  */
+/* should be after your bootstrap imports, it uses bs4 variables, mixins, functions  */
+// @import '~ngx-toastr/toastr-bs4-alert';
+/* if you'd like to use it without importing all of bootstrap it requires  */
+/* @import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr-bs4-alert'; */
+
+.owl-carousel {
+  width: 90% !important;
+  margin: 10% auto;
+}
+
+.owl-carousel .owl-nav {
+  overflow: hidden;
+  height: 0px;
+}
+
+.owl-carousel .nav-btn {
+  height: 47px;
+  position: absolute;
+  width: 26px;
+  cursor: pointer;
+  top: 30% !important;
+}
+
+.owl-carousel .owl-prev.disabled,
+.owl-carousel .owl-next.disabled {
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+//   .owl-carousel .prev-slide {
+//     background: url(./assets/images/nav-icon.png) no-repeat scroll 0 0;
+//     left: -33px;
+//   }
+
+//   .owl-carousel .next-slide {
+//     background: url(./assets/images/nav-icon.png) no-repeat scroll -24px 0px;
+//     right: -33px;
+//   }
+
+.owl-carousel .prev-slide:hover {
+  background-position: 0px -53px;
+}
+
+.owl-carousel .next-slide:hover {
+  background-position: -24px -53px;
+}
+
+.toast-container .ngx-toastr {
+  width: 350px;
+  padding: 10px 15px 10px 50px;
+}
+
+.toast-title {
+  font-size: 14px !important;
+}
+
+.toast-message {
+  font-size: 13px !important;
+}
+
+.badge-light {
+  color: #606972 !important;
+  background-color: #dbdbdb !important;
+}

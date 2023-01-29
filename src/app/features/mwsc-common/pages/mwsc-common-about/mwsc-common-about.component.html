@@ -1,0 +1,69 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Staff Portal</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a [routerLink]="['/staff-portal']"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a>About</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <a class="btn btn-sm btn-neutral" [routerLink]="['/staff-portal']">Go to Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0">Updates</h3>
+        </div>
+        <div class="card-body">
+          <div class="timeline timeline-one-side" data-timeline-content="axis" data-timeline-axis-style="dashed"
+            *ngIf="updateList">
+
+            <ng-container *ngFor="let updateObj of updateList; let i = index">
+              <div class="timeline-block">
+                <span class="timeline-step badge-success">
+                  <i class="ni ni-bell-55"></i>
+                </span>
+                <div class="timeline-content" style="margin-right: 50px !important; max-width: 90% !important;">
+                  <small class="text-muted font-weight-bold">{{updateObj?.release_created_on}}</small>
+                  <h4 class="text-primary mt-3 mb-2">{{updateObj?.release_description}}</h4>
+                  <!-- <p class=" text-sm mt-1 mb-0">Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis
+                    natoque
+                    penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p> -->
+
+                  <ul class="mb-1" *ngFor="let updateListObj of updateObj.release_updates_list">
+                    <li class="h5 mb-0">{{updateListObj?.updated_description}}
+                      <span class="badge badge-primary ml-4">{{updateListObj?.updated_module}}</span>
+                      <span class="badge badge-info ml-1">{{updateListObj?.updated_page}}</span>
+                      <span class="badge badge-default ml-1">{{updateListObj?.updated_type}}</span>
+                    </li>
+                  </ul>
+                  <div class="mt-3">
+                    <span class="badge badge-pill badge-success">{{updateObj?.release_enviroment}}</span>
+                    <span class="badge badge-pill badge-success">{{updateObj?.release_reference}}</span>
+                    <!-- <span class="badge badge-pill badge-success">creative</span> -->
+                  </div>
+                  <hr class="mb-0 mt-3" *ngIf="i+1 < updateList?.length">
+                </div>
+              </div>
+            </ng-container>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

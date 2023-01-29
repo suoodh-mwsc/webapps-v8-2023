@@ -1,0 +1,524 @@
+<div class="row" *ngIf="request && request?.items?.length > 0">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+    <section>
+      <div class="row" *ngIf="request && request?.items?.length > 0 && requestUi?.viewType === 'card'">
+        <ng-container *ngFor="let requestObj of request?.items">
+          <div class="col-xl-12 col-md-12">
+
+            <summary class="card card-stats mb-1" (mouseenter)="selectAccount(requestObj)"
+              [ngClass]="requestObj?.Id === request_item?.selected_application?.Id ? 'bg-primary-light border border-primary' : ''">
+              <!-- Card body -->
+              <div class="card-body my-auto py-2 px-3">
+                <div class="row">
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-12 my-auto">
+                        <h5 class="mb-0">
+                          <i class="fas fa-envelope mr-2"></i>
+                          <span class="h4 text-dark">{{requestObj?.CreatedBy}}</span>
+                        </h5>
+                      </div>
+                      <div class="col-12 my-auto">
+                        <h5 class="mb-0">
+                          <i class="fas fa-copy"></i>
+                          <span class="text-primary"> {{requestObj?.ApplicationType?.Description}}</span>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-lg my-auto">
+                        <h5 class="mb-0">
+                          <i class="fas fa-calendar"></i>
+                          <span class="text-primary"> {{requestObj?.CreatedOn | date: 'dd/MM/yyyy HH:mm a'}}</span>
+                        </h5>
+                      </div>
+                      <div class="col-lg-auto my-auto">
+                        <span class="badge badge-primary" [ngClass]="{'badge-success': requestObj.CurrentStageDescription === 'Completed',
+                        'badge-warning': requestObj.CurrentStageDescription === 'Processing',
+                        'badge-muted': requestObj.CurrentStageDescription === 'Draft',
+                        'badge-danger': requestObj.CurrentStageDescription === 'Incomplete'}">
+                          {{requestObj?.CurrentStageDescription}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </summary>
+
+          </div>
+        </ng-container>
+      </div>
+    </section>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+    <div class="card card-stats shadow mb-1" *ngIf="request_item?.selected_application">
+      <div class="card-body my-auto p-2">
+
+        <div class="row">
+          <div class="col-lg-12" *ngIf="request_item?.selected_application?.CreatedBy">
+            <div class="row px-4 mb-2">
+              <div class="col-lg-auto my-auto pl-1">
+                <img src="../../assets/img/brand/company-logo.png" class="navbar-brand-img" alt="..." style="max-width: 120px;">
+              </div>
+              <div class="col-lg px-1">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <span class="h3 font-weight-bold mb-0 text-primary">Male' Water and Sewerage Company</span>
+                  </div>
+                  <div class="col-lg-12">
+                    <span class="h3 font-weight-bold mb-0 text-primary dhivehi-text">މާލޭ ވޯޓަރ އެންޑް ސްވަރޭޖް ކޮންޕެނީ ޕްރައިވެޓް ލިމިޓެޑް</span>
+                  </div>
+                  <div class="col-lg-12">
+                    <span class="h6 font-weight-bold mb-0 text-primary mr-2">Fen Building, Ameenee Magu,</span>
+                    <span class="h6 font-weight-bold mb-0 text-primary">Malé 20375, Republic of Maldives.</span>
+                  </div>
+                  <div class="col-lg-12">
+                    <span class="h6 font-weight-bold mb-0 text-primary mr-2">T: +960 332 3209</span>
+                    <span class="h6 font-weight-bold mb-0 text-primary mr-2">F: +960 332 4306</span>
+                    <span class="h6 font-weight-bold mb-0 text-primary mr-2">E: mail@mwsc.com.mv</span>
+                    <span class="h6 font-weight-bold mb-0 text-primary">W: www.mwsc.com.mv</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 my-auto pr-1">
+                <div class="row">
+                  <div class="col-lg-12 text-right">
+                    <span class="h2 font-weight-bold mb-0 text-primary">Application for Water & Sewer Services</span>
+                  </div>
+                  <div class="col-lg-12 text-right">
+                    <span class="h2 font-weight-bold mb-0 text-primary dhivehi-text">ފެނާއި ނަރުދަމާގެ ޚިދުމަތްތަކަށް އެދޭ ފޯމް</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row px-3 mb-2">
+              <div class="col-lg-3 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Application User</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <span class="h5">
+                          <i class="fas fa-envelope mr-2"></i>
+                          <span
+                            class="h5 font-weight-bold mb-0">{{request_item?.selected_application?.CreatedBy}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Application Type</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <span class="h5">
+                          <i class="fas fa-copy mr-2"></i>
+                          <span
+                            class="h5 text-primary font-weight-bold mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Application Submitted On</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <span class="h5">
+                          <i class="fas fa-calendar mr-2"></i>
+                          <span
+                            class="h5 text-primary font-weight-bold mb-0">{{request_item?.selected_application?.CreatedOn
+                            | date:
+                            'dd/MM/yyyy HH:mm a'}}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Application Status</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <span class="badge badge-primary" [ngClass]="{'badge-success': request_item?.selected_application?.CurrentStageDescription === 'Completed',
+                        'badge-warning': request_item?.selected_application?.CurrentStageDescription === 'Processing',
+                        'badge-muted': request_item?.selected_application?.CurrentStageDescription === 'Draft',
+                        'badge-danger': request_item?.selected_application?.CurrentStageDescription === 'Incomplete'}">
+                          {{request_item?.selected_application?.CurrentStageDescription}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row px-3 mb-2" *ngIf="request_item?.selected_application?.OwnerDetails || request_item?.selected_application?.OwnerDetails?.length > 0">
+              <div class="col-lg-12 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Owner Details</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Secondary Contact :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.OwnerDetails?.SecondaryContactNo}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Identification Details :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.OwnerDetails?.IdentificationDetails}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Business Partner :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.OwnerDetails?.BusinessPartnerId}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row px-3 mb-2">
+              <div class="col-lg-12 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Application Details</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ContactName}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Number :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ContactNumber}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Status :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.CurrentStageDescription}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Created By :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.CreatedBy}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Created On :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.CreatedOn  | date: 'dd/MM/yyyy hh:mm a'}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Sales Order No :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.SalesOrderNo}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="col-lg-12">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Remarks :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.MWSCRemarks}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row px-3 mb-2">
+              <div class="col-lg-6 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Permenant Address</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 px-1">
+                <div class="card card-stats border mb-1">
+                  <div class="card-body px-3 py-2">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <h6 class="card-title text-uppercase text-muted mb-0">Permenant Address</h6>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="row">
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-lg-4">
+
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h5 text-dark font-weight-bold mb-0 mr-2">Contact Name :</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 text-primary mb-0">{{request_item?.selected_application?.ApplicationType?.Description}}</span>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
