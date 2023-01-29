@@ -37,6 +37,36 @@ const AppRoutes: Routes = [
       }
     ]
   },
+    {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      { 
+        path: 'dutyroster', 
+        loadChildren: () => import('./features/dutyroster/dutyroster-routing.module').then(m => m.dutyRosterRoutes)
+      }
+    ]
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      { 
+        path: 'e-services', 
+        loadChildren: () => import('./features/e-service/e-service-routing.module').then(m => m.eServiceRoutes)
+      }
+    ]
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      { 
+        path: 'finance', 
+        loadChildren: () => import('./features/payment/payment-routing.module').then(m => m.paymentRoutes) 
+      }
+    ]
+  },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
     // { path: '**', component: NotFoundComponent }
