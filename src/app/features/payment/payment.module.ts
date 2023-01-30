@@ -103,6 +103,9 @@ import { TppaPaymentsViewComponent } from './components/tppa/tppa-payments-view/
     TppaPaymentsActionsComponent,                        // Shared-Component
     TppaPaymentsCommonViewComponent,                     // Shared-Component
     TppaPaymentsViewComponent,                           // Shared-Component
+  ],
+  providers:[
+    // AuthGuard
   ]
 })
 export class PaymentModule { }

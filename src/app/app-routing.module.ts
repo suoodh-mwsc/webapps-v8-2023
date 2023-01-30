@@ -32,7 +32,7 @@ const AppRoutes: Routes = [
     children: [
       { 
         path: 'dutyroster', 
-        loadChildren: () => import('./features/dutyroster/dutyroster-routing.module').then(m => m.dutyRosterRoutes)
+        loadChildren: () => import('./features/dutyroster/dutyroster.module').then(m => m.DutyrosterModule)
       }
     ]
   },
@@ -42,7 +42,7 @@ const AppRoutes: Routes = [
     children: [
       { 
         path: 'e-services', 
-        loadChildren: () => import('./features/e-service/e-service-routing.module').then(m => m.eServiceRoutes)
+        loadChildren: () => import('./features/e-service/e-service.module').then(m => m.EServiceModule)
       }
     ]
   },
@@ -52,7 +52,7 @@ const AppRoutes: Routes = [
     children: [
       { 
         path: 'payment', 
-        loadChildren: () => import('./features/payment/payment-routing.module').then(m => m.paymentRoutes) 
+        loadChildren: () => import('./features/payment/payment.module').then(m => m.PaymentModule) 
       }
     ]
   },
