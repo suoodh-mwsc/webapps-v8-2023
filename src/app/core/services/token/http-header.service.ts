@@ -36,7 +36,7 @@ export class HttpHeaderService {
 
   public prepareOptionsRefresh(): any {
     let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     console.log('prepareOptionsRefresh -> ', token);
     headers = headers
       .set('Content-Type', 'application/json')
@@ -48,7 +48,7 @@ export class HttpHeaderService {
 
   public prepareOptions(): any {
     let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     // console.log('prepareOptionsRefresh -> ', token);
     headers = headers
       .set('Content-Type', 'application/json');
@@ -59,7 +59,7 @@ export class HttpHeaderService {
 
   public prepareOptionsForBlob(): any {
     let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     headers = headers
       .set('Content-Type', 'application/json')
     return { headers };
@@ -68,7 +68,7 @@ export class HttpHeaderService {
 
 
   public prepareOptionsFileUpload(): any {
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
 
     let headers = new HttpHeaders().set('Authorization', `Bearer ${token}`,);;
 
@@ -82,7 +82,7 @@ export class HttpHeaderService {
 
   public prepareOptionsPayslipDownload(): any {
     let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     headers = headers
     .set('Authorization', `Bearer ${token}`);
 
@@ -101,7 +101,7 @@ export class HttpHeaderService {
 
   public prepareOptionsPayslipDownloadWithObserve(): any {
     //let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     // console.log('prepareOptionsRefresh -> ', token);
     let httpOptions: Object = {
       headers: new HttpHeaders(
@@ -118,7 +118,7 @@ export class HttpHeaderService {
 
   public prepareOptionsWithParams(searchParams): any {
     let headers = new HttpHeaders();
-    let token = this._tokenStorage.getYodaToken();
+    let token = this._tokenStorage.getAdalToken();
     console.log('prepareOptionsRefresh -> ', token);
     const params = new HttpParams()
       .set('filter_by_absence_type_sap_id', searchParams.filter_by_absence_type_sap_id);

@@ -3,13 +3,11 @@ import { environment } from './../environments/environment';
 import { UiBaseService } from './core/services/ui-setup/ui-base.service';
 import { Adal8HTTPService, Adal8Service, Adal8Interceptor } from 'adal-angular8';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Event as NavigationEvent } from '@angular/router';
-
 import { TokenStorageService } from "./core/services/token/token-storage.service";
 import { UiConfigService } from "./core/services/ui-config/ui-config.service";
 import { EventBusService } from './core/services/event-bus/event-bus.service';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-
 //
 import { AdalAuthService } from './core/services/auth/adal-auth.service';
 import * as moment from 'moment';
@@ -83,7 +81,6 @@ export class AppComponent implements OnInit {
 
     this._uiConfigService.saveUiConfig(this.configUi);
 
-
     this.info_card.app_env = environment.staffAppApiConfig.api_server;
     this.info_card.api_env = environment.staffAppApiConfig.api_url;
     this.info_card.env_type = environment.production;
@@ -94,17 +91,19 @@ export class AppComponent implements OnInit {
       if (event instanceof NavigationStart) {
         // Show loading indicator
         window.scrollTo(0, 0);
+        console.log('NavigationStart :: ', event);
       }
 
       if (event instanceof NavigationEnd) {
         // Hide loading indicator
+        // Present error to user
+        console.log('NavigationError :: ', event);
       }
 
       if (event instanceof NavigationError) {
         // Hide loading indicator
-
         // Present error to user
-        console.log(event.error);
+        console.log('NavigationError :: ', event.error);
       }
     });
 

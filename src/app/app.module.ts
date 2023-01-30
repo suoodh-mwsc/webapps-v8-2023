@@ -28,7 +28,6 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule, TooltipOptions } from 'ng2-tooltip-directive';
 // import { MyDefaultTooltipOptions } from './my-default-options';
 
-
 // const TooltipOptions = {
 //   'show-delay': 500
 // }

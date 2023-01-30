@@ -24,16 +24,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq = req;
-    let token = this._tokenService.getYodaToken();
+    let token = this._tokenService.getAdalToken();
 
     if (token != null) {
       console.log('auth.interceptor token', token);            
 
       if (!req.url.includes('v1/auth')) {
-        let allTokenDetails = this._tokenService.getYodaAllTokenDetails();
+        let allTokenDetails = this._tokenService.getAdalAllTokenDetails();
         var currentTime = moment();
-        var tokenExpiresOn = moment(allTokenDetails.YODA_TOKEN_EXPIRY);
-        var refreshTokenExpiresOn = moment(allTokenDetails.YODA_REFRESHTOKEN_EXPIRY);
+        var tokenExpiresOn = moment(allTokenDetails.ADAL_TOKEN_EXPIRY);
+        var refreshTokenExpiresOn = moment(allTokenDetails.ADAL_REFRESHTOKEN_EXPIRY);
         console.log('auth.interceptor req.url', req.url);
         console.log('auth.interceptor currentTime', currentTime.toString());
         console.log('auth.interceptor tokenExpiresOn', tokenExpiresOn.toString());
@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
         } else if (currentTime < refreshTokenExpiresOn) {
           console.log('auth.interceptor REFRESH NOT TOKEN EXPIRED');
           return this._staffPortalAuth.refreshToken().pipe(mergeMap(response => {
-            let newToken = this._tokenService.getYodaToken();
+            let newToken = this._tokenService.getAdalToken();
             console.log('auth.interceptor newToken', newToken);            
             let newAuthReq = this.addTokenHeader(req, newToken);
 
@@ -77,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
 
-      const token = this._tokenService.getYodaRefreshToken();
+      const token = this._tokenService.getAdalRefreshToken();
 
       if (token)
         return this._staffPortalAuth.refreshToken().pipe(
