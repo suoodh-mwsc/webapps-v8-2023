@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Subject, throwError } from 'rxjs';
 import { environment } from '../../../../../../environments/environment';
 // API Data Services
-import { TppaPaymentsService } from './../../../../../shared/services/finance/tppa-payments.service';
+import { TppaPaymentsService } from './../../../../../shared/services/payment/tppa-payments.service';
 // Core Services
 import { PaginationService } from './../../../../../core/services/pagination/pagination.service';
 import { YodaCoreErrorHandlerService } from './../../../../../core/services/error-handler/yoda-core-error-handler.service';

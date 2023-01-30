@@ -7,6 +7,9 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 // Orchestra-Module
 import { MwscCommonModule } from './mwsc-common/mwsc-common.module';
 import { LeaveModule } from './leave/leave.module';
+import { DutyrosterModule } from './dutyroster/dutyroster.module';
+import { EServiceModule } from './e-service/e-service.module';
+import { PaymentModule } from './payment/payment.module';
 
 
 @NgModule({
@@ -15,6 +18,9 @@ import { LeaveModule } from './leave/leave.module';
     CommonModule,
     FeaturesRoutingModule,
     NgApexchartsModule,
+    DutyrosterModule,                         // Orchestra-Module
+    EServiceModule,                           // Orchestra-Module
+    PaymentModule,                            // Orchestra-Module
     MwscCommonModule,                         // Orchestra-Module
     LeaveModule,                              // Orchestra-Module
   ]

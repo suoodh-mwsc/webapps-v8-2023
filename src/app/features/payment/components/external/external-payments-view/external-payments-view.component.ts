@@ -8,7 +8,7 @@ import { environment } from './../../../../../../environments/environment';
 // Action Models
 // import { EServiceUserActionComponent } from '../e-service-user-action/e-service-user-action.component';
 // API Data Services
-import { ExternalPaymentsService } from './../../../../../shared/services/finance/external-payments.service';
+import { ExternalPaymentsService } from './../../../../../shared/services/payment/external-payments.service';
 // Core Services
 import { YodaCoreErrorHandlerService } from './../../../../../core/services/error-handler/yoda-core-error-handler.service';
 

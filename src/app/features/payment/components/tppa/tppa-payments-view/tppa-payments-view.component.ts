@@ -8,7 +8,7 @@ import { environment } from './../../../../../../environments/environment';
 // Action Models
 import { TppaPaymentsActionsComponent } from '../tppa-payments-actions/tppa-payments-actions.component';
 // API Data Services
-import { TppaPaymentsService } from './../../../../../shared/services/finance/tppa-payments.service';
+import { TppaPaymentsService } from './../../../../../shared/services/payment/tppa-payments.service';
 // Core Services
 import { YodaCoreErrorHandlerService } from './../../../../../core/services/error-handler/yoda-core-error-handler.service';
 

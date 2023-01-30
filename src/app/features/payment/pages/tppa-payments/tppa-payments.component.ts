@@ -8,7 +8,7 @@ import { environment } from './../../../../../environments/environment';
 // Ui Config
 import { UiConfigService } from './../../../../core/services/ui-config/ui-config.service';
 // API Data Services
-import { TppaPaymentsService } from './../../../../shared/services/finance/tppa-payments.service';
+import { TppaPaymentsService } from './../../../../shared/services/payment/tppa-payments.service';
 // Core Services
 import { PaginationService } from './../../../../core/services/pagination/pagination.service';
 import { PaginationYodaService } from './../../../../core/services/pagination/pagination-yoda.service';

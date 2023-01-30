@@ -4,7 +4,7 @@ import { takeUntil } from "rxjs/operators";
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../../../environments/environment';
 // API Data Services
-import { ExternalPaymentsService } from './../../../../../shared/services/finance/external-payments.service';
+import { ExternalPaymentsService } from './../../../../../shared/services/payment/external-payments.service';
 // Core Services
 import { PaginationService } from './../../../../../core/services/pagination/pagination.service';
 import { YodaCoreErrorHandlerService } from './../../../../../core/services/error-handler/yoda-core-error-handler.service';

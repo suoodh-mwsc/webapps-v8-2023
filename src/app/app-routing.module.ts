@@ -16,17 +16,6 @@ import { AdminLayoutComponent } from "./core/_layouts/admin-layout/admin-layout.
 // export const mainRoutes: Routes = [
 const AppRoutes: Routes = [
   { path: '', redirectTo: 'welcome', pathMatch: 'full', },
-
-  {
-    path: '',
-    component: AdminLayoutComponent,
-    children: [
-      { 
-        path: 'common', 
-        loadChildren: () => import('./features/mwsc-common/mwsc-common.module').then(m => m.MwscCommonModule) 
-      }
-    ]
-  },
   {
     path: '',
     component: AdminLayoutComponent,
@@ -64,6 +53,16 @@ const AppRoutes: Routes = [
       { 
         path: 'payment', 
         loadChildren: () => import('./features/payment/payment-routing.module').then(m => m.paymentRoutes) 
+      }
+    ]
+  },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      { 
+        path: 'common', 
+        loadChildren: () => import('./features/mwsc-common/mwsc-common.module').then(m => m.MwscCommonModule) 
       }
     ]
   },

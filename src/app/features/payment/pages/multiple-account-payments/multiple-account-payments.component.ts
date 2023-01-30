@@ -8,7 +8,7 @@ import { environment } from './../../../../../environments/environment';
 // Ui Config
 import { UiConfigService } from './../../../../core/services/ui-config/ui-config.service';
 // API Data Services
-import { MultipleAccountPaymentsService } from './../../../../shared/services/finance/multiple-account-payments.service';
+import { MultipleAccountPaymentsService } from './../../../../shared/services/payment/multiple-account-payments.service';
 // Core Services
 import { PaginationService } from './../../../../core/services/pagination/pagination.service';
 import { YodaCoreErrorHandlerService } from './../../../../core/services/error-handler/yoda-core-error-handler.service';
